@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/19 16:49:17 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/19 17:40:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_minishell
 	char	**input_cmd;
 	char	**split_pipe;
 	char	*path_cmd;
+	int		fd[2];
 }				t_minishell;
 
 int		check_write_exit(t_minishell *ms);

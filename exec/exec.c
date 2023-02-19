@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/19 17:19:05 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:29:13 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static int	check_command(t_minishell *ms)
 	return (0);
 }
 
-int	exec_cmd(t_minishell *ms, char **envp)
+
+
+
+/*int	exec_cmd(t_minishell *ms, char **envp)
 {
 	char	**tmp;
 	int		id;
@@ -56,12 +59,12 @@ int	exec_cmd(t_minishell *ms, char **envp)
 	ms->prompt = "👨‍💻 Minishell> ";
 	wait(NULL);
 	return (1);
-}
+}*/
 
 
 /////////////////////////////////////VERSION PIPE NON FINI//////////////////////////////////////////
 
-/*int	exec_cmd(t_minishell *ms, char **envp)
+int	exec_cmd(t_minishell *ms, char **envp)
 {
 	char	**tmp;
 	char	**tmp2;
@@ -71,28 +74,43 @@ int	exec_cmd(t_minishell *ms, char **envp)
 	tmp = ft_split(ms->line, '\n');
 	tmp2 = ft_split(tmp[0], '|');
 	int i = 0;
-
+	int j = 0;
 	while (tmp2[i])
 	{
 		ms->input_cmd = ft_split(tmp2[i], ' ');
+		while (ms->input_cmd[j])
+		{
+			ft_printf("%s\n", ms->input_cmd[j]);
+			j++;
+		}
 		if (!check_command(ms))
 		{
 			ms->prompt = ERR_PROMPT;
 			return (error(CMD_ERR), 0);
 		}
+		if (pipe(ms->fd) == -1)
+			error("pipe");
 		id = fork();
 		if (id == 0)
 		{
+			close(ms->fd[1]);
+			dup2(ms->fd[0], 0);
 			if (execve(ms->path_cmd, ms->input_cmd, envp) == - 1)
 				return (exit(0), 0);
 			if (write(1, ms->prompt, ft_strlen(ms->prompt)) == -1)
 				return (0);
 			exit(0);
 		}
-		wait(NULL);
-		wait(NULL);
+		dup2(ms->fd[1], 1);
+		close(ms->fd[0]);
+		close(ms->fd[1]);
+		ft_free_tab(ms->input_cmd);
 		i++;
 	}
+	ft_free_tab(tmp);
+	ft_free_tab(tmp2);
+	wait(NULL);
+	wait(NULL);
 	ms->prompt = "👨‍💻 Minishell> ";
 	return (1);
-}*/
+}
