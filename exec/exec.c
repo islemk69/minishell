@@ -31,86 +31,126 @@ static int	check_command(t_minishell *ms)
 	return (0);
 }
 
-
-
-
-/*int	exec_cmd(t_minishell *ms, char **envp)
+int count_pipe(t_minishell *ms)
 {
-	char	**tmp;
+	int	pipe;
+	int i;
+
+	i = 0;
+	pipe = 0;
+	while (ms->line[i])
+	{
+		if (ms->line[i] == '|')
+			pipe++;
+		i++;
+	}
+	return (pipe);
+}
+
+int	exec_one_pipe(t_minishell *ms, char **envp, char **tmp)
+{
 	int		id;
 
-	(void)(envp);
-	tmp = ft_split(ms->line, '\n');
 	ms->input_cmd = ft_split(tmp[0], ' ');
 	if (!check_command(ms))
 	{
-		ms->prompt = ERR_PROMPT;
+		ft_free_tab(ms->input_cmd);
 		return (error(CMD_ERR), 0);
 	}
 	id = fork();
 	if (id == 0)
 	{
 		if (execve(ms->path_cmd, ms->input_cmd, envp) == - 1)
-			return (exit(0), 0);
-		if (write(1, ms->prompt, ft_strlen(ms->prompt)) == -1)
-			return (0);
+			error("error exec");
 		exit(0);
 	}
-	ms->prompt = "👨‍💻 Minishell> ";
+	ft_free_tab(ms->input_cmd);
+	free(ms->path_cmd);
+	wait(NULL);
 	wait(NULL);
 	return (1);
-}*/
+}
 
+int	exec_multi_pipe(t_minishell *ms, char **envp, char **tmp2, int nb_pipe)
+{
+	int	id;
+	int	i;
+	int	save_stdin;
 
-/////////////////////////////////////VERSION PIPE NON FINI//////////////////////////////////////////
+	save_stdin = dup(0);
+	i = 0;
+	while (tmp2[i])
+	{
+		ms->input_cmd = ft_split(tmp2[i], ' ');
+		if (!check_command(ms))
+		{
+			if (dup2(save_stdin, 0) == -1)
+				error ("dup");
+			ft_free_tab(ms->input_cmd);
+			return (close(save_stdin), error(CMD_ERR), 0);
+		}
+		if (pipe(ms->fd) == -1)
+			error("pipe");	
+		id = fork();
+		if (id == 0)
+		{
+			close(ms->fd[0]);
+			if (nb_pipe != 0)
+			{
+				if (dup2(ms->fd[1], 1) == -1)
+					error ("dup");
+			}
+			else
+				dup(1);
+			if (execve(ms->path_cmd, ms->input_cmd, envp) == - 1)
+				error("error exec");
+			exit(0);
+		}
+		if (nb_pipe != 0)
+		{
+			if (dup2(ms->fd[0], 0) == -1)
+				error ("dup");
+		}
+		else
+			if (dup2(save_stdin, 0) == -1)
+				error ("dup");
+		close(ms->fd[0]);
+		close(ms->fd[1]);
+		ft_free_tab(ms->input_cmd);
+		free(ms->path_cmd);
+		i++;
+		nb_pipe--;
+	}
+	close(save_stdin);
+	ft_free_tab(tmp2);
+	while (i >= 0)
+	{
+		wait(NULL);
+		i--;
+	}
+	return (1);
+}
 
 int	exec_cmd(t_minishell *ms, char **envp)
 {
 	char	**tmp;
 	char	**tmp2;
-	int		id;
+	int		nb_pipe;
 
 	(void)(envp);
 	tmp = ft_split(ms->line, '\n');
-	tmp2 = ft_split(tmp[0], '|');
-	int i = 0;
-	int j = 0;
-	while (tmp2[i])
+	nb_pipe = count_pipe(ms);
+	if (nb_pipe == 0)
 	{
-		ms->input_cmd = ft_split(tmp2[i], ' ');
-		while (ms->input_cmd[j])
-		{
-			ft_printf("%s\n", ms->input_cmd[j]);
-			j++;
-		}
-		if (!check_command(ms))
-		{
-			ms->prompt = ERR_PROMPT;
-			return (error(CMD_ERR), 0);
-		}
-		if (pipe(ms->fd) == -1)
-			error("pipe");
-		id = fork();
-		if (id == 0)
-		{
-			close(ms->fd[1]);
-			dup2(ms->fd[0], 0);
-			if (execve(ms->path_cmd, ms->input_cmd, envp) == - 1)
-				return (exit(0), 0);
-			if (write(1, ms->prompt, ft_strlen(ms->prompt)) == -1)
-				return (0);
-			exit(0);
-		}
-		dup2(ms->fd[1], 1);
-		close(ms->fd[0]);
-		close(ms->fd[1]);
-		ft_free_tab(ms->input_cmd);
-		i++;
+		if (!exec_one_pipe(ms, envp, tmp))
+			return (ft_free_tab(tmp), 0);
+	}
+	else
+	{
+		tmp2 = ft_split(tmp[0], '|');
+		if (!exec_multi_pipe(ms, envp, tmp2, nb_pipe))
+			return (ft_free_tab(tmp2), ft_free_tab(tmp), 0);
 	}
 	ft_free_tab(tmp);
-	ft_free_tab(tmp2);
-	wait(NULL);
-	wait(NULL);
-	ms->prompt = "👨‍💻 Minishell> ";
 	return (1);
 }

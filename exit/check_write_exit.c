@@ -16,8 +16,8 @@ int	check_write_exit(t_minishell *ms)
 {
 	if (!ft_strncmp(ms->line, "exit", 4))
 	{
-		//write(1, "👳‍ <== おはよう\n", ft_strlen("👳‍ <== おはよう\n"));
-		//exit(0);
+		write(1, "👳‍ <== SALAM\n", ft_strlen("👳‍ <== SALAM\n"));
+		return (0);
 	}
-	return (0);
+	return (1);
 }

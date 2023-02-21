@@ -19,9 +19,12 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # define CMD_ERR "Error : Command not found\n"
-# define PROMPT "👨‍💻 Minishell> ";
+# define PROMPT "👨‍💻 Minishell> "
 # define ERR_PROMPT "❌ Minishell> "
 
 typedef struct s_minishell
@@ -31,6 +34,7 @@ typedef struct s_minishell
 	char	*line;
 	char	**input_cmd;
 	char	**split_pipe;
+	char	**history;
 	char	*path_cmd;
 	int		fd[2];
 }				t_minishell;

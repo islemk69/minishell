@@ -10,13 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = gcc -lreadline
 
 SRCS = main.c exit/check_write_exit.c init_env/init_env.c exec/exec.c utils/error.c
 
 OBJS = $(SRCS:.c=.o)
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -g -Wall -Wextra -Werror 
 
 NAME = minishell
 
