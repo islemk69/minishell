@@ -12,47 +12,20 @@
 
 #include "include/minishell.h"
 
-/*static void	start_minishell(char **envp, t_minishell *ms)
-{
-
-	ms->line = NULL;
-	ms->prompt = PROMPT;
-	while (1)
-	{
-		if (write(1, ms->prompt, ft_strlen(ms->prompt)) == -1)
-				exit(0);
-		if (ms->line)
-		{
-			free(ms->line);
-			ms->line = NULL;
-		}
-		ms->line = get_next_line_gnl(0);
-		if (ms->line && ms->line[0] == '\n')
-			continue;
-		if (!check_write_exit(ms))
-			exit(0);
-		if (ms->line)
-			exec_cmd(ms, envp);
-	}
-}*/
-
 static void	start_minishell(char **envp, t_minishell *ms)
 {
-	//char *rd_line;
-	(void)envp;
 	int	i;
-	ms->line = NULL;
-	//ms->prompt = PROMPT;
+
 	while (1)
 	{
-
 		free(ms->line);
 		ms->line = NULL;
 		ms->line = readline(PROMPT);
 		/////////////////////HISTORIQUE///////////////
-		if (ms->line[0]) {
-            add_history(ms->line);
+		if (!ms->line[0]) {
+			continue ;
         }
+		add_history(ms->line);
 		if (ms->line && ms->line[0] && !ft_strncmp(ms->line, "history\0", 8)) 
 		{
 			i = 0;
@@ -82,22 +55,21 @@ static void	start_minishell(char **envp, t_minishell *ms)
 				ft_printf("message d'erreur a mettre\n");
 				continue ;
 			}
-		}
-		/*if (!ft_strncmp(ms->line, "!1", 2))
+		} 
+		if (!ft_strncmp(ms->line, "!5", 2))
 		{
 			int index;
 
-			index = ft_atoi(&ms->line[2]);
+			index = ft_atoi(&ms->line[1]);//faire un atoi modifier qui zappe ! et prend aue des chiffre
+			ft_printf("%d\n", index);            //et rien d'autres
 			HIST_ENTRY *index_hist = history_get(index);
             if (index_hist != NULL) {
                 ms->line = index_hist->line;
                 add_history(ms->line);
 			}
-		}*/
+		}
 		//ft_printf("%s\n", ms->line);
 		////////////////////HISTORIQUE////////////////		
-		if (ms->line[0] == 0)
-			continue ;
 		if (!check_write_exit(ms))
 			exit(0);
 		if (ms->line)
