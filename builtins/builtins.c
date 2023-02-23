@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 16:07:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:22:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
 			ft_printf("%s\n", ms->line);
 			if (ms->line)
 				exec_cmd(ms, envp);
+			free(ms->line);
 			ft_free_tab(split);
 			ms->line = NULL;
 			return (1);
@@ -84,15 +85,38 @@ static int	inputx_index(char **split, t_minishell *ms, char **envp)
 		}
 		if (ms->line)
 			exec_cmd(ms, envp);
+		free(ms->line);
+		ft_free_tab(split);
 		ms->line = NULL;
 		return (1);
 	}
 	return (0);
 }
 
+static int	input_env(char **env, char **split, t_minishell *ms)
+{
+	int		i;
+
+	i = 0;
+	if (split[0] && !split[1] && !ft_strncmp(split[0], "env\0", 4))
+	{
+		while (env[i])
+		{
+			ft_printf("%ssalut\n", env[i]);
+			i++;
+		}
+		free(ms->line);
+		ft_free_tab(split);
+		ms->line = NULL;
+		return (1);
+	}
+	return (0);
+}
+
+
 int builtins(t_minishell *ms, char **split, char **envp)
 {
-	if (input_history(split, ms) || input_last_cmd(split, ms, envp) || inputx_index(split, ms, envp))
+	if (input_history(split, ms) || input_last_cmd(split, ms, envp) || inputx_index(split, ms, envp) || input_env(envp, split, ms))
 		return (1);
 	return (0);
 }
