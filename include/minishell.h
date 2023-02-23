@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 14:47:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/23 23:53:27 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ int		exec_cmd(t_minishell *ms, char **envp);
 void	error(char *str);
 
 int		builtins(t_minishell *ms, char **split, char **envp);
+
+char	*ft_find_path(char **envp, char *str);
 
 #endif

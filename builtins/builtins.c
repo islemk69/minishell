@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 17:22:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/24 00:07:50 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,26 @@ static int	input_env(char **env, char **split, t_minishell *ms)
 	return (0);
 }
 
+static int	input_cd(char **split, char **envp)
+{
+	if (split[0] && !ft_strncmp(split[0], "cd\0", 3))
+	{
+		if (!split[1])
+		{
+			if (chdir(ft_find_path(envp, "HOME")) == -1)
+				ft_printf("erreur a mettre chdir\n");
+		}
+		else if (chdir(split[1]) == -1 && split[1]) 
+			ft_printf("erreur a mettre chdir\n");
+		return (1);
+	}
+	return (0);
+}
+
 
 int builtins(t_minishell *ms, char **split, char **envp)
 {
-	if (input_history(split, ms) || input_last_cmd(split, ms, envp) || inputx_index(split, ms, envp) || input_env(envp, split, ms))
+	if (input_history(split, ms) || input_last_cmd(split, ms, envp) || inputx_index(split, ms, envp) || input_env(envp, split, ms) || input_cd(split, envp))
 		return (1);
 	return (0);
 }

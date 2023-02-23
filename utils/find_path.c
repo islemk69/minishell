@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 23:59:55 by ikaismou         ###   ########.fr       */
+/*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
+/*   Updated: 2023/02/23 23:53:14 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-
-int	init_env(t_minishell *ms, char **envp)
+char	*ft_find_path(char **envp, char *str)
 {
-	char	*path;
+	int	i;
 
-	path = ft_find_path(envp, "PATH");
-	if (!path)
-		return (0);
-	ms->path_env = ft_split(path, ':');
-	if (!ms->path_env)
-		return (0);
-	return (1);
+	i = 0;
+	while (ft_strncmp(str, envp[i], 4))
+		i++;
+	if (!envp[i])
+		return (NULL);
+	return (envp[i] + (ft_strlen(str)) + 1);
 }
