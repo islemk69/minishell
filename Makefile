@@ -6,13 +6,13 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/15 18:23:28 by hel-ouar          #+#    #+#              #
-#    Updated: 2023/02/19 15:23:21 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/02/23 14:45:38 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc -lreadline
 
-SRCS = main.c exit/check_write_exit.c init_env/init_env.c exec/exec.c utils/error.c
+SRCS = main.c exit/check_write_exit.c init_env/init_env.c exec/exec.c utils/error.c builtins/builtins.c
 
 OBJS = $(SRCS:.c=.o)
 
