@@ -6,13 +6,14 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/24 00:07:50 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/24 00:30:29 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
+///////////////history/////////////////////
 static int	input_history(char **split, t_minishell *ms)
 {
 	int i;
@@ -37,6 +38,8 @@ static int	input_history(char **split, t_minishell *ms)
 	return (0);
 }
 
+
+//////////////////////////////!!!!!!!!!!/////////////////////////
 static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
 {
 	if (split[0] && !split[1] && !ft_strncmp(split[0], "!!\0", 3))
@@ -50,21 +53,18 @@ static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
 			ft_printf("%s\n", ms->line);
 			if (ms->line)
 				exec_cmd(ms, envp);
-			free(ms->line);
-			ft_free_tab(split);
-			ms->line = NULL;
 			return (1);
 		}
 		else
 		{
-			ft_printf("message d'erreur a mettre\n");
-			ft_free_tab(split);
+			//ft_free_tab(split);
 			return (1);
 		}
 	} 
 	return (0);
 }
 
+////////////////////////////!!!!!!!!!!xxxxxxxxx////////////////
 static int	inputx_index(char **split, t_minishell *ms, char **envp)
 {
 	if (split[0] && !split[1] && split[0][0] == '!')
@@ -85,15 +85,13 @@ static int	inputx_index(char **split, t_minishell *ms, char **envp)
 		}
 		if (ms->line)
 			exec_cmd(ms, envp);
-		free(ms->line);
-		ft_free_tab(split);
-		ms->line = NULL;
 		return (1);
 	}
 	return (0);
 }
 
-static int	input_env(char **env, char **split, t_minishell *ms)
+////////////////////////////ENV////////////////////////
+static int	input_env(char **env, char **split)
 {
 	int		i;
 
@@ -105,14 +103,12 @@ static int	input_env(char **env, char **split, t_minishell *ms)
 			ft_printf("%ssalut\n", env[i]);
 			i++;
 		}
-		free(ms->line);
-		ft_free_tab(split);
-		ms->line = NULL;
 		return (1);
 	}
 	return (0);
 }
 
+//////////////CCCCCCCCCDDDDDDDDDD////////////
 static int	input_cd(char **split, char **envp)
 {
 	if (split[0] && !ft_strncmp(split[0], "cd\0", 3))
@@ -130,9 +126,36 @@ static int	input_cd(char **split, char **envp)
 }
 
 
+
+//////////////////PWD//////////////////////
+
+int	built_in_pwd(char **split)
+{
+	char cwd[100000];
+	
+	if (split[0] && !split[1] && !ft_strncmp(split[0], "pwd\0", 4))
+	{
+		if (getcwd(cwd, sizeof(cwd)) != NULL) {
+			printf("%s\n", cwd);
+		} else {
+			perror("getcwd()");
+		}
+		return (1);
+	}
+	return (0);
+}
+
+
 int builtins(t_minishell *ms, char **split, char **envp)
 {
-	if (input_history(split, ms) || input_last_cmd(split, ms, envp) || inputx_index(split, ms, envp) || input_env(envp, split, ms) || input_cd(split, envp))
+	if (input_history(split, ms) || input_last_cmd(split, ms, envp) 
+			|| inputx_index(split, ms, envp) || input_env(envp, split) 
+			|| input_cd(split, envp) || built_in_pwd(split))
+	{
+		free(ms->line);
+		ft_free_tab(split);
+		ms->line = NULL;
 		return (1);
+	}
 	return (0);
 }
