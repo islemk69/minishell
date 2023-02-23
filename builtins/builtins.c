@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 15:11:25 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:07:09 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static int	inputx_index(char **split, t_minishell *ms, char **envp)
 
 int builtins(t_minishell *ms, char **split, char **envp)
 {
-    (void)envp;
 	if (input_history(split, ms) || input_last_cmd(split, ms, envp) || inputx_index(split, ms, envp))
 		return (1);
 	return (0);
