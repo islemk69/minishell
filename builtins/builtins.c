@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/24 00:30:29 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/25 18:18:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ static int	input_history(char **split, t_minishell *ms)
 			}
 			i++;
 		}
-		free(ms->line);
-		ft_free_tab(split);
-		ms->line = NULL;
 		return (1);
 	}
 	return (0);
@@ -57,7 +54,7 @@ static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
 		}
 		else
 		{
-			//ft_free_tab(split);
+			ft_printf("erreur a mettre \"!!\"\n");
 			return (1);
 		}
 	} 
@@ -91,45 +88,46 @@ static int	inputx_index(char **split, t_minishell *ms, char **envp)
 }
 
 ////////////////////////////ENV////////////////////////
-static int	input_env(char **env, char **split)
+static int	input_env(t_env **env, char **split, t_minishell *ms)
 {
-	int		i;
+	t_env 	*head;
 
-	i = 0;
+	head = *env;
 	if (split[0] && !split[1] && !ft_strncmp(split[0], "env\0", 4))
 	{
-		while (env[i])
+		while (head)
 		{
-			ft_printf("%ssalut\n", env[i]);
-			i++;
+			ft_printf("%s\n", head->str);
+			head = head->next;
 		}
+		add_history(ms->line);
 		return (1);
 	}
 	return (0);
 }
 
 //////////////CCCCCCCCCDDDDDDDDDD////////////
-static int	input_cd(char **split, char **envp)
+static int	input_cd(char **split, t_minishell *ms, t_env **env)
 {
 	if (split[0] && !ft_strncmp(split[0], "cd\0", 3))
 	{
 		if (!split[1])
 		{
-			if (chdir(ft_find_path(envp, "HOME")) == -1)
+			if (chdir(ft_find_path(env, "HOME")) == -1)
 				ft_printf("erreur a mettre chdir\n");
 		}
 		else if (chdir(split[1]) == -1 && split[1]) 
 			ft_printf("erreur a mettre chdir\n");
+		add_history(ms->line);
 		return (1);
 	}
 	return (0);
 }
 
 
-
 //////////////////PWD//////////////////////
 
-int	built_in_pwd(char **split)
+int	built_in_pwd(char **split, t_minishell *ms)
 {
 	char cwd[100000];
 	
@@ -140,17 +138,39 @@ int	built_in_pwd(char **split)
 		} else {
 			perror("getcwd()");
 		}
+		add_history(ms->line);
 		return (1);
 	}
 	return (0);
 }
 
 
-int builtins(t_minishell *ms, char **split, char **envp)
+///////////////////export//////////
+
+int built_in_export(t_env **env, char **split)
+{
+	if (!ft_strncmp(split[0], "export\0,", 1) && ft_strchr(split[1], '='))
+	{
+		t_env	*cell;
+		ft_printf("salutttt\n");
+		cell = create_cell(split[1]);
+		if (!cell)
+		{
+			lstclear(env);
+			return (0);
+		}
+		ft_lstad_back(env, cell);
+		return (1);
+	}
+	return (0);
+}
+
+
+int builtins(t_minishell *ms, char **split, char **envp, t_env **env)
 {
 	if (input_history(split, ms) || input_last_cmd(split, ms, envp) 
-			|| inputx_index(split, ms, envp) || input_env(envp, split) 
-			|| input_cd(split, envp) || built_in_pwd(split))
+			|| inputx_index(split, ms, envp) || input_env(env, split, ms) 
+			|| input_cd(split, ms, env) || built_in_pwd(split, ms) || built_in_export(env, split))
 	{
 		free(ms->line);
 		ft_free_tab(split);

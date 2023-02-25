@@ -6,20 +6,22 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 23:53:14 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/25 17:52:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	*ft_find_path(char **envp, char *str)
+char	*ft_find_path(t_env **env, char *srch)
 {
-	int	i;
+	t_env	*head;
 
-	i = 0;
-	while (ft_strncmp(str, envp[i], 4))
-		i++;
-	if (!envp[i])
-		return (NULL);
-	return (envp[i] + (ft_strlen(str)) + 1);
+	head = *env;
+	while (head)
+	{
+		if (!ft_strncmp(head->str, srch, ft_strlen(srch)))
+			return (head->str + (ft_strlen(srch) + 1));
+		head = head->next;
+	}
+	return (NULL);
 }

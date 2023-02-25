@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 23:53:27 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/25 18:03:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -39,16 +38,27 @@ typedef struct s_minishell
 	int		fd[2];
 }				t_minishell;
 
+typedef struct s_env {
+	char			*str;
+	struct s_env	*next;
+}				t_env;
+
 int		check_write_exit(t_minishell *ms);
 
-int		init_env(t_minishell *ms, char **envp);
+int		init_env(t_minishell *ms, char **envp, t_env **env);
 
 int		exec_cmd(t_minishell *ms, char **envp);
 
 void	error(char *str);
 
-int		builtins(t_minishell *ms, char **split, char **envp);
+int		builtins(t_minishell *ms, char **split, char **envp, t_env **env);
 
-char	*ft_find_path(char **envp, char *str);
+char	*ft_find_path(t_env **env, char *srch);
+
+t_env	*create_cell(char *str);
+
+void	ft_lstad_back(t_env **lst, t_env *new);
+
+void	lstclear(t_env **lst);
 
 #endif
