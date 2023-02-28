@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/25 18:03:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:27:03 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 typedef struct s_minishell
 {
+	char	**joined;
+	char	**parsed;
 	char	**path_env;
 	char	*prompt;
 	char	*line;
@@ -35,6 +37,7 @@ typedef struct s_minishell
 	char	**split_pipe;
 	char	**history;
 	char	*path_cmd;
+	char	*new_line;
 	int		fd[2];
 }				t_minishell;
 
@@ -60,5 +63,7 @@ t_env	*create_cell(char *str);
 void	ft_lstad_back(t_env **lst, t_env *new);
 
 void	lstclear(t_env **lst);
+
+void	check_new_line(t_minishell *ms);
 
 #endif

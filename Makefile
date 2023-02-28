@@ -6,13 +6,13 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/15 18:23:28 by hel-ouar          #+#    #+#              #
-#    Updated: 2023/02/25 16:30:27 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/02/28 16:23:11 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = gcc -lreadline
 
-SRCS = main.c exit/check_write_exit.c init_env/init_env.c exec/exec.c utils/error.c builtins/builtins.c utils/find_path.c utils/list.c
+SRCS = main.c exit/check_write_exit.c init_env/init_env.c exec/exec.c utils/error.c builtins/builtins.c utils/find_path.c utils/list.c parsing/check_line.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -31,7 +31,7 @@ all: Libft $(NAME)
 
 $(NAME): $(OBJS) Libft
 	$(RM) $(OBJB)
-	$(CC) $(OBJS) Libft/libft.a -o $(NAME) -lreadline
+	$(CC) $(OBJS) Libft/libft.a -o $(NAME)
 
 clean:
 	$(RM) $(OBJS) $(OBJB)

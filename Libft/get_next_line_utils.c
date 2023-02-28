@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 13:46:55 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/01/05 12:02:24 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/02/28 16:42:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	while (s2[j])
 		ptr[i++] = s2[j++];
 	ptr[i] = '\0';
-	return (free(s1), ptr);
+	return (ptr);
 }

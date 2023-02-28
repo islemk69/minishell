@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/26 17:45:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:13:16 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int built_in_export(t_env **env, char **split, t_minishell *ms)
 		}
 		ft_lstad_back(env, cell);
 		add_history(ms->line);
+		////free(m);
 		return (1);
 	}
 	return (0);
@@ -181,8 +182,15 @@ int	built_in_unset(t_env **env, char **split)
 {
 	if (!ft_strncmp(split[0], "unset\0", 6) && split[1])
 	{
+		t_env *occur;
 		
+		occur = (*env);
+		while (ft_strncmp(occur->str, split[1], ft_strlen(split[1])))
+			occur = occur->next;
+		free(occur);
+		return (1);
 	}
+	return (0);
 }
 
 
@@ -190,7 +198,8 @@ int builtins(t_minishell *ms, char **split, char **envp, t_env **env)
 {
 	if (input_history(split, ms) || input_last_cmd(split, ms, envp) 
 			|| inputx_index(split, ms, envp) || input_env(env, split, ms) 
-			|| input_cd(split, ms, env) || built_in_pwd(split, ms) || built_in_export(env, split, ms))
+			|| input_cd(split, ms, env) || built_in_pwd(split, ms) 
+			|| built_in_export(env, split, ms) || built_in_unset(env, split))
 	{
 		free(ms->line);
 		ft_free_tab(split);

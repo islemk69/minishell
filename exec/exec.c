@@ -6,13 +6,13 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/23 16:27:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:09:53 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static int	check_command(t_minishell *ms)
+static int	check_command(t_minishell *ms, char *input_cmd)
 {
 	char	*tmp;
 	int		i;
@@ -21,7 +21,7 @@ static int	check_command(t_minishell *ms)
 	while (ms->path_env[i])
 	{
 		tmp = ft_strjoin(ms->path_env[i], "/");
-		ms->path_cmd = ft_strjoin(tmp, ms->input_cmd[0]);
+		ms->path_cmd = ft_strjoin(tmp, input_cmd);
 		free(tmp);
 		if (access(ms->path_cmd, X_OK) != -1)
 			return (1);
@@ -47,46 +47,40 @@ int count_pipe(t_minishell *ms)
 	return (pipe);
 }
 
-int	exec_one_pipe(t_minishell *ms, char **envp, char **tmp)
+int	exec_one_pipe(t_minishell *ms, char **envp)
 {
 	int		id;
 
-	ms->input_cmd = ft_split(tmp[0], ' ');
-	if (!check_command(ms))
-	{
-		ft_free_tab(ms->input_cmd);
+	if (!check_command(ms, ms->parsed[0]))
 		return (error(CMD_ERR), 0);
-	}
 	id = fork();
 	if (id == 0)
 	{
-		if (execve(ms->path_cmd, ms->input_cmd, envp) == - 1)
+		if (execve(ms->path_cmd, ms->parsed, envp) == - 1)
 			error("error exec");
 		exit(0);
 	}
-	ft_free_tab(ms->input_cmd);
-	free(ms->path_cmd);
 	wait(NULL);
 	wait(NULL);
 	return (1);
 }
 
-int	exec_multi_pipe(t_minishell *ms, char **envp, char **tmp2, int nb_pipe)
+int	exec_multi_pipe(t_minishell *ms, char **envp, int nb_pipe)
 {
 	int	id;
 	int	i;
 	int	save_stdin;
+	char	**split;
 
 	save_stdin = dup(0);
 	i = 0;
-	while (tmp2[i])
+	while (ms->parsed[i])
 	{
-		ms->input_cmd = ft_split(tmp2[i], ' ');
-		if (!check_command(ms))
+		split = ft_split(ms->parsed[i], ' ');
+		if (!check_command(ms, split[0]))
 		{
 			if (dup2(save_stdin, 0) == -1)
 				error ("dup");
-			ft_free_tab(ms->input_cmd);
 			return (close(save_stdin), error(CMD_ERR), 0);
 		}
 		if (pipe(ms->fd) == -1)
@@ -102,7 +96,7 @@ int	exec_multi_pipe(t_minishell *ms, char **envp, char **tmp2, int nb_pipe)
 			}
 			else
 				dup(1);
-			if (execve(ms->path_cmd, ms->input_cmd, envp) == - 1)
+			if (execve(ms->path_cmd, split, envp) == - 1)
 				error("error exec");
 			exit(0);
 		}
@@ -116,13 +110,13 @@ int	exec_multi_pipe(t_minishell *ms, char **envp, char **tmp2, int nb_pipe)
 				error ("dup");
 		close(ms->fd[0]);
 		close(ms->fd[1]);
-		ft_free_tab(ms->input_cmd);
 		free(ms->path_cmd);
 		i++;
 		nb_pipe--;
 	}
 	close(save_stdin);
-	ft_free_tab(tmp2);
+	//ft_free_tab(ms->joined); //////////////////seg fault
+	ft_free_tab(split);
 	while (i >= 0)
 	{
 		wait(NULL);
@@ -133,24 +127,18 @@ int	exec_multi_pipe(t_minishell *ms, char **envp, char **tmp2, int nb_pipe)
 
 int	exec_cmd(t_minishell *ms, char **envp)
 {
-	char	**tmp;
-	char	**tmp2;
 	int		nb_pipe;
 
-	(void)(envp);
-	tmp = ft_split(ms->line, '\n');
 	nb_pipe = count_pipe(ms);
 	if (nb_pipe == 0)
 	{
-		if (!exec_one_pipe(ms, envp, tmp))
-			return (ft_free_tab(tmp), 0);
+		if (!exec_one_pipe(ms, envp))
+			return (0);
 	}
 	else
 	{
-		tmp2 = ft_split(tmp[0], '|');
-		if (!exec_multi_pipe(ms, envp, tmp2, nb_pipe))
-			return (ft_free_tab(tmp2), ft_free_tab(tmp), 0);
+		if (!exec_multi_pipe(ms, envp, nb_pipe))
+			return (0);
 	}
-	ft_free_tab(tmp);
 	return (1);
 }

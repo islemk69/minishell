@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:29:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/25 16:57:17 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/02/27 22:24:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ t_env	*ft_lstlas(t_env *lst)
 	return (lst);
 }
 
-t_env	*create_cell(char *str)
+t_env	*create_cell(char *str2)
 {
 	t_env	*cell;
 
 	cell = malloc(sizeof(t_env));
 	if (!cell)
 		return (cell);
-	cell->str = str;
+	cell->str = str2;
 	cell->next = NULL;
 	return (cell);
 }
