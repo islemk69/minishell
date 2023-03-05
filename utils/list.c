@@ -52,6 +52,21 @@ void	ft_lstad_back(t_env **lst, t_env *new)
 	}
 }
 
+int	lstsize(t_env *lst)
+{
+	int	i;
+	t_env *cpy;
+	cpy = lst;
+
+	i = 0;
+	while (cpy)
+	{
+		cpy = cpy->next;
+		i++;
+	}
+	return (i);
+}
+
 void	lstclear(t_env **lst)
 {
 	t_env	*tmp;

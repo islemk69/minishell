@@ -14,11 +14,10 @@
 
 #include "include/minishell.h"
 
-static void	start_minishell(char **envp, t_minishell *ms, t_env **env)
+static void	start_minishell(t_minishell *ms, t_env **env)
 {
 	ms->line = NULL;
-	(void)envp;
-	(void)env;
+	
 	while (1)
 	{
 		if (ms->parsed)
@@ -30,7 +29,7 @@ static void	start_minishell(char **envp, t_minishell *ms, t_env **env)
 		if (!ms->line[0])
 			continue ;
 		check_new_line(ms);
-		if (builtins(ms, ms->parsed, envp, env))
+		if (builtins(ms, ms->parsed, env))
 			continue ;
 		add_history(ms->line);
 		if (!check_write_exit(ms))
@@ -40,7 +39,7 @@ static void	start_minishell(char **envp, t_minishell *ms, t_env **env)
 			exit(0);
 		}
 		if (ms->parsed)
-			exec_cmd(ms, envp);
+			exec_cmd(ms, env);
 		//ft_free_tab(ms->parsed); seg fault mshell> "ls" -la | wc
 	}
 }
@@ -55,6 +54,6 @@ int	main(int argc, char **argv, char **envp)
 		return (perror("Number of Arguments"), 0);
 	env = NULL;
 	init_env(&ms, envp, &env);
-	start_minishell(envp, &ms, &env);
+	start_minishell(&ms, &env);
 	return(0);
 }

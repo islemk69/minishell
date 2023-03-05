@@ -31,6 +31,7 @@ typedef struct s_minishell
 	char	**joined;
 	char	**parsed;
 	char	**path_env;
+	char	**new_env;
 	char	*prompt;
 	char	*line;
 	char	**input_cmd;
@@ -50,11 +51,11 @@ int		check_write_exit(t_minishell *ms);
 
 int		init_env(t_minishell *ms, char **envp, t_env **env);
 
-int		exec_cmd(t_minishell *ms, char **envp);
+int		exec_cmd(t_minishell *ms, t_env **env);
 
 void	error(char *str);
 
-int		builtins(t_minishell *ms, char **split, char **envp, t_env **env);
+int		builtins(t_minishell *ms, char **split, t_env **env);
 
 char	*ft_find_path(t_env **env, char *srch);
 
@@ -65,5 +66,7 @@ void	ft_lstad_back(t_env **lst, t_env *new);
 void	lstclear(t_env **lst);
 
 void	check_new_line(t_minishell *ms);
+
+int		lstsize(t_env *lst);
 
 #endif

@@ -37,7 +37,7 @@ static int	input_history(char **split, t_minishell *ms)
 
 
 //////////////////////////////!!!!!!!!!!/////////////////////////
-static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
+static int	input_last_cmd(char **split, t_minishell *ms, t_env **env)
 {
 	if (split[0] && !split[1] && !ft_strncmp(split[0], "!!\0", 3))
 	{
@@ -49,7 +49,7 @@ static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
 			add_history(ms->line);
 			ft_printf("%s\n", ms->line);
 			if (ms->line)
-				exec_cmd(ms, envp);
+				exec_cmd(ms, env);
 			return (1);
 		}
 		else
@@ -62,7 +62,7 @@ static int	input_last_cmd(char **split, t_minishell *ms, char **envp)
 }
 
 ////////////////////////////!!!!!!!!!!xxxxxxxxx////////////////
-static int	inputx_index(char **split, t_minishell *ms, char **envp)
+static int	inputx_index(char **split, t_minishell *ms, t_env **env)
 {
 	if (split[0] && !split[1] && split[0][0] == '!')
 	{
@@ -81,7 +81,7 @@ static int	inputx_index(char **split, t_minishell *ms, char **envp)
 			add_history(ms->line);
 		}
 		if (ms->line)
-			exec_cmd(ms, envp);
+			exec_cmd(ms, env);
 		return (1);
 	}
 	return (0);
@@ -183,21 +183,26 @@ int	built_in_unset(t_env **env, char **split)
 	if (!ft_strncmp(split[0], "unset\0", 6) && split[1])
 	{
 		t_env *occur;
-		
+		t_env *previous;
+
 		occur = (*env);
 		while (ft_strncmp(occur->str, split[1], ft_strlen(split[1])))
+		{
+			previous = occur;
 			occur = occur->next;
-		free(occur);
+		}
+		occur = occur->next;
+		previous->next = occur->next;
 		return (1);
 	}
 	return (0);
 }
 
 
-int builtins(t_minishell *ms, char **split, char **envp, t_env **env)
+int builtins(t_minishell *ms, char **split, t_env **env)
 {
-	if (input_history(split, ms) || input_last_cmd(split, ms, envp) 
-			|| inputx_index(split, ms, envp) || input_env(env, split, ms) 
+	if (input_history(split, ms) || input_last_cmd(split, ms, env) 
+			|| inputx_index(split, ms, env) || input_env(env, split, ms) 
 			|| input_cd(split, ms, env) || built_in_pwd(split, ms) 
 			|| built_in_export(env, split, ms) || built_in_unset(env, split))
 	{

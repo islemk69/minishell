@@ -12,6 +12,31 @@
 
 #include "../include/minishell.h"
 
+static char **refresh_env(t_env **env)
+{
+	t_env *head;
+	head = *env;
+	char **new_env;
+	int i = 0;
+	int j = 0;
+	new_env = (char **)malloc(sizeof(char *) * (lstsize(*env) + 1));
+	while (head)
+	{
+		new_env[i] = (char *)malloc(sizeof(char) * (ft_strlen(head->str) + 1));
+		j = 0;
+		while (head->str[j])
+		{
+			new_env[i][j] = head->str[j];
+			j++;
+		}
+		new_env[i][j] = 0;
+		head = head->next;
+		i++;
+	}
+	new_env[i] = 0;
+	return (new_env);
+}
+
 static int	check_command(t_minishell *ms, char *input_cmd)
 {
 	char	*tmp;
@@ -47,7 +72,7 @@ int count_pipe(t_minishell *ms)
 	return (pipe);
 }
 
-int	exec_one_pipe(t_minishell *ms, char **envp)
+int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int		id;
 
@@ -56,16 +81,17 @@ int	exec_one_pipe(t_minishell *ms, char **envp)
 	id = fork();
 	if (id == 0)
 	{
-		if (execve(ms->path_cmd, ms->parsed, envp) == - 1)
+		if (execve(ms->path_cmd, ms->parsed, refresh_env(env)) == - 1)
 			error("error exec");
 		exit(0);
 	}
 	wait(NULL);
 	wait(NULL);
+	ft_free_tab(ms->new_env);
 	return (1);
 }
 
-int	exec_multi_pipe(t_minishell *ms, char **envp, int nb_pipe)
+int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 {
 	int	id;
 	int	i;
@@ -96,7 +122,7 @@ int	exec_multi_pipe(t_minishell *ms, char **envp, int nb_pipe)
 			}
 			else
 				dup(1);
-			if (execve(ms->path_cmd, split, envp) == - 1)
+			if (execve(ms->path_cmd, split, refresh_env(env)) == - 1)
 				error("error exec");
 			exit(0);
 		}
@@ -125,19 +151,19 @@ int	exec_multi_pipe(t_minishell *ms, char **envp, int nb_pipe)
 	return (1);
 }
 
-int	exec_cmd(t_minishell *ms, char **envp)
+int	exec_cmd(t_minishell *ms, t_env **env)
 {
 	int		nb_pipe;
 
 	nb_pipe = count_pipe(ms);
 	if (nb_pipe == 0)
 	{
-		if (!exec_one_pipe(ms, envp))
+		if (!exec_one_pipe(ms, env))
 			return (0);
 	}
 	else
 	{
-		if (!exec_multi_pipe(ms, envp, nb_pipe))
+		if (!exec_multi_pipe(ms, env, nb_pipe))
 			return (0);
 	}
 	return (1);
