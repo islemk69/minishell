@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/28 20:06:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:30:38 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static void del_char(t_minishell *ms)
 
 void new(t_minishell *ms, char **space)
 {
-    (void)(ms);
     int i;
     char **quot;
 
@@ -114,9 +113,10 @@ void new(t_minishell *ms, char **space)
     //ft_free_tab(quot);
 }
 
-void    ft_pipe(t_minishell *ms, char **space)
+void    ft_pipe(t_minishell *ms)
 {
     char	**pipe;
+	char	**space;
 	int		i;
     int j = 0;
 	
@@ -132,46 +132,31 @@ void    ft_pipe(t_minishell *ms, char **space)
 		i = 0;
 		while (ms->parsed[i])
 		{
+			ft_printf("ooooo %s\n", ms->parsed[i]);
 			ms->joined[j] = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
 			ms->joined[j] = ft_strjoin_gnl(ms->joined[j], " ");
 			i++;
 		}
-		//ft_free_tab(ms->parsed);
+		ft_free_tab(ms->parsed);
         j++;
     }
+	ms->joined[j] = 0;
 	//ft_free_tab(pipe);
 }
 
 void check_new_line(t_minishell *ms)
 {
+	char	**space;
     int i;
-    char **space;
     
-	space = NULL;
-    i = 0;
-	//explications :
-	//ms->new_line c'est le ms->uchar que t'as cree.
-	//dans un cas ms->new_line est une modification ms->line sans les ';' et '\'
-	// et dans l'autre cas c'est juste une copie de ms->line
-	// comme ça on utilisera que ms->new_line pour TOUT à partir d'ici,
-	// sauf pour add_history(ms->line) qui mettra les ';' et '\' dans l'history.
+     i = 0;
     if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';'))
         del_char(ms);
     else
         ms->new_line = ft_strdup(ms->line);
-	//explications :
-	//dans le cas ou ya pas de '|', on obtientra un char ** ms->parsed 
-	//avec les commandes parsées et pretes à etre exec.
-	//Dans le cas des '|', obligé de split pipe, de creer un char **ms->joined
-	//qui sert à remettre les espaces apres les avoir split,
-	// et au final ms->parsed devient la copie de ms->joined
-	// sans ça on aurait du manipuler des char ***
-	//ça simplifie de ouf l'exec pour les pipe
-
-	//pour les leaks j'en ai que avec des '|' regarde avec valgrind.
     if (ft_strchr(ms->new_line, '|'))
 	{
-        ft_pipe(ms, space);
+        ft_pipe(ms);
 		while (ms->joined[i])
 			i++;
 		ms->parsed = malloc(sizeof(char *) * (i + 1));
@@ -182,15 +167,13 @@ void check_new_line(t_minishell *ms)
 			i++;
 		}
 		ms->joined[i] = 0;
-		//ft_free_tab(ms->joined);
+		ft_free_tab(ms->joined);
 	}
     else
-    {
-        space = ft_split(ms->new_line, ' ');
+	{
+		space = ft_split(ms->new_line, ' ');
         new(ms, space);
-    }
-	//explications de la suite :
-	//juste le printf pour verifier mdrr. 
+	}
 	/*i = 0;
 	while(ms->parsed[i])
 	{

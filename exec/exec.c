@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/28 20:09:53 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/06 18:35:00 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,28 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int		id;
 
-	if (!check_command(ms, ms->parsed[0]))
-		return (error(CMD_ERR), 0);
+
+	if (input_last_cmd(ms->parsed, ms, env) || inputx_index(ms->parsed, ms))
+	{
+		ft_free_tab(ms->parsed);
+		check_new_line(ms);
+	}
+	add_history(ms->line);
+	if (builtins(ms, ms->parsed, env) == 1)
+		return (0);
 	id = fork();
 	if (id == 0)
 	{
+		if (!check_command(ms, ms->parsed[0]))
+			return (error(CMD_ERR), 0);
 		if (execve(ms->path_cmd, ms->parsed, refresh_env(env)) == - 1)
 			error("error exec");
 		exit(0);
 	}
+
 	wait(NULL);
 	wait(NULL);
-	ft_free_tab(ms->new_env);
+	//ft_free_tab(ms->new_env);
 	return (1);
 }
 
@@ -136,13 +146,13 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				error ("dup");
 		close(ms->fd[0]);
 		close(ms->fd[1]);
-		free(ms->path_cmd);
+		//free(ms->path_cmd);
 		i++;
 		nb_pipe--;
 	}
 	close(save_stdin);
 	//ft_free_tab(ms->joined); //////////////////seg fault
-	ft_free_tab(split);
+	//ft_free_tab(split);
 	while (i >= 0)
 	{
 		wait(NULL);

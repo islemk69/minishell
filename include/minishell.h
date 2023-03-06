@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/28 16:27:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/06 17:28:53 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_minishell
 	char	**split_pipe;
 	char	**history;
 	char	*path_cmd;
+	char	*tmp;
 	char	*new_line;
 	int		fd[2];
+	int		flg;
 }				t_minishell;
 
 typedef struct s_env {
@@ -68,5 +70,9 @@ void	lstclear(t_env **lst);
 void	check_new_line(t_minishell *ms);
 
 int		lstsize(t_env *lst);
+
+int		input_last_cmd(char **split, t_minishell *ms, t_env **env);
+
+int		inputx_index(char **split, t_minishell *ms);
 
 #endif

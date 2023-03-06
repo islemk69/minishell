@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/28 20:14:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/06 19:45:14 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,22 @@ static void	start_minishell(t_minishell *ms, t_env **env)
 		if (ms->parsed)
 		{
 			free(ms->line);
+			ft_printf("jesuispasse\n");
 			ms->line = NULL;
 		}
 		ms->line = readline(PROMPT);
 		if (!ms->line[0])
+		{
 			continue ;
+		}
 		check_new_line(ms);
-		if (builtins(ms, ms->parsed, env))
-			continue ;
-		add_history(ms->line);
+		int i = 0;
+		while (ms->parsed[i])
+		{
+			ft_printf("%s\n", ms->parsed[i]);
+			i++;
+		}
+		continue ;
 		if (!check_write_exit(ms))
 		{
 			ft_free_tab(ms->parsed);
@@ -40,7 +47,7 @@ static void	start_minishell(t_minishell *ms, t_env **env)
 		}
 		if (ms->parsed)
 			exec_cmd(ms, env);
-		//ft_free_tab(ms->parsed); seg fault mshell> "ls" -la | wc
+		//ft_free_tab(ms->parsed);
 	}
 }
 
