@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/06 18:12:41 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:56:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int is_built_in(char *str)
+{
+	if (!strncmp(str, "history\0", ft_strlen(str + 1)) 
+		|| !strncmp(str, "cd\0", ft_strlen(str + 1)) 
+		|| !strncmp(str, "export\0", ft_strlen(str + 1)) 
+		|| !strncmp(str, "pwd\0", ft_strlen(str + 1))
+		|| !strncmp(str, "unset\0", ft_strlen(str + 1))
+		|| !strncmp(str, "!!\0", ft_strlen(str + 1))
+		|| (str[0] == '!' && str[1] != '!' && str[1] != ' '))
+	{
+		ft_printf("je suis un builtin\n");
+		return (1);
+	}
+	return (0);
+}
 
 
 ///////////////history/////////////////////
@@ -38,14 +54,14 @@ static int	input_history(char **split)
 int	input_last_cmd(char **split, t_minishell *ms, t_env **env)
 {
 	(void)env;
-	if (split[0] && !split[1] && !ft_strncmp(split[0], "!!\0", 3)) 
+	if (!ft_strncmp(split[0], "!!\0", 3)) 
 	{ 
+		ft_printf("salut\n");
 		HIST_ENTRY *last_entry = history_get(history_length);
 		if (last_entry) 
 		{
 			free(ms->line);
 			ms->line = ft_strdup(last_entry->line);
-			ft_printf("TEsT%s\n", ms->line);
 			return (1);
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/06 17:28:53 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:34:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,11 @@ int		lstsize(t_env *lst);
 int		input_last_cmd(char **split, t_minishell *ms, t_env **env);
 
 int		inputx_index(char **split, t_minishell *ms);
+
+int		only(char *str);
+
+char	**refresh_env(t_env **env);
+
+int is_built_in(char *str);
 
 #endif

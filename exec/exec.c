@@ -3,39 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/06 18:35:00 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/08 15:54:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-static char **refresh_env(t_env **env)
-{
-	t_env *head;
-	head = *env;
-	char **new_env;
-	int i = 0;
-	int j = 0;
-	new_env = (char **)malloc(sizeof(char *) * (lstsize(*env) + 1));
-	while (head)
-	{
-		new_env[i] = (char *)malloc(sizeof(char) * (ft_strlen(head->str) + 1));
-		j = 0;
-		while (head->str[j])
-		{
-			new_env[i][j] = head->str[j];
-			j++;
-		}
-		new_env[i][j] = 0;
-		head = head->next;
-		i++;
-	}
-	new_env[i] = 0;
-	return (new_env);
-}
 
 static int	check_command(t_minishell *ms, char *input_cmd)
 {
@@ -48,7 +24,7 @@ static int	check_command(t_minishell *ms, char *input_cmd)
 		tmp = ft_strjoin(ms->path_env[i], "/");
 		ms->path_cmd = ft_strjoin(tmp, input_cmd);
 		free(tmp);
-		if (access(ms->path_cmd, X_OK) != -1)
+		if (access(ms->path_cmd, X_OK) != -1 || is_built_in(input_cmd))
 			return (1);
 		i++;
 		free(ms->path_cmd);
@@ -70,7 +46,7 @@ int count_pipe(t_minishell *ms)
 		i++;
 	}
 	return (pipe);
-}
+} 
 
 int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
@@ -83,18 +59,17 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		check_new_line(ms);
 	}
 	add_history(ms->line);
-	if (builtins(ms, ms->parsed, env) == 1)
-		return (0);
 	id = fork();
 	if (id == 0)
 	{
 		if (!check_command(ms, ms->parsed[0]))
 			return (error(CMD_ERR), 0);
+		if (builtins(ms, ms->parsed, env) == 1)
+			exit (0);
 		if (execve(ms->path_cmd, ms->parsed, refresh_env(env)) == - 1)
 			error("error exec");
 		exit(0);
 	}
-
 	wait(NULL);
 	wait(NULL);
 	//ft_free_tab(ms->new_env);
@@ -109,6 +84,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	char	**split;
 
 	save_stdin = dup(0);
+	add_history(ms->line);
 	i = 0;
 	while (ms->parsed[i])
 	{
@@ -132,8 +108,10 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			}
 			else
 				dup(1);
+			if (builtins(ms, split, env) == 1 || input_last_cmd(split, ms, env) || inputx_index(split, ms))
+				exit (0);
 			if (execve(ms->path_cmd, split, refresh_env(env)) == - 1)
-				error("error exec");
+				error("error exec\n");
 			exit(0);
 		}
 		if (nb_pipe != 0)
