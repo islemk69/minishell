@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/09 15:37:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:48:30 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int is_built_in(char *str)
 {
-	if (!strncmp(str, "history\0", ft_strlen(str + 1)) 
-		|| !strncmp(str, "cd\0", ft_strlen(str + 1)) 
-		|| !strncmp(str, "export\0", ft_strlen(str + 1)) 
-		|| !strncmp(str, "pwd\0", ft_strlen(str + 1))
-		|| !strncmp(str, "unset\0", ft_strlen(str + 1))
-		|| !strncmp(str, "!!\0", ft_strlen(str + 1))
+	if (!strncmp(str, "history\0", ft_strlen(str)) 
+		|| !strncmp(str, "cd\0", ft_strlen(str)) 
+		|| !strncmp(str, "export\0", ft_strlen(str)) 
+		|| !strncmp(str, "pwd\0", ft_strlen(str))
+		|| !strncmp(str, "unset\0", ft_strlen(str))
+		|| !strncmp(str, "!!\0", ft_strlen(str))
 		|| (str[0] == '!' && str[1] != '!' && str[1] != ' '))
 	{
 		ft_printf("je suis un builtin\n");
