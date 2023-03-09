@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/08 18:18:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/09 19:31:47 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*quote(char *line)
 	return (str);
 }
 
-static void del_char(t_minishell *ms)
+static int del_char(t_minishell *ms)
 {
     int size;
     int i;
@@ -59,31 +59,23 @@ static void del_char(t_minishell *ms)
     
     i = 0;
     size = 0;
-    while (ms->line[i])
+    while (ms->line[i++])
     {
         if (ms->line[i] != 92 && ms->line[i] != ';')
             size++;
-		i++;
     }
     ms->new_line = malloc(sizeof(char) * (size + 1));
     if (!ms->new_line)
-    {
-        free(ms->new_line);
-        return ;
-    }
-    i = 0;
+        return (free(ms->new_line), 0);
+    i = -1;
     j = 0;
-    while (ms->line[i])
+    while (ms->line[++i])
     {
         if (ms->line[i] != 92 && ms->line[i] != ';')
-		{
-            ms->new_line[j] = ms->line[i];
-			j++;
-		}
-		i++;
-
+            ms->new_line[j++] = ms->line[i];
     }
     ms->new_line[j] = 0;
+	return (1);
 }
 
 void new(t_minishell *ms, char **space)
@@ -99,7 +91,7 @@ void new(t_minishell *ms, char **space)
         quot[i] = ft_strdup(quote(space[i]));
         i++;
     }
-    quot[i] = 0;
+	quot[i] = 0;
     i = 0;
     while (quot[i])
     {
@@ -114,29 +106,30 @@ void    ft_pipe(t_minishell *ms)
 {
     char	**pipe;
 	char	**space;
+	char	*tmp;
 	int		i;
-    int j = 0;
+    int		j;
 	
     pipe = ft_split(ms->new_line, '|');
 	ms->joined = (char **)malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
-	j = 0;
-    while (pipe[j])
+	j = -1;
+    while (pipe[++j])
     {
         space = ft_split(pipe[j], ' ');
         new(ms, space);
-		i = 0;
-		ms->joined[j] = NULL;
-		while (ms->parsed[i])
+		ms->joined[j] = 0;
+		i = -1;
+		while (ms->parsed[++i])
 		{
-			ms->joined[j] = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
-			ms->joined[j] = ft_strjoin_gnl(ms->joined[j], " ");
-			i++;
+			tmp = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
+			ms->joined[j] = ft_strdup(ft_strjoin_gnl(tmp, " "));
+			free(tmp);
 		}
 		ms->parsed[i] = 0;
-        j++;
+		ft_free_tab(space);
     }
 	ms->joined[j] = 0;
-	//ft_free_tab(pipe);
+	ft_free_tab(pipe);
 }
 
 void check_new_line(t_minishell *ms)
@@ -144,27 +137,22 @@ void check_new_line(t_minishell *ms)
 	char	**space;
     int i;
     
-    i = 0;
-    if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';'))
+    if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';') || ft_strchr(ms->line, '$'))
         del_char(ms);
     else
         ms->new_line = ms->line;
     if (ft_strchr(ms->new_line, '|'))
 	{
         ft_pipe(ms);
-		while (ms->joined[i])
-			i++;
 		ft_free_tab(ms->parsed);
-		ms->parsed = malloc(sizeof(char *) * (i + 1));
+		ms->parsed = malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
 		i = 0;
 		while(ms->joined[i])
 		{
-			ms->parsed[i] = ms->joined[i];
+			ms->parsed[i] = ft_strdup(ms->joined[i]);
 			i++;
 		}
-		ms->joined[i] = 0;
-		ms->parsed[i] = 0;
-		//ft_free_tab(ms->joined);
+		ft_free_tab(ms->joined);
 	}
     else
 	{

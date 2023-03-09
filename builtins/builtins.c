@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/08 15:56:06 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/09 15:37:03 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,13 +206,11 @@ int	built_in_unset(t_env **env, char **split)
 
 int builtins(t_minishell *ms, char **split, t_env **env)
 {
+	(void)ms;
 	if (input_history(split) || input_env(env, split) 
 			|| input_cd(split, env) || built_in_pwd(split) 
 			|| built_in_export(env, split) || built_in_unset(env, split))
 	{
-		free(ms->line);
-		ft_free_tab(split);
-		ms->line = NULL;
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/08 18:11:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/09 17:26:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,28 @@
 static void	start_minishell(t_minishell *ms, t_env **env)
 {
 	ms->line = NULL;
+	ms->parsed = NULL;
 	
 	while (1)
 	{
+		if (ms->line || ms->parsed != NULL)
+		{
+			ft_free_tab(ms->parsed);
+			free(ms->line);
+		}
 		ms->line = readline(PROMPT);
-		if (!ms->line[0] || only(ms->line))
+		if (is_empty(ms->line))
 			continue ;
 		check_new_line(ms);
 		if (!check_write_exit(ms))
 		{
 			free(ms->line);
+			if (ms->parsed)
+				ft_free_tab(ms->parsed);
+			lstclear(env);
 			exit(0);
 		}
-		ft_free_tab(ms->parsed);
-		free(ms->line);
-		continue ;
-		if (ms->parsed)
-			exec_cmd(ms, env);
+		exec_cmd(ms, env);
 	}
 }
 
