@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/09 19:31:47 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:30:19 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void new(t_minishell *ms, char **space)
         i++;
     }
     ms->parsed[i] = 0;
-    ft_free_tab(quot);
+    //ft_free_tab(quot);   abord 3 cmd
 }
 
 void    ft_pipe(t_minishell *ms)
@@ -122,14 +122,14 @@ void    ft_pipe(t_minishell *ms)
 		while (ms->parsed[++i])
 		{
 			tmp = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
-			ms->joined[j] = ft_strdup(ft_strjoin_gnl(tmp, " "));
-			free(tmp);
+			ms->joined[j] = ft_strjoin_gnl(tmp, " ");
+			//free(tmp);
 		}
 		ms->parsed[i] = 0;
-		ft_free_tab(space);
+		//ft_free_tab(space);
     }
 	ms->joined[j] = 0;
-	ft_free_tab(pipe);
+	//ft_free_tab(pipe);
 }
 
 void check_new_line(t_minishell *ms)
@@ -137,14 +137,16 @@ void check_new_line(t_minishell *ms)
 	char	**space;
     int i;
     
-    if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';') || ft_strchr(ms->line, '$'))
+    if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';'))
         del_char(ms);
     else
+	{
         ms->new_line = ms->line;
+	}
     if (ft_strchr(ms->new_line, '|'))
 	{
         ft_pipe(ms);
-		ft_free_tab(ms->parsed);
+		//ft_free_tab(ms->parsed);
 		ms->parsed = malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
 		i = 0;
 		while(ms->joined[i])
@@ -152,12 +154,12 @@ void check_new_line(t_minishell *ms)
 			ms->parsed[i] = ft_strdup(ms->joined[i]);
 			i++;
 		}
-		ft_free_tab(ms->joined);
+		//ft_free_tab(ms->joined);
 	}
     else
 	{
 		space = ft_split(ms->new_line, ' ');
         new(ms, space);
-		ft_free_tab(space);
+		//ft_free_tab(space);
 	}
 }

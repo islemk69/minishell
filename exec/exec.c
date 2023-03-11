@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/09 17:18:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 15:00:55 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int	check_command(t_minishell *ms, char *input_cmd)
 		free(tmp);
 		if (access(ms->path_cmd, X_OK) != -1 || is_built_in(input_cmd))
 			return (1);
-		i++;
 		free(ms->path_cmd);
+		i++;
 	}
 	return (0);
 }
@@ -76,25 +76,39 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 
 int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 {
-	int	id;
-	int	i;
-	int	save_stdin;
+	int		id;
+	int		i;
+	int		save_stdin;
 	char	**split;
+	int		cpt;
 
 	save_stdin = dup(0);
 	add_history(ms->line);
 	i = 0;
 	while (ms->parsed[i])
 	{
-		split = ft_split(ms->parsed[i], ' ');
-		if (!check_command(ms, split[0]))
+		if (ms->parsed[i][0] == '|')
 		{
-			if (dup2(save_stdin, 0) == -1)
-				error ("dup");
-			return (close(save_stdin), error(CMD_ERR), 0);
+			i++;
+			continue ;
 		}
+		split = ft_split(ms->parsed[i], ' ');
 		if (pipe(ms->fd) == -1)
-			error("pipe");	
+			error("pipe");
+		//if (!check_command(ms, split[0]))
+		//{
+		//	if (nb_pipe == 0)
+		//	{
+		//		if (dup2(save_stdin, 0) == -1)
+		//			error ("dup");
+		//		return (close(save_stdin), error(CMD_ERR), 0);
+		//	}
+		//	//free(ms->path_cmd);
+		//	//ft_free_tab(split);
+		//	i++;
+		//	nb_pipe--;
+		//}
+		check_command(ms, split[0]);
 		id = fork();
 		if (id == 0)
 		{
@@ -109,7 +123,11 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			if (builtins(ms, split, env) == 1 || input_last_cmd(split, ms, env) || inputx_index(split, ms))
 				exit (0);
 			if (execve(ms->path_cmd, split, refresh_env(env)) == - 1)
+			{
+				nb_pipe--;
+				i++;
 				error("error exec\n");
+			}
 			exit(0);
 		}
 		if (nb_pipe != 0)
@@ -122,13 +140,14 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				error ("dup");
 		close(ms->fd[0]);
 		close(ms->fd[1]);
-		free(ms->path_cmd);
-		ft_free_tab(split);
+		//free(ms->path_cmd);
+		//ft_free_tab(split);
 		i++;
+		cpt++;
 		nb_pipe--;
 	}
 	close(save_stdin);
-	wait_pid(i);
+	wait_pid(cpt);
 	return (1);
 }
 
