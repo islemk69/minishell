@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/10 16:23:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:17:31 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ char	**refresh_env(t_env **env);
 int		is_built_in(char *str);
 
 void	wait_pid(int i);
+
+int		is_token(char *str);
 
 #endif

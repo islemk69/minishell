@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 15:00:55 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:40:12 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static int	check_command(t_minishell *ms, char *input_cmd)
 	{
 		tmp = ft_strjoin(ms->path_env[i], "/");
 		ms->path_cmd = ft_strjoin(tmp, input_cmd);
-		free(tmp);
+		//free(tmp);
 		if (access(ms->path_cmd, X_OK) != -1 || is_built_in(input_cmd))
 			return (1);
-		free(ms->path_cmd);
+		//free(ms->path_cmd);
 		i++;
 	}
 	return (0);
@@ -87,11 +87,11 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	i = 0;
 	while (ms->parsed[i])
 	{
-		if (ms->parsed[i][0] == '|')
-		{
-			i++;
-			continue ;
-		}
+		//if (ms->parsed[i][0] == '|')
+		//{
+		//	i++;
+		//	continue ;
+		//}
 		split = ft_split(ms->parsed[i], ' ');
 		if (pipe(ms->fd) == -1)
 			error("pipe");
