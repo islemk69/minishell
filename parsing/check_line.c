@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:26:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 16:56:16 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,13 @@ void    ft_pipe(t_minishell *ms)
 		{
 			tmp = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
 			ms->joined[j] = ft_strjoin_gnl(tmp, " ");
-			//free(tmp);
+			free(tmp);
 		}
 		ms->parsed[i] = 0;
-		//ft_free_tab(space);
+		ft_free_tab(space);
     }
 	ms->joined[j] = 0;
-	//ft_free_tab(pipe);
+	ft_free_tab(pipe);
 }
 
 void check_new_line(t_minishell *ms)
@@ -141,7 +141,7 @@ void check_new_line(t_minishell *ms)
         del_char(ms);
     else
 	{
-        ms->new_line = ms->line;
+        ms->new_line = ft_strdup(ms->line);
 	}
     if (ft_strchr(ms->new_line, '|'))
 	{
