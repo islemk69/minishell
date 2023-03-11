@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/08 14:52:05 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:23:19 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char **refresh_env(t_env **env)
 	char **new_env;
 	int i = 0;
 	int j = 0;
-	new_env = (char **)malloc(sizeof(char *) * (lstsize(*env) + 1));
+	new_env = (char **)ft_gc_malloc(sizeof(char *) * (lstsize(*env) + 1));
 	while (head)
 	{
-		new_env[i] = (char *)malloc(sizeof(char) * (ft_strlen(head->str) + 1));
+		new_env[i] = (char *)ft_gc_malloc(sizeof(char) * (ft_strlen(head->str) + 1));
 		j = 0;
 		while (head->str[j])
 		{

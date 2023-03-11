@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/02/08 19:02:42 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:04:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdarg.h>
 # include <fcntl.h>
 # include <stdint.h>
+# include "ft_gc.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
@@ -149,5 +150,17 @@ void	ft_sort_int_tab(int *tab, int size);
 char	**ft_split2(char const *s, char c, char e);
 
 char	**ft_split3(char const *s, char c, char e, char f);
+
+int	ft_dprintf(const char *str, ...);
+
+void	format_dprintf(const char c, va_list args, int *len);
+
+void	ft_putnbr_base_dprintf(long long unsigned int nb, long long unsigned int taille, char *base, int *len);
+
+void	ft_putnbr_dprintf(int n, int *len);
+
+void	ft_putchar_dprintf(char c, int *len);
+
+void	ft_putstr_dprintf(char *str, int *len);
 
 #endif

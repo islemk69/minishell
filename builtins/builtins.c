@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/09 19:48:30 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:25:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	input_last_cmd(char **split, t_minishell *ms, t_env **env)
 		HIST_ENTRY *last_entry = history_get(history_length);
 		if (last_entry) 
 		{
-			free(ms->line);
+			//free(ms->line);
 			ms->line = ft_strdup(last_entry->line);
 			return (1);
 		}
@@ -159,7 +159,7 @@ int built_in_export(t_env **env, char **split)
 	{
 		t_env	*cell;
 		
-		char *m = malloc(sizeof(char) * (ft_strlen(split[1]) + 1));
+		char *m = ft_gc_malloc(sizeof(char) * (ft_strlen(split[1]) + 1));
 		int i = 0;
 		
 		while (split[1][i])
@@ -171,11 +171,9 @@ int built_in_export(t_env **env, char **split)
 		cell = create_cell(m);
 		if (!cell)
 		{
-			lstclear(env);
 			return (0);
 		}
 		ft_lstad_back(env, cell);
-		////free(m);
 		return (1);
 	}
 	return (0);

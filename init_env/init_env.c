@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/02/25 18:03:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:24:30 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	init_env(t_minishell *ms, char **envp, t_env **env)
 		cell = create_cell(envp[i]);
 		if (!cell)
 		{
-			lstclear(env);
 			return (0);
 		}
 		ft_lstad_back(env, cell);

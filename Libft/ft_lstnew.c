@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 13:53:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2022/11/18 11:57:46 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:09:43 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*cell;
 
-	cell = malloc(sizeof(t_list));
+	cell = ft_gc_malloc(sizeof(t_list));
 	if (!cell)
 		return (0);
 	cell->content = content;

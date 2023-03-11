@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:40:12 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:50:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ static int	check_command(t_minishell *ms, char *input_cmd)
 	{
 		tmp = ft_strjoin(ms->path_env[i], "/");
 		ms->path_cmd = ft_strjoin(tmp, input_cmd);
-		//free(tmp);
 		if (access(ms->path_cmd, X_OK) != -1 || is_built_in(input_cmd))
 			return (1);
-		//free(ms->path_cmd);
 		i++;
 	}
 	return (0);
@@ -55,7 +53,6 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 
 	if (input_last_cmd(ms->parsed, ms, env) || inputx_index(ms->parsed, ms))
 	{
-		ft_free_tab(ms->parsed);
 		check_new_line(ms);
 	}
 	if (builtins(ms, ms->parsed, env) == 1)
@@ -82,9 +79,11 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	char	**split;
 	int		cpt;
 
+	split = NULL;
 	save_stdin = dup(0);
 	add_history(ms->line);
 	i = 0;
+	cpt = 0;
 	while (ms->parsed[i])
 	{
 		//if (ms->parsed[i][0] == '|')
@@ -103,8 +102,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		//			error ("dup");
 		//		return (close(save_stdin), error(CMD_ERR), 0);
 		//	}
-		//	//free(ms->path_cmd);
-		//	//ft_free_tab(split);
 		//	i++;
 		//	nb_pipe--;
 		//}
@@ -140,8 +137,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				error ("dup");
 		close(ms->fd[0]);
 		close(ms->fd[1]);
-		//free(ms->path_cmd);
-		//ft_free_tab(split);
+
 		i++;
 		cpt++;
 		nb_pipe--;

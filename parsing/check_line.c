@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:56:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 22:36:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static int del_char(t_minishell *ms)
         if (ms->line[i] != 92 && ms->line[i] != ';')
             size++;
     }
-    ms->new_line = malloc(sizeof(char) * (size + 1));
+    ms->new_line = ft_gc_malloc(sizeof(char) * (size + 1));
     if (!ms->new_line)
-        return (free(ms->new_line), 0);
+        return (0);
     i = -1;
     j = 0;
     while (ms->line[++i])
@@ -83,8 +83,8 @@ void new(t_minishell *ms, char **space)
     int i;
     char **quot;
 
-    quot = (char**)malloc(sizeof(char *) * (ft_strlen(*space) + 1));
-	ms->parsed = (char **)malloc(sizeof(char *) * ft_strlen(*space) + 1);
+    quot = (char**)ft_gc_malloc(sizeof(char *) * (ft_strlen(*space) + 1));
+	ms->parsed = (char **)ft_gc_malloc(sizeof(char *) * ft_strlen(*space) + 1);
     i = 0;
     while (space[i])
     {
@@ -99,7 +99,6 @@ void new(t_minishell *ms, char **space)
         i++;
     }
     ms->parsed[i] = 0;
-    //ft_free_tab(quot);   abord 3 cmd
 }
 
 void    ft_pipe(t_minishell *ms)
@@ -111,7 +110,7 @@ void    ft_pipe(t_minishell *ms)
     int		j;
 	
     pipe = ft_split(ms->new_line, '|');
-	ms->joined = (char **)malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
+	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
 	j = -1;
     while (pipe[++j])
     {
@@ -122,14 +121,11 @@ void    ft_pipe(t_minishell *ms)
 		while (ms->parsed[++i])
 		{
 			tmp = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
-			ms->joined[j] = ft_strjoin_gnl(tmp, " ");
-			free(tmp);
+			ms->joined[j] = ft_strdup(ft_strjoin_gnl(tmp, " "));
 		}
 		ms->parsed[i] = 0;
-		ft_free_tab(space);
     }
 	ms->joined[j] = 0;
-	ft_free_tab(pipe);
 }
 
 void check_new_line(t_minishell *ms)
@@ -146,20 +142,17 @@ void check_new_line(t_minishell *ms)
     if (ft_strchr(ms->new_line, '|'))
 	{
         ft_pipe(ms);
-		//ft_free_tab(ms->parsed);
-		ms->parsed = malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
+		ms->parsed = ft_gc_malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
 		i = 0;
 		while(ms->joined[i])
 		{
 			ms->parsed[i] = ft_strdup(ms->joined[i]);
 			i++;
 		}
-		//ft_free_tab(ms->joined);
 	}
     else
 	{
 		space = ft_split(ms->new_line, ' ');
         new(ms, space);
-		//ft_free_tab(space);
 	}
 }

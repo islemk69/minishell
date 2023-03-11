@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:02:22 by hel-ouar          #+#    #+#             */
-/*   Updated: 2022/11/19 11:21:05 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/11 21:09:25 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_itoa(int n)
 
 	nb = n;
 	i = mallocsize(nb);
-	tab = (char *)malloc(sizeof(char) * (i + 1));
+	tab = (char *)ft_gc_malloc(sizeof(char) * (i + 1));
 	if (!tab)
 		return (NULL);
 	tab[i--] = '\0';
