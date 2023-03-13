@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/03/11 21:04:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/11 23:38:41 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,7 @@ void	ft_putnbr_dprintf(int n, int *len);
 void	ft_putchar_dprintf(char c, int *len);
 
 void	ft_putstr_dprintf(char *str, int *len);
+
+char	**ft_split_token(char const *s, char c);
 
 #endif

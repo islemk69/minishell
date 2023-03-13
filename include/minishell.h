@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 16:17:31 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/13 12:35:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,16 @@
 # define PROMPT "👨‍💻 Minishell> "
 # define ERR_PROMPT "❌ Minishell> "
 
+
+typedef struct s_env {
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}				t_env;
+
 typedef struct s_minishell
 {
+	t_env	*head_env;
 	char	**joined;
 	char	**parsed;
 	char	**path_env;
@@ -44,14 +52,9 @@ typedef struct s_minishell
 	int		flg;
 }				t_minishell;
 
-typedef struct s_env {
-	char			*str;
-	struct s_env	*next;
-}				t_env;
-
 int		check_write_exit(t_minishell *ms);
 
-int		init_env(t_minishell *ms, char **envp, t_env **env);
+int		init_env(t_minishell *ms, char **envp);
 
 int		exec_cmd(t_minishell *ms, t_env **env);
 
@@ -61,7 +64,7 @@ int		builtins(t_minishell *ms, char **split, t_env **env);
 
 char	*ft_find_path(t_env **env, char *srch);
 
-t_env	*create_cell(char *str);
+t_env	*create_cell(char *var, char *content);
 
 void	ft_lstad_back(t_env **lst, t_env *new);
 

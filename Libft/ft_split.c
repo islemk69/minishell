@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 07:34:41 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/03/11 21:10:25 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/12 12:49:09 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,6 @@ static int	ft_sizeword(const char *s, char c, int pos)
 	return (count + 1);
 }
 
-static char	**ft_free(char **tab, int j)
-{
-	int	i;
-
-	i = -1;
-	while (i++ < j)
-		free (tab[i]);
-	free(tab);
-	return (NULL);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	char	**tab;
@@ -73,7 +62,7 @@ char	**ft_split(char const *s, char c)
 			k++;
 		tab[i] = (char *)ft_gc_malloc(sizeof (char) * ft_sizeword(s, c, k));
 		if (!tab[i])
-			return (ft_free(tab, i));
+			return (NULL);
 		j = 0;
 		while (s[k] && s[k] != c)
 			tab[i][j++] = s[k++];

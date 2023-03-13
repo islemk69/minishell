@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 21:25:01 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:33:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int	input_env(t_env **env, char **split)
 	{
 		while (head)
 		{
-			ft_printf("%s\n", head->str);
+			ft_printf("%s=%s\n", head->key, head->value);
 			head = head->next;
 		}
 		return (1);
@@ -168,7 +168,7 @@ int built_in_export(t_env **env, char **split)
 			i++;
 		}
 		m[i] = 0;
-		cell = create_cell(m);
+		cell = create_cell(m, NULL);
 		if (!cell)
 		{
 			return (0);
@@ -183,19 +183,21 @@ int built_in_export(t_env **env, char **split)
 
 int	built_in_unset(t_env **env, char **split)
 {
+	(void)env;
 	if (!ft_strncmp(split[0], "unset\0", 6) && split[1])
 	{
-		t_env *occur;
-		t_env *previous;
+		// t_env *occur;
+		// t_env *previous;
 
-		occur = (*env);
-		while (ft_strncmp(occur->str, split[1], ft_strlen(split[1])))
-		{
-			previous = occur;
-			occur = occur->next;
-		}
-		occur = occur->next;
-		previous->next = occur->next;
+		// occur = (*env);
+		// while (ft_strncmp(occur->str, split[1], ft_strlen(split[1])))
+		// {
+		// 	previous = occur;
+		// 	occur = occur->next;
+		// }
+		// occur = occur->next;
+		// previous->next = occur->next;
+		// return (1);
 		return (1);
 	}
 	return (0);

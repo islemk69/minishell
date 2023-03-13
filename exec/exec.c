@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 21:50:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:30:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,15 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 
 
 	if (input_last_cmd(ms->parsed, ms, env) || inputx_index(ms->parsed, ms))
-	{
 		check_new_line(ms);
-	}
 	if (builtins(ms, ms->parsed, env) == 1)
 			return (1);
 	id = fork();
 	if (id == 0)
 	{
-		if (!check_command(ms, ms->parsed[0]))
-			return (error(CMD_ERR), 0);
+		check_command(ms, ms->parsed[0]);
 		if (execve(ms->path_cmd, ms->parsed, refresh_env(env)) == - 1)
-			error("error exec");
-		exit(0);
+			ft_dprintf("bash: %s: command not found\n", ms->parsed[0]);
 	}
 	wait(NULL);
 	wait(NULL);
@@ -123,7 +119,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			{
 				nb_pipe--;
 				i++;
-				error("error exec\n");
+				ft_dprintf("bash: %s: command not found\n", split[0]);
 			}
 			exit(0);
 		}

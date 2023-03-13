@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/11 22:36:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/13 13:43:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ void new(t_minishell *ms, char **space)
     int i;
     char **quot;
 
-    quot = (char**)ft_gc_malloc(sizeof(char *) * (ft_strlen(*space) + 1));
-	ms->parsed = (char **)ft_gc_malloc(sizeof(char *) * ft_strlen(*space) + 1);
+	i = 0;
+	while(space[i])
+		i++;
+    quot = (char**)ft_gc_malloc(sizeof(char *) * (i + 1));
+	ms->parsed = (char **)ft_gc_malloc(sizeof(char *) * (i + 1));
     i = 0;
     while (space[i])
     {
@@ -109,7 +112,7 @@ void    ft_pipe(t_minishell *ms)
 	int		i;
     int		j;
 	
-    pipe = ft_split(ms->new_line, '|');
+    pipe = ft_split_token(ms->new_line, '|');
 	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
 	j = -1;
     while (pipe[++j])
