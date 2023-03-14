@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/14 18:10:50 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:25:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,19 +143,22 @@ char **redir_first(t_minishell *ms)
 	new_tab = (char **)ft_gc_malloc(sizeof(char *) * ft_strlen_dtab(ms->parsed) + 1);
 	while (ms->parsed[i])
 	{
-		if (ms->parsed[i][0] != '<')
+		if (ms->parsed[i][0] != '<' || (ms->parsed[i][0] == '<' && !ms->parsed[i][1]))
 		{
 			i++;
 			continue ;
 		}
+		if (ms->parsed[i] == 0)
+			break ;
 		new_tab[j] = ft_strdup(ms->parsed[i]);
+		ft_printf("HAHA %s", new_tab[j]);
 		j++;
 		i++;
 	}
 	i = 0;
 	while (ms->parsed[i])
 	{
-		if (ms->parsed[i][0] == '<')
+		if (ms->parsed[i][0] == '<' && ms->parsed[i][1])
 		{
 			i++;
 			continue ;
