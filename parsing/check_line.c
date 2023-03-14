@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/14 17:29:51 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/14 18:10:50 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char **redir_first(t_minishell *ms)
 	int i = 0;
 	int j = 0;
 	
-	new_tab = (char **)ft_gc_malloc(sizeof(char *) * ft_strlen_dtab(ms->parsed));
+	new_tab = (char **)ft_gc_malloc(sizeof(char *) * ft_strlen_dtab(ms->parsed) + 1);
 	while (ms->parsed[i])
 	{
 		if (ms->parsed[i][0] != '<')
@@ -201,8 +201,10 @@ void	redirection(t_minishell *ms)
 	
 	while (ms->parsed[i])
 	{
+		ft_printf("%s\n", ms->parsed[i]);
 		if (ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
 		{
+			ft_printf("je suis passe la %d\n", i);
 			ms->parsed[i] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
 			i++;
 			j = i;
@@ -216,7 +218,9 @@ void	redirection(t_minishell *ms)
 		//if (ms->parsed[i + 1] == 0)
 		//	ms->parsed[i] = 0;
 		else
+		{
 			ms->parsed[i] = ms->parsed[i];
+		}
 		//else if (!ft_strchr(ms->parsed[i], '>'))
 		//{
 		//	ft_printf("Je suis a cet index : %d strind %s\n", i, ms->parsed[i]);
