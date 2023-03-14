@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/13 12:35:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:13:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	ft_lstad_back(t_env **lst, t_env *new);
 void	lstclear(t_env **lst);
 
 void	check_new_line(t_minishell *ms);
+
+size_t	ft_strlen_dtab(char **s);
 
 int		lstsize(t_env *lst);
 

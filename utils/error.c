@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 15:20:42 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/09 17:23:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/14 13:40:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,14 @@ int	is_empty(char *str)
 	if (str[i] == 0)
 		return (1);
 	return (0);
+}
+
+size_t	ft_strlen_dtab(char **s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
