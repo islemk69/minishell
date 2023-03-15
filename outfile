@@ -1,4 +1,21 @@
-salut
-asdsds
-asdsdsd
-asdsds
+total 6916
+drwxr-xr-x 12 ikaismou ikaismou     4096 15 mars  21:14 .
+drwxr-xr-x 10 ikaismou ikaismou     4096 15 mars  19:23 ..
+-rw-r--r--  1 ikaismou ikaismou        0 15 mars  19:23 a.out
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  20:12 builtins
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  20:12 exec
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  20:12 exit
+drwxr-xr-x  8 ikaismou ikaismou     4096 15 mars  19:23 .git
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  19:23 include
+-rw-r--r--  1 ikaismou ikaismou       49 15 mars  19:23 infile
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  20:12 init_env
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  19:23 Libft
+-rw-r--r--  1 ikaismou ikaismou     1582 15 mars  19:23 main.c
+-rw-r--r--  1 ikaismou ikaismou     2600 15 mars  20:12 main.o
+-rw-r--r--  1 ikaismou ikaismou     1583 15 mars  20:12 Makefile
+-rwxr-xr-x  1 ikaismou ikaismou    42400 15 mars  21:14 minishell
+-rw-r--r--  1 ikaismou ikaismou        0 15 mars  21:38 outfile
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  21:14 parsing
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  19:23 subject
+drwxr-xr-x  2 ikaismou ikaismou     4096 15 mars  20:12 utils
+-rw-r--r--  1 ikaismou ikaismou 10588160 15 mars  19:23 vgcore.32878

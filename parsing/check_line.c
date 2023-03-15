@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/15 17:13:19 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/15 21:14:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void    ft_pipe(t_minishell *ms)
     {
         space = ft_split(pipe[j], ' ');
         new(ms, space);
+		redirection(ms);
 		ms->joined[j] = 0;
 		i = -1;
 		while (ms->parsed[++i])
@@ -134,142 +135,7 @@ void    ft_pipe(t_minishell *ms)
 	ms->joined[j] = 0;
 }
 
-char **redir_first(t_minishell *ms)
-{
-	char **new_tab;
-	int i = 0;
-	int j = 0;
-	
-	new_tab = (char **)ft_gc_malloc(sizeof(char *) * ft_strlen_dtab(ms->parsed) + 1);
-	while (ms->parsed[i])
-	{
-		if (ms->parsed[i][0] != '<' || (ms->parsed[i][0] == '<' && !ms->parsed[i][1]))
-		{
-			i++;
-			continue ;
-		}
-		if (ms->parsed[i] == 0)
-			break ;
-		new_tab[j] = ft_strdup(ms->parsed[i]);
-		j++;
-		i++;
-	}
-	i = 0;
-	while (ms->parsed[i])
-	{
-		if (ms->parsed[i][0] == '<' && ms->parsed[i][1])
-		{
-			i++;
-			continue ;
-		}
-		new_tab[j] = ft_strdup(ms->parsed[i]);
-		j++;
-		i++;
-	}
-	new_tab[j] = 0;
-	return (new_tab);
-}
 
-char	*ft_strdup_token(const char *s1, char c)
-{
-	char	*ptr;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 1;
-	while (s1[i])
-		i++;
-	ptr = (void *)ft_gc_malloc(sizeof(const char) * (i + 2));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	ptr[0] = c;
-	i = 0;
-	while (s1[i])
-	{
-		ptr[j] = s1[i];
-		i++;
-		j++;
-	}
-	ptr[j] = '\0';
-	return (ptr);
-}
-
-char	**ft_strdup_dtab(char **s1)
-{
-	char	**ptr;
-	int		i;
-
-	while (s1[i])
-		i++;
-	ptr = (char **)ft_gc_malloc(sizeof(const char) * (i + 1));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		ptr[i] = ft_strdup(s1[i]);
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-
-
-void	redirection(t_minishell *ms)
-{
-	int i = 0;
-	//int flg = 0;
-	int j = 0;
-	//char **split_token;
-	
-	while (ms->parsed[i])
-	{
-		ft_printf("%s\n", ms->parsed[i]);
-		if (ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-		{
-			//flg = 1;
-			ft_printf("je suis passe la %d\n", i);
-			ms->parsed[i] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
-			j = i + 1;
-			while (ms->parsed[j + 1] != 0)
-			{
-				ms->parsed[j] = ms->parsed[j + 1];
-				j++;
-			}
-			ms->parsed[j] = 0;
-		}
-		i++;
-	}
-	ms->parsed[i] = 0;
-	//i = 0;
-	//while (ms->parsed[i])
-	//{
-	//	if (ft_strchr(ms->parsed[i], '<') && ms->parsed[i][0] != '<')
-	//	{
-	//		ft_printf("JE SUIS LA \n");
-	//		split_token = ft_split(ms->parsed[i], '<');
-	//		j = 0;
-	//		ms->parsed[i] = ft_strdup(split_token[j]);
-	//		ft_printf("PARSED %s\n", ms->parsed[i]);
-	//		j++;
-	//		i++;
-	//		while (split_token[j])
-	//		{
-	//			ms->parsed[i] = ft_strdup_token(split_token[j], '<');
-	//			ft_printf("PARSED %s\n", ms->parsed[i]);
-	//			i++;
-	//			j++;
-	//		}
-	//	}
-	//	i++;
-	//}
-	//ms->parsed[i] = 0;
-	ms->parsed = redir_first(ms);
-	ft_printf("_____________________________________\n");
-}
 
 void check_new_line(t_minishell *ms)
 {
