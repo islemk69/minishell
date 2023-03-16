@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/15 22:49:30 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:33:47 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,49 @@ int count_pipe(t_minishell *ms)
 		i++;
 	}
 	return (pipe);
-} 
+}
+
+char	**redirection_verif(t_minishell *ms)
+{
+	int i;
+	char	**realloc;
+	int		size;
+	int		j;
+
+	j = 0;
+	size = 0;
+	i = 0;
+	while (ms->parsed[size])
+		size++;
+	while (ms->parsed[i] && ms->parsed[i][0] == '<')
+		i++;
+	i--;
+	//ft_printf("derniere redirection %s\n", ms->parsed[i]);
+	ms->infile = open(ms->parsed[i] + 1, O_RDONLY);
+	if (ms->infile < 0)
+		ft_printf("error infile");
+	if (dup2(ms->infile, 0) == -1)
+		error ("dup");
+	// int k = size - i;
+	// ft_printf("new size = %d\n", k);
+	realloc = ft_gc_malloc(sizeof(char *) * (size - i));
+	i++;
+	//ft_printf("celui la %s\n", ms->parsed[i]);
+	while (ms->parsed[i])
+	{
+		realloc[j] = ft_strdup(ms->parsed[i]);
+		//ft_printf("celui la %s\n", realloc[j]);
+		j++;
+		i++;
+	}
+	realloc[j] = 0;
+	return (realloc);
+}
 
 int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int		id;
-
+	char	**str;
 
 	if (input_last_cmd(ms->parsed, ms, env) || inputx_index(ms->parsed, ms))
 		check_new_line(ms);
@@ -58,9 +95,13 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	id = fork();
 	if (id == 0)
 	{
-		check_command(ms, ms->parsed[0]);
-		if (execve(ms->path_cmd, ms->parsed, refresh_env(env)) == - 1)
-			ft_dprintf("bash: %s: command not found\n", ms->parsed[0]);
+		if (ms->parsed[0][0] == '<')
+			str = redirection_verif(ms);
+		else 
+			str = ms->parsed;
+		check_command(ms, str[0]);
+		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
+			ft_dprintf("bash: %s: command not found\n", str[0]);
 	}
 	wait(NULL);
 	wait(NULL);

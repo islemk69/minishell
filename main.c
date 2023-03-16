@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/15 22:49:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/16 16:22:32 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	start_minishell(t_minishell *ms)
 	
 	while (1)
 	{
+		// ft_printf("okok");
 		ms->line = readline(PROMPT);
 		if (is_empty(ms->line))
 			continue ;
@@ -32,7 +33,7 @@ static int	start_minishell(t_minishell *ms)
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
 		free(ms->line);
-		continue ;
+		//continue ;
 		exec_cmd(ms, &ms->head_env);
 	}
 }

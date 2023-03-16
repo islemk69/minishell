@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/13 13:33:37 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/16 13:52:40 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int is_built_in(char *str)
 {
-	if (!strncmp(str, "history\0", ft_strlen(str)) 
-		|| !strncmp(str, "cd\0", ft_strlen(str)) 
-		|| !strncmp(str, "export\0", ft_strlen(str)) 
-		|| !strncmp(str, "pwd\0", ft_strlen(str))
-		|| !strncmp(str, "unset\0", ft_strlen(str))
-		|| !strncmp(str, "!!\0", ft_strlen(str))
+	if (!ft_strncmp(str, "history\0", ft_strlen(str)) 
+		|| !ft_strncmp(str, "cd\0", ft_strlen(str)) 
+		|| !ft_strncmp(str, "export\0", ft_strlen(str)) 
+		|| !ft_strncmp(str, "pwd\0", ft_strlen(str))
+		|| !ft_strncmp(str, "unset\0", ft_strlen(str))
+		|| !ft_strncmp(str, "!!\0", ft_strlen(str))
 		|| (str[0] == '!' && str[1] != '!' && str[1] != ' '))
 	{
 		ft_printf("je suis un builtin\n");
