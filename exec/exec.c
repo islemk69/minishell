@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/16 16:52:34 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/17 15:58:13 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ char	**redirection_verif(t_minishell *ms, char **tab)
 	//ft_printf("derniere redirection %s\n", tab[i]);
 	ms->infile = open(tab[i] + 1, O_RDONLY);
 	if (ms->infile < 0)
-		ft_printf("error infile");
+	{
+		ft_dprintf("bash: %s: No such file or directory\n", ms->parsed[i]);
+		exit (0);
+	}
 	if (dup2(ms->infile, 0) == -1)
 		error ("dup");
 	// int k = size - i;
@@ -179,7 +182,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				error ("dup");
 		close(ms->fd[0]);
 		close(ms->fd[1]);
-
 		i++;
 		cpt++;
 		nb_pipe--;

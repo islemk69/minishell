@@ -1,73 +1,84 @@
 #include "libft.h"
 
-static int	ft_countword(const char *s, char c)
+static int count_words(char *input)
 {
-	int	i;
-	int	j;
+    int count = 0;
+    int in_double_quote = 0;
+    int in_single_quote = 0;
+    char *c = input;
+    while (*c != '\0') {
+        if (*c == '\"' && !in_single_quote) {
+            in_double_quote = !in_double_quote;
+        } else if (*c == '\'' && !in_double_quote) {
+            in_single_quote = !in_single_quote;
+        } else if (*c == '|' && !in_double_quote && !in_single_quote) {
+            count++;
+        }
+        c++;
+    }
+    return count + 1;
+}
 
-	j = 0;
+static char *next_pipe(char *input)
+{
+    int in_double_quote = 0;
+    int in_single_quote = 0;
+    char *c = input;
+    while (*c != '\0') {
+        if (*c == '\"' && !in_single_quote) {
+            in_double_quote = !in_double_quote;
+        } else if (*c == '\'' && !in_double_quote) {
+            in_single_quote = !in_single_quote;
+        } else if (*c == '|' && !in_double_quote && !in_single_quote) {
+            return c;
+        }
+        c++;
+    }
+    return NULL;
+}
+
+static int word_length(char *start, char *end)
+{
+    int in_quote = 0;
+    char *c = start;
+    while (c < end) {
+        if (*c == '\"') {
+            in_quote = !in_quote;
+        }
+        c++;
+    }
+    return end - start - (in_quote ? 2 : 0);
+}
+
+
+char **ft_split_token(char *input)
+{
+    int count;
+	char *end;
+	int i;
+
 	i = 0;
-	while (s[i])
+	count = count_words(input);
+    char **split = (char **)malloc(sizeof(char *) * (count + 1));
+    if (!split)
 	{
-		if ((s[i] == c || s[i] == '\0') == 0
-			&& (s[i + 1] == c || s[i + 1] == '\0') == 1)
-			j++;
-		i++;
+        return (NULL);
 	}
-	return (j + 1);
-}
-
-static int	ft_sizeword(const char *s, char c, int pos)
-{
-	int	count;
-
-	count = 0;
-	while (s[pos])
-	{
-		if (s[pos] == c)
-			return (count + 1);
-		pos++;
-		count++;
-	}
-	return (count + 1);
-}
-
-static char	**ft_free(char **tab, int j)
-{
-	int	i;
-
-	i = -1;
-	while (i++ < j)
-		free (tab[i]);
-	free(tab);
-	return (NULL);
-}
-
-char	**ft_split_token(char const *s, char c)
-{
-	char	**tab;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	k = 0;
-	tab = (char **)ft_gc_malloc(sizeof(char *) * ft_countword(s, c));
-	if (!tab)
-		return (NULL);
-	while (s[k] && i < ft_countword(s, c) - 1)
-	{
-		while (s[k] == c)
-			k++;
-		tab[i] = (char *)ft_gc_malloc(sizeof (char) * ft_sizeword(s, c, k));
-		if (!tab[i])
-			return (ft_free(tab, i));
-		j = 0;
-		while (s[k] && s[k] != c)
-			tab[i][j++] = s[k++];
-		tab[i][j] = '\0';
-		i++;
-	}
-	tab[i] = 0;
-	return (tab);
+   	end = next_pipe(input);
+    while (end != NULL) {
+        split[i] = malloc(word_length(input, end) + 1);
+        if (!split[i]) {
+            return NULL;
+        }
+        ft_strncpy(split[i], input, end - input);
+        split[i][end - input] = '\0';
+        i++;
+        input = end + 1;
+        end = next_pipe(input);
+    }
+    split[i] = ft_strdup(input);
+    if (!split[i])
+        return NULL;
+    split[i + 1] = NULL;
+    return (split);
 }

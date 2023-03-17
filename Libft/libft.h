@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/03/16 13:53:52 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/16 20:17:25 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void	ft_putchar_dprintf(char c, int *len);
 
 void	ft_putstr_dprintf(char *str, int *len);
 
-char	**ft_split_token(char const *s, char c);
+char **ft_split_token(char *input);
+
+char    *ft_strncpy(char *dest, const char *src, size_t n);
 
 #endif

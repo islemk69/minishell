@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/15 21:14:06 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/17 14:53:52 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void    ft_pipe(t_minishell *ms)
 	int		i;
     int		j;
 	
-    pipe = ft_split_token(ms->new_line, '|');
+    pipe = ft_split_token(ms->new_line);
 	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
 	j = -1;
     while (pipe[++j])
@@ -145,9 +145,7 @@ void check_new_line(t_minishell *ms)
     if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';'))
         del_char(ms);
     else
-	{
         ms->new_line = ft_strdup(ms->line);
-	}
     if (ft_strchr(ms->new_line, '|'))
 	{
         ft_pipe(ms);
