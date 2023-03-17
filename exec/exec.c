@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 16:43:04 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:54:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 	ms->infile = open(tab[i] + 1, O_RDONLY);
 	if (ms->infile < 0)
 	{
-		ft_dprintf(""RED"bash: %s: No such file or directory\n", ms->parsed[i]);
+		ft_dprintf(""RED"bash: %s: No such file or directory"CYAN"\n", ms->parsed[i]);
 		exit (0);
 	}
 	if (dup2(ms->infile, 0) == -1)
@@ -99,10 +99,13 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 			str = ms->parsed;
 		check_command(ms, str[0]);
 		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
-			ft_dprintf(""RED"bash: %s: command not found\n", str[0]);
+		{
+			ft_dprintf(""RED"bash: %s: command not found"CYAN"\n", str[0]);
+			exit(0);
+		}
 	}
 	wait(NULL);
-	wait(NULL);
+	//wait(NULL);
 	return (1);
 }
 
@@ -147,7 +150,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			{
 				nb_pipe--;
 				i++;
-				ft_dprintf(""RED"bash: %s: command not found\n", str[0]);
+				ft_dprintf(""RED"bash: %s: command not found"CYAN"\n", str[0]);
 			}
 			exit(0);
 		}

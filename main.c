@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 16:42:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:51:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc > 1)
-		return (ft_dprintf(""RED"Error : Number of Arguments\n"), 0);
+		return (ft_dprintf(""RED"Error : Number of Arguments\n"CYAN""), 0);
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))
 		return (ft_gc_free_all(), 0);
