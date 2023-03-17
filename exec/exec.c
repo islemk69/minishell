@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 15:58:13 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:43:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int count_pipe(t_minishell *ms)
 	return (pipe);
 }
 
-char	**redirection_verif(t_minishell *ms, char **tab)
+char	**check_redir(t_minishell *ms, char **tab)
 {
 	int i;
 	char	**realloc;
@@ -61,24 +61,19 @@ char	**redirection_verif(t_minishell *ms, char **tab)
 	while (tab[i] && tab[i][0] == '<')
 		i++;
 	i--;
-	//ft_printf("derniere redirection %s\n", tab[i]);
 	ms->infile = open(tab[i] + 1, O_RDONLY);
 	if (ms->infile < 0)
 	{
-		ft_dprintf("bash: %s: No such file or directory\n", ms->parsed[i]);
+		ft_dprintf(""RED"bash: %s: No such file or directory\n", ms->parsed[i]);
 		exit (0);
 	}
 	if (dup2(ms->infile, 0) == -1)
 		error ("dup");
-	// int k = size - i;
-	// ft_printf("new size = %d\n", k);
 	realloc = ft_gc_malloc(sizeof(char *) * (size - i));
 	i++;
-	//ft_printf("celui la %s\n", tab[i]);
 	while (tab[i])
 	{
 		realloc[j] = ft_strdup(tab[i]);
-		//ft_printf("celui la %s\n", realloc[j]);
 		j++;
 		i++;
 	}
@@ -99,12 +94,12 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	if (id == 0)
 	{
 		if (ms->parsed[0][0] == '<')
-			str = redirection_verif(ms, ms->parsed);
+			str = check_redir(ms, ms->parsed);
 		else 
 			str = ms->parsed;
 		check_command(ms, str[0]);
 		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
-			ft_dprintf("bash: %s: command not found\n", str[0]);
+			ft_dprintf(""RED"bash: %s: command not found\n", str[0]);
 	}
 	wait(NULL);
 	wait(NULL);
@@ -127,29 +122,13 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	cpt = 0;
 	while (ms->parsed[i])
 	{
-		//if (ms->parsed[i][0] == '|')
-		//{
-		//	i++;
-		//	continue ;
-		//}
 		split = ft_split(ms->parsed[i], ' ');
 		if (pipe(ms->fd) == -1)
 			error("pipe");
 		if (split[0][0] == '<')
-			str = redirection_verif(ms, split);
+			str = check_redir(ms, split);
 		else 
 			str = split;
-		//if (!check_command(ms, split[0]))
-		//{
-		//	if (nb_pipe == 0)
-		//	{
-		//		if (dup2(save_stdin, 0) == -1)
-		//			error ("dup");
-		//		return (close(save_stdin), error(CMD_ERR), 0);
-		//	}
-		//	i++;
-		//	nb_pipe--;
-		//}
 		check_command(ms, str[0]);
 		id = fork();
 		if (id == 0)
@@ -168,7 +147,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			{
 				nb_pipe--;
 				i++;
-				ft_dprintf("bash: %s: command not found\n", str[0]);
+				ft_dprintf(""RED"bash: %s: command not found\n", str[0]);
 			}
 			exit(0);
 		}

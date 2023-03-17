@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/16 14:20:19 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/17 16:42:14 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define PURPLE "\033[1;35m"
+# define CYAN "\033[1;36m"
+# define YELLOW "\033[1;33m"
+#define WHITE "\033[1;37m"
+#define RED "\033[1;31m"
 # define CMD_ERR "Error : Command not found\n"
-# define PROMPT "👨‍💻 Minishell> "
+# define PROMPT "👨‍💻 "CYAN"Minishell> "WHITE""
 # define ERR_PROMPT "❌ Minishell> "
+
 
 
 typedef struct s_env {
