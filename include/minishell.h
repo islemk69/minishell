@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 13:06:41 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 15:08:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,26 @@
 # define PURPLE "\033[1;35m"
 # define CYAN "\033[1;36m"
 # define YELLOW "\033[1;33m"
-#define WHITE "\033[1;37m"
-#define RED "\033[1;31m"
+# define WHITE "\033[1;37m"
+# define RED "\033[1;31m"
 # define CMD_ERR "Error : Command not found\n"
 # define PROMPT ""WHITE"\n42@guest>"
 # define ERR_PROMPT "❌ Minishell> "
-# define COLOR "WHITE"
 
 #define SQUOTE 39
 #define DQUOTE 34
 #define DOLLAR 36
 #define TILDE 126
-
+#define SHELLSCRIPT "\
+#/bin/bash \n\
+echo -e \""CYAN"       .__       .__       "YELLOW".__           "RED"\
+.__  .__   \n"CYAN"  _____ |__| ____ |__| "YELLOW"_____|  |__   ____ "\
+RED"|  | |  |  \n"CYAN" /     \\|  |/    \\|  |"YELLOW"/  ___/  |  \
+\\_/ __ \\"RED"|  | |  |  \n"CYAN"|  Y Y  \\  |   |  \\  |"YELLOW"\\___ \
+\\|   Y  \\  ___/"RED"|  |_|  |__\n"CYAN"|__|_|  /__|___|  /__/"YELLOW"\
+____  >___|  /\\___  "RED">____/____/\n"CYAN"      \\/        \\/      \
+  "YELLOW"\\/     \\/     \\/           \" \n\
+"
 
 
 typedef struct s_env {
