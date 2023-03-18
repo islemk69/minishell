@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 19:42:34 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:23:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char **realloc_redir(t_minishell *ms)
 		i++;
 	}
 	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
-	ft_printf("SIZE %d\n", size);
 	if (!realloc)
 		return (NULL);
 	return (realloc);
@@ -109,12 +108,10 @@ char **redir_first(char **realloc)
 			i++;
 			continue;
 		}
-		ft_printf("je suis passe\n");
 		new_tab[j] = ft_strdup(realloc[i]);
 		j++;
 		i++;
 	}
-	ft_printf("INDEX %d\n", i);
 	new_tab[j] = 0;
 	return (new_tab);
 }
@@ -168,5 +165,4 @@ void redirection(t_minishell *ms)
 	// }
 	// ms->parsed[i] = 0;
 	ms->parsed = redir_first(realloc);
-	ft_printf("_____________________________________\n");
 }

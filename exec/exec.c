@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 12:56:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 16:19:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int count_pipe(t_minishell *ms)
 	pipe = 0;
 	while (ms->line[i])
 	{
-		if (ms->line[i] == '|')
+		if (ms->line[i] == '|' && ms->line[i - 1] != '\"' && ms->line[i + 1] != '\"')
 			pipe++;
 		i++;
 	}
@@ -64,7 +64,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 	ms->infile = open(tab[i] + 1, O_RDONLY);
 	if (ms->infile < 0)
 	{
-		ft_dprintf(""RED"bash: %s: No such file or directory"CYAN"\n", ms->parsed[i]);
+		ft_dprintf(""RED"bash: %s: No such file or directory\n", ms->parsed[i]);
 		exit (0);
 	}
 	if (dup2(ms->infile, 0) == -1)
@@ -145,8 +145,10 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			}
 			else
 				dup(1);
-			if (builtins(ms, str, env) == 1 || input_last_cmd(str, ms, env) || inputx_index(str, ms))
+			if (builtins(ms, str, env) == 1)
 				exit (0);
+			input_last_cmd(str, ms, env);
+			inputx_index(str, ms);
 			if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
 			{
 				nb_pipe--;

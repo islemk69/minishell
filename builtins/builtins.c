@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/16 13:52:40 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/18 16:00:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	input_last_cmd(char **split, t_minishell *ms, t_env **env)
 		HIST_ENTRY *last_entry = history_get(history_length);
 		if (last_entry) 
 		{
-			//free(ms->line);
+			free(ms->line);
 			ms->line = ft_strdup(last_entry->line);
 			return (1);
 		}
