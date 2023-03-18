@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 16:54:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 12:56:40 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		check_command(ms, str[0]);
 		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
 		{
-			ft_dprintf(""RED"bash: %s: command not found"CYAN"\n", str[0]);
+			ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", str[0]);
 			exit(0);
 		}
 	}
@@ -128,14 +128,15 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		split = ft_split(ms->parsed[i], ' ');
 		if (pipe(ms->fd) == -1)
 			error("pipe");
-		if (split[0][0] == '<')
-			str = check_redir(ms, split);
-		else 
-			str = split;
-		check_command(ms, str[0]);
+	
 		id = fork();
 		if (id == 0)
 		{
+			if (split[0][0] == '<')
+				str = check_redir(ms, split);
+			else 
+				str = split;
+			check_command(ms, str[0]);
 			close(ms->fd[0]);
 			if (nb_pipe != 0)
 			{

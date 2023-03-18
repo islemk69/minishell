@@ -6,17 +6,23 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 16:51:06 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 13:27:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
+	#define SHELLSCRIPT "\
+	#/bin/bash \n\
+	echo -e \""PURPLE"        .__       .__       .__           .__  .__   \n  _____ |__| ____ |__| _____|  |__   ____ |  | |  |  \n /     \\|  |/    \\|  |/  ___/  |  \\_/ __ \\|  | |  |  \n|  Y Y  \\  |   |  \\  |\\___ \\|   Y  \\  ___/|  |_|  |__\n|__|_|  /__|___|  /__/____  >___|  /\\___  >____/____/\n      \\/        \\/        \\/     \\/     \\/           \" \n\
+	"
+
 static int	start_minishell(t_minishell *ms)
 {
 	ms->line = NULL;
 	ms->parsed = NULL;
-	
+
+    system(SHELLSCRIPT);
 	while (1)
 	{
 		// ft_printf("okok");

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/15 20:38:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/17 19:42:34 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@
 // 	return (ptr);
 // }
 
-char	*ft_strdup_token(const char *s1, char c)
+
+
+char *ft_strdup_token(const char *s1, char c)
 {
-	char	*ptr;
-	int		i;
-	int		j;
+	char *ptr;
+	int i;
+	int j;
 
 	i = 0;
 	j = 1;
@@ -58,7 +60,7 @@ char	*ft_strdup_token(const char *s1, char c)
 	return (ptr);
 }
 
-char  **realloc_redir(t_minishell *ms)
+char **realloc_redir(t_minishell *ms)
 {
 	int i = 0;
 	int size = 0;
@@ -81,20 +83,19 @@ char  **realloc_redir(t_minishell *ms)
 	return (realloc);
 }
 
-
 char **redir_first(char **realloc)
 {
 	char **new_tab;
 	int i = 0;
 	int j = 0;
-	
+
 	new_tab = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(realloc) + 1));
 	while (realloc[i])
 	{
 		if (realloc[i][0] != '<' || (realloc[i][0] == '<' && !realloc[i][1]))
 		{
 			i++;
-			continue ;
+			continue;
 		}
 		new_tab[j] = ft_strdup(realloc[i]);
 		j++;
@@ -106,7 +107,7 @@ char **redir_first(char **realloc)
 		if (realloc[i][0] == '<' && realloc[i][1])
 		{
 			i++;
-			continue ;
+			continue;
 		}
 		ft_printf("je suis passe\n");
 		new_tab[j] = ft_strdup(realloc[i]);
@@ -118,15 +119,15 @@ char **redir_first(char **realloc)
 	return (new_tab);
 }
 
-void	redirection(t_minishell *ms)
+void redirection(t_minishell *ms)
 {
 	int i = 0;
-	//int flg = 0;
-	//int j = 0;
+	// int flg = 0;
+	// int j = 0;
 	char **realloc;
-	//char **split_token;
+	// char **split_token;
 	int k = 0;
-	
+
 	realloc = realloc_redir(ms);
 	while (ms->parsed[i])
 	{
@@ -143,8 +144,8 @@ void	redirection(t_minishell *ms)
 	}
 	realloc[k] = 0;
 	ms->parsed = realloc;
-	//i = 0;
-	//while (ms->parsed[i])
+	// i = 0;
+	// while (ms->parsed[i])
 	//{
 	//	if (ft_strchr(ms->parsed[i], '<') && ms->parsed[i][0] != '<')
 	//	{
@@ -164,8 +165,8 @@ void	redirection(t_minishell *ms)
 	//		}
 	//	}
 	//	i++;
-	//}
-	//ms->parsed[i] = 0;
+	// }
+	// ms->parsed[i] = 0;
 	ms->parsed = redir_first(realloc);
 	ft_printf("_____________________________________\n");
 }

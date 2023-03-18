@@ -6,11 +6,37 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/17 14:53:52 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 11:48:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+// int is_pipe(char *str)
+// {
+// 	int i;
+// 	int pipe;
+
+// 	pipe = 0;
+// 	i = 0;
+// 	while (str[i])
+// 	{
+// 		if ((str[i] == '|' && str[i - 1] != '\"' || str[i] == '|') ||  str[i - 1] != SQUOTE && str[i + 1] != '\"'))
+// 		{
+// 			ft_printf("INDEX OU PIPE++ %d\n", i);
+// 			pipe++;
+// 		}
+// 		// else if ((str[i] == '|' && str[i - 1] != SQUOTE && str[i + 1] != SQUOTE))
+// 		// {
+// 		// 	pipe++;
+// 		// }
+// 		i++;
+// 	}
+// 	ft_printf("NOMBRE DE PIPE %d", pipe);
+// 	if (pipe > 0)
+// 		return (1);
+// 	return (0);
+// }
 
 char	*quote_2(char *line, char *str)
 {
@@ -148,6 +174,7 @@ void check_new_line(t_minishell *ms)
         ms->new_line = ft_strdup(ms->line);
     if (ft_strchr(ms->new_line, '|'))
 	{
+		ft_printf("jesuispasasdsadsaser\n");
         ft_pipe(ms);
 		ms->parsed = ft_gc_malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
 		i = 0;
