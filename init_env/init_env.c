@@ -6,11 +6,40 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/13 13:10:52 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:28:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+char* strcpy_no_null(char* dest, const char* src) {
+    char* ret = dest;
+    while (*src != '\0') {
+        *dest = *src;
+        dest++;
+        src++;
+    }
+    return ret;
+}
+
+char *get_prompt(t_minishell *ms, char *envp)
+{
+	char *prompt;
+	int i = 3;
+	
+	prompt = envp + 5;
+	ms->prompt = ft_gc_malloc(sizeof(char) * (ft_strlen(prompt)) + 5);
+	ms->prompt = strcpy_no_null(ms->prompt, "42@");
+	while (*prompt)
+	{
+		ms->prompt[i] = *prompt;
+		i++;
+		prompt++;
+	}
+	ms->prompt[i] = '>';
+	i++;
+	ms->prompt[i] = 0;
+}
 
 char	*get_key(char *line)
 {
@@ -75,7 +104,6 @@ int	init_env(t_minishell *ms, char **envp)
 {
 	char	*key;
 	char	*value;
-	(void)ms;
 	char *path;
 	int		i;
 
@@ -83,6 +111,8 @@ int	init_env(t_minishell *ms, char **envp)
 	ms->head_env = NULL;
 	while (envp[i])
 	{
+		if (!ft_strncmp(envp[i], "USER=", 5))
+			get_prompt(ms, envp[i]);
 		key = get_key(envp[i]);
 		value = get_value(envp[i]);
 		fill_list(&ms->head_env, key, value);

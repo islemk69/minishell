@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 16:22:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 20:42:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ static int	start_minishell(t_minishell *ms)
 	while (1)
 	{
 		// ft_printf("okok");
-		ms->line = readline(PROMPT);
+		ms->line = readline(ms->prompt);
 		if (is_empty(ms->line))
 			continue ;
 		check_new_line(ms);
 		add_history(ms->line);
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
+		int i = 0;
+		while (ms->parsed[i])
+		{
+			ft_printf("%s\n", ms->parsed[i]);
+			i++;
+		}
 		exec_cmd(ms, &ms->head_env);
 		free(ms->line);
 	}

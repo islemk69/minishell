@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 15:08:04 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/18 18:02:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define WHITE "\033[1;37m"
 # define RED "\033[1;31m"
 # define CMD_ERR "Error : Command not found\n"
-# define PROMPT ""WHITE"\n42@guest>"
+# define PROMPT "42@guest> "
 # define ERR_PROMPT "❌ Minishell> "
 
 #define SQUOTE 39
@@ -43,7 +43,7 @@ RED"|  | |  |  \n"CYAN" /     \\|  |/    \\|  |"YELLOW"/  ___/  |  \
 \\_/ __ \\"RED"|  | |  |  \n"CYAN"|  Y Y  \\  |   |  \\  |"YELLOW"\\___ \
 \\|   Y  \\  ___/"RED"|  |_|  |__\n"CYAN"|__|_|  /__|___|  /__/"YELLOW"\
 ____  >___|  /\\___  "RED">____/____/\n"CYAN"      \\/        \\/      \
-  "YELLOW"\\/     \\/     \\/           \" \n\
+  "YELLOW"\\/     \\/     \\/      "WHITE"     \" \n\
 "
 
 
