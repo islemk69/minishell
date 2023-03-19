@@ -59,14 +59,14 @@ char **ft_split_token(char *input)
 
 	i = 0;
 	count = count_words(input);
-    char **split = (char **)malloc(sizeof(char *) * (count + 1));
+    char **split = (char **)ft_gc_malloc(sizeof(char *) * (count + 1));
     if (!split)
 	{
         return (NULL);
 	}
    	end = next_pipe(input);
     while (end != NULL) {
-        split[i] = malloc(word_length(input, end) + 1);
+        split[i] = ft_gc_malloc(word_length(input, end) + 1);
         if (!split[i]) {
             return NULL;
         }

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 16:23:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/19 14:26:10 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,21 @@ char **realloc_redir(t_minishell *ms)
 			size++;
 			i++;
 		}
+		else if (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+		{
+			size++;
+			i++;
+		}
+		else if (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
+		{
+			size++;
+			i++;
+		}
+		else if (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+		{
+			size++;
+			i++;
+		}
 		else
 			size++;
 		i++;
@@ -103,7 +118,19 @@ char **redir_first(char **realloc)
 	i = 0;
 	while (realloc[i])
 	{
-		if (realloc[i][0] == '<' && realloc[i][1])
+		if (realloc[i][0] != '>' || (realloc[i][0] == '>' && !realloc[i][1]))
+		{
+			i++;
+			continue;
+		}
+		new_tab[j] = ft_strdup(realloc[i]);
+		j++;
+		i++;
+	}
+	i = 0;
+	while (realloc[i])
+	{
+		if ((realloc[i][0] == '<' && realloc[i][1]) || (realloc[i][0] == '>' && realloc[i][i]))
 		{
 			i++;
 			continue;
@@ -128,7 +155,10 @@ void redirection(t_minishell *ms)
 	realloc = realloc_redir(ms);
 	while (ms->parsed[i])
 	{
-		if (ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
+		if ((ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<')) 
+			|| (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<')))
 		{
 			realloc[k] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
 			i += 2;
