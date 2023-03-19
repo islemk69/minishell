@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/19 17:43:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:58:00 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char **redir_first(char **realloc)
 	i = 0;
 	while (realloc[i])
 	{
-		if ((realloc[i][0] == '<' && realloc[i][1]) || (realloc[i][0] == '>' && realloc[i][i]))
+		if ((realloc[i][0] == '<' && realloc[i][1]) || (realloc[i][0] == '>' && realloc[i][1]))
 		{
 			i++;
 			continue;
@@ -145,7 +145,8 @@ int check_double_token(char **str)
 	
 	while (str[i])
 	{
-		if (is_token(str[i][ft_strlen(str[i]) - 1]) && is_token(str[i + 1][0]))
+		if ((is_token(str[i][0]) && !str[i + 1]) 
+			|| (is_token(str[i][ft_strlen(str[i]) - 1]) && is_token(str[i + 1][0])))
 			return (0);
 		i++;
 	}
