@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 21:56:22 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:48:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void new(t_minishell *ms, char **space)
     ms->parsed[i] = 0;
 }
 
-void    ft_pipe(t_minishell *ms)
+int   ft_pipe(t_minishell *ms)
 {
     char	**pipe;
 	char	**space;
@@ -131,6 +131,8 @@ void    ft_pipe(t_minishell *ms)
     int		j;
 	
     pipe = ft_split_token(ms->new_line);
+	if (!pipe)
+		return(0);
 	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
 	j = -1;
     while (pipe[++j])
@@ -148,11 +150,12 @@ void    ft_pipe(t_minishell *ms)
 		ms->parsed[i] = 0;
     }
 	ms->joined[j] = 0;
+	return(1);
 }
 
 
 
-void check_new_line(t_minishell *ms)
+int check_new_line(t_minishell *ms)
 {
 	char	**space;
     int i;
@@ -163,7 +166,8 @@ void check_new_line(t_minishell *ms)
         ms->new_line = ft_strdup(ms->line);
     if (is_pipe(ms->new_line))
 	{
-        ft_pipe(ms);
+		if (!ft_pipe(ms))
+        	return (0);
 		ms->parsed = ft_gc_malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
 		i = 0;
 		while(ms->joined[i])
@@ -176,6 +180,8 @@ void check_new_line(t_minishell *ms)
 	{
 		space = ft_split(ms->new_line, ' ');
         new(ms, space);
-		redirection(ms);
+		if (!redirection(ms))
+			return (0);
 	}
+	return (1);
 }

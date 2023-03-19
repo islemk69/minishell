@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/19 14:26:10 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:43:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,11 @@ char **realloc_redir(t_minishell *ms)
 	char **realloc;
 	while (ms->parsed[i])
 	{
-		if (ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-		{
-			size++;
-			i++;
-		}
-		else if (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
-		{
-			size++;
-			i++;
-		}
-		else if (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-		{
-			size++;
-			i++;
-		}
-		else if (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+		if ((ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| ((ms->parsed[i][ft_strlen(ms->parsed[i] - 1)] == '<' && ms->parsed[i + 1] && ms->parsed[i + 1][0] != '<')))
 		{
 			size++;
 			i++;
@@ -143,7 +132,27 @@ char **redir_first(char **realloc)
 	return (new_tab);
 }
 
-void redirection(t_minishell *ms)
+int is_token(char c)
+{
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
+}
+
+int check_double_token(char **str)
+{
+	int i = 0;
+	
+	while (str[i])
+	{
+		if (is_token(str[i][ft_strlen(str[i]) - 1]) && is_token(str[i + 1][0]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int redirection(t_minishell *ms)
 {
 	int i = 0;
 	// int flg = 0;
@@ -158,8 +167,10 @@ void redirection(t_minishell *ms)
 		if ((ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<')) 
 			|| (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
 			|| (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<')))
+			|| (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
+			|| (ms->parsed[i][ft_strlen(ms->parsed[i] - 1)] == '<' && ms->parsed[i + 1] && ms->parsed[i + 1][0] != '<'))
 		{
+			ft_printf("je join\n");
 			realloc[k] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
 			i += 2;
 			k++;
@@ -171,6 +182,8 @@ void redirection(t_minishell *ms)
 	}
 	realloc[k] = 0;
 	ms->parsed = realloc;
+	if (!check_double_token(ms->parsed))
+		return (ft_dprintf("Error token\n"), 0);
 	// i = 0;
 	// while (ms->parsed[i])
 	//{
@@ -195,4 +208,5 @@ void redirection(t_minishell *ms)
 	// }
 	// ms->parsed[i] = 0;
 	ms->parsed = redir_first(realloc);
+	return (1);
 }

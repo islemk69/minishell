@@ -60,7 +60,7 @@ char **ft_split_token(char *input)
 	i = 0;
 	count = count_words(input);
     char **split = (char **)ft_gc_malloc(sizeof(char *) * (count + 1));
-    if (!split)
+    if (!split || input[0] == '|' || input[ft_strlen(input) - 1] == '|')
 	{
         return (NULL);
 	}

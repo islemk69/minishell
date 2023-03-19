@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 22:47:06 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/19 17:40:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_lstad_back(t_env **lst, t_env *new);
 
 void	lstclear(t_env **lst);
 
-void	check_new_line(t_minishell *ms);
+int	check_new_line(t_minishell *ms);
 
 size_t	ft_strlen_dtab(char **s);
 
@@ -110,8 +110,7 @@ int		is_built_in(char *str);
 
 void	wait_pid(int i);
 
-int		is_token(char *str);
 
-void	redirection(t_minishell *ms);
+int	redirection(t_minishell *ms);
 
 #endif
