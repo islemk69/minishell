@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/19 17:48:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:47:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ int   ft_pipe(t_minishell *ms)
     {
         space = ft_split(pipe[j], ' ');
         new(ms, space);
-		redirection(ms);
+		if (!redirection(ms))
+			return (0);
 		ms->joined[j] = 0;
 		i = -1;
 		while (ms->parsed[++i])

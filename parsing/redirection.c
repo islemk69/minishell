@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/19 17:58:00 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/20 20:57:51 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char **realloc_redir(t_minishell *ms)
 			size++;
 		i++;
 	}
+	ft_printf("SIZE%d\n", size);
 	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
 	if (!realloc)
 		return (NULL);
@@ -145,7 +146,8 @@ int check_double_token(char **str)
 	
 	while (str[i])
 	{
-		if ((is_token(str[i][0]) && !str[i + 1]) 
+		if ((is_token(str[i][0]) && !str[i + 1] && !str[i][1])
+			|| (is_token(str[i][ft_strlen(str[i]) - 1]) && !str[i + 1])
 			|| (is_token(str[i][ft_strlen(str[i]) - 1]) && is_token(str[i + 1][0])))
 			return (0);
 		i++;
@@ -156,22 +158,22 @@ int check_double_token(char **str)
 int redirection(t_minishell *ms)
 {
 	int i = 0;
+	int j = 0;
 	// int flg = 0;
 	// int j = 0;
 	char **realloc;
-	// char **split_token;
+	char **realloc2;
+	char **split_token;
 	int k = 0;
 
-	realloc = realloc_redir(ms);
+	realloc = realloc_redir(ms);//< infile// << infile// > infile// >> infile
+	if (!check_double_token(ms->parsed))
+		return (ft_dprintf("Error token\n"), 0);
 	while (ms->parsed[i])
 	{
-		if ((ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<')) 
-			|| (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][ft_strlen(ms->parsed[i] - 1)] == '<' && ms->parsed[i + 1] && ms->parsed[i + 1][0] != '<'))
+		if ((is_token(ms->parsed[i][0]) && !ms->parsed[i][1]) 
+			|| (is_token(ms->parsed[i][0]) && is_token(ms->parsed[i][1]) && !ms->parsed[i][2]))
 		{
-			ft_printf("je join\n");
 			realloc[k] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
 			i += 2;
 			k++;
@@ -183,31 +185,29 @@ int redirection(t_minishell *ms)
 	}
 	realloc[k] = 0;
 	ms->parsed = realloc;
-	if (!check_double_token(ms->parsed))
-		return (ft_dprintf("Error token\n"), 0);
 	// i = 0;
 	// while (ms->parsed[i])
-	//{
-	//	if (ft_strchr(ms->parsed[i], '<') && ms->parsed[i][0] != '<')
-	//	{
-	//		ft_printf("JE SUIS LA \n");
-	//		split_token = ft_split(ms->parsed[i], '<');
-	//		j = 0;
-	//		ms->parsed[i] = ft_strdup(split_token[j]);
-	//		ft_printf("PARSED %s\n", ms->parsed[i]);
-	//		j++;
-	//		i++;
-	//		while (split_token[j])
-	//		{
-	//			ms->parsed[i] = ft_strdup_token(split_token[j], '<');
-	//			ft_printf("PARSED %s\n", ms->parsed[i]);
-	//			i++;
-	//			j++;
-	//		}
-	//	}
-	//	i++;
+	// {
+	// 	if (ft_strchr(ms->parsed[i], '<') && !is_token(ms->parsed[i][0]))
+	// 	{
+	// 		ft_printf("JE SUIS LA \n");
+	// 		split_token = ft_split(ms->parsed[i], '<');
+	// 		j = 0;
+	// 		ms->parsed[i] = ft_strdup(split_token[j]);
+	// 		ft_printf("PARSED %s\n", ms->parsed[i]);
+	// 		j++;
+	// 		i++;
+	// 		while (split_token[j])
+	// 		{
+	// 			ms->parsed[i] = ft_strdup_token(split_token[j], '<');
+	// 			ft_printf("PARSED %s\n", ms->parsed[i]);
+	// 			i++;
+	// 			j++;
+	// 		}
+	// 	}
+	// 	i++;
 	// }
-	// ms->parsed[i] = 0;
+	//ms->parsed[i] = 0;
 	ms->parsed = redir_first(realloc);
 	return (1);
 }

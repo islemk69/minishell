@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/19 17:40:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/20 23:09:16 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/wait.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 

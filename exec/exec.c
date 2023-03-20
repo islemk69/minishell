@@ -6,12 +6,11 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 18:00:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/20 21:41:06 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 static int	check_command(t_minishell *ms, char *input_cmd)
 {
@@ -101,7 +100,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
 		{
 			ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", str[0]);
-			exit(0);
+			//exit(0);
 		}
 	}
 	wait(NULL);
