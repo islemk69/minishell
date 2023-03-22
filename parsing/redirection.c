@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/22 14:40:04 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:41:19 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,8 @@ char *strcpy_token_2(char* src, int *s_int, int mod) {
         j++;
         *s_int += 1;
 	}
-    while (src[*s_int] && !is_token_char(src[*s_int])) {
+    while (src[*s_int] && !is_token_char(src[*s_int])) 
+	{
         sdup[j] = src[*s_int];
         j++;
         *s_int += 1;
