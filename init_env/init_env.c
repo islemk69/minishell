@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 18:28:33 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/21 21:39:19 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char* strcpy_no_null(char* dest, const char* src) {
     return ret;
 }
 
-char *get_prompt(t_minishell *ms, char *envp)
+void get_prompt(t_minishell *ms, char *envp)
 {
 	char *prompt;
 	int i = 3;

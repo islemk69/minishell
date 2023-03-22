@@ -18,7 +18,7 @@ SRCS = main.c exit/check_write_exit.c init_env/init_env.c exec/exec.c utils/erro
 		
 OBJS = $(SRCS:.c=.o)
 
-FLAGS = 
+FLAGS = -Wall -Wextra -Werror
 
 NAME = minishell
 

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/20 20:57:51 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:40:04 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@
 // }
 
 
+int is_token_char(char c)
+{
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
+}
 
 char *ft_strdup_token(const char *s1, char c)
 {
@@ -67,11 +73,8 @@ char **realloc_redir(t_minishell *ms)
 	char **realloc;
 	while (ms->parsed[i])
 	{
-		if ((ms->parsed[i][0] == '<' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][0] == '<' && ms->parsed[i][1] == '<' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][0] == '>' && !ms->parsed[i][1] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| (ms->parsed[i][0] == '>' && ms->parsed[i][1] == '>' && !ms->parsed[i][2] && !ft_strchr(ms->parsed[i + 1], '<'))
-			|| ((ms->parsed[i][ft_strlen(ms->parsed[i] - 1)] == '<' && ms->parsed[i + 1] && ms->parsed[i + 1][0] != '<')))
+		if ((is_token_char(ms->parsed[i][0]) && !ms->parsed[i][1]) 
+			|| (is_token_char(ms->parsed[i][0]) && is_token_char(ms->parsed[i][1]) && !ms->parsed[i][2]))
 		{
 			size++;
 			i++;
@@ -133,46 +136,190 @@ char **redir_first(char **realloc)
 	return (new_tab);
 }
 
-int is_token(char c)
-{
-	if (c == '<' || c == '>')
-		return (1);
-	return (0);
-}
-
 int check_double_token(char **str)
 {
 	int i = 0;
 	
 	while (str[i])
 	{
-		if ((is_token(str[i][0]) && !str[i + 1] && !str[i][1])
-			|| (is_token(str[i][ft_strlen(str[i]) - 1]) && !str[i + 1])
-			|| (is_token(str[i][ft_strlen(str[i]) - 1]) && is_token(str[i + 1][0])))
+		if ((is_token_char(str[i][0]) && !str[i + 1] && !str[i][1])
+			|| (is_token_char(str[i][ft_strlen(str[i]) - 1]) && !str[i + 1])
+			|| (is_token_char(str[i][ft_strlen(str[i]) - 1]) && is_token_char(str[i + 1][0])))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int redirection(t_minishell *ms)
+int is_redir(char *str)
+{
+	int i;
+	int token;
+
+	
+	token = 0;
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] == '>' && str[i - 1] != '\"' && str[i + 1] != '\"')
+		|| (str[i] == '<' && str[i - 1] != '\"' && str[i + 1] != '\"'))
+			token++;
+		if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' && str[i + 1] == '>'))
+			i += 2;
+		else
+			i++;
+	}
+	return (token);
+}
+
+char **realloc_stick(t_minishell *ms)
 {
 	int i = 0;
-	int j = 0;
-	// int flg = 0;
-	// int j = 0;
+	int size = 0;
+	int token;
 	char **realloc;
-	char **realloc2;
-	char **split_token;
-	int k = 0;
-
-	realloc = realloc_redir(ms);//< infile// << infile// > infile// >> infile
-	if (!check_double_token(ms->parsed))
-		return (ft_dprintf("Error token\n"), 0);
+	
+	token = 0;
 	while (ms->parsed[i])
 	{
-		if ((is_token(ms->parsed[i][0]) && !ms->parsed[i][1]) 
-			|| (is_token(ms->parsed[i][0]) && is_token(ms->parsed[i][1]) && !ms->parsed[i][2]))
+		token = is_redir(ms->parsed[i]);
+		if (!is_token_char(ms->parsed[i][0]) && token)
+			size += token + 1;
+		else if (is_token_char(ms->parsed[i][0]) && token > 1)
+			size += token;
+		else
+			size++;
+		token = 0;
+		i++;
+	}
+	realloc = (char**)ft_gc_malloc(sizeof(char *) * (size + 1));
+	return (realloc);
+}
+
+char *strcpy_token(char* src, int *s_int) 
+{
+	
+	int j;
+	int size = 0;
+	char	*sdup;
+	int save = *s_int;
+
+	j = 0;
+	while (src[save] && !is_token_char(src[save])) 
+	{
+		size++;
+		save ++;
+    }
+	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
+    while (src[*s_int] && !is_token_char(src[*s_int])) 
+	{
+        sdup[j] = src[*s_int];
+        j++;
+        *s_int += 1;
+    }
+	sdup[j] = 0;
+	return (sdup);
+}
+
+char *strcpy_token_2(char* src, int *s_int, int mod) {
+	
+	int j;
+	int size = 0;
+	char *sdup;
+	(void)mod;
+	int save = *s_int;
+	
+	while(src[save] && is_token_char(src[save]))
+	{
+		size++;
+        save ++;
+	}
+    while (src[save] && !is_token_char(src[save])) 
+	{
+        size++;
+		save++;
+    }
+	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
+	j = 0;
+	while(src[*s_int] && is_token_char(src[*s_int]))
+	{
+		sdup[j] = src[*s_int];
+        j++;
+        *s_int += 1;
+	}
+    while (src[*s_int] && !is_token_char(src[*s_int])) {
+        sdup[j] = src[*s_int];
+        j++;
+        *s_int += 1;
+    }
+	sdup[j] = 0;
+    return (sdup);
+}
+
+
+int redirection(t_minishell *ms)
+{
+	int		i;
+	char	**realloc;
+	char	**realloc2;
+	int		token;
+	int		k;
+	int		u;
+	int		s_int;
+
+	u = 0;
+	s_int = 0;
+	i = 0;
+	k = 0;
+	token = 0;
+	//realloc = NULL;
+	realloc2 = NULL;
+	if (!check_double_token(ms->parsed))
+		return (ft_dprintf("Error token\n"), 0);
+	realloc2 = realloc_stick(ms);
+	while (ms->parsed[i])
+	{
+		s_int = 0;
+		token = is_redir(ms->parsed[i]);
+		if (!is_token_char(ms->parsed[i][0]) && token)
+		{
+			u = 1;
+			realloc2[k] =  strcpy_token(ms->parsed[i], &s_int);
+			k++;
+			while (u <= token)
+			{
+				realloc2[k] = strcpy_token_2(ms->parsed[i], &s_int, 0);
+				k++;
+				u++;
+			}
+		}
+		else if (is_token_char(ms->parsed[i][0]) && token > 1)
+		{
+			u = 0;
+			while (u < token)
+			{
+				realloc2[k] = strcpy_token_2(ms->parsed[i], &s_int, 1);
+				k++;
+				u++;
+			}
+		}
+		else
+		{
+			realloc2[k] = ft_strdup(ms->parsed[i]);
+			k++;
+		}
+		token = 0;
+		i++;
+	}
+	realloc2[k] = 0;
+	k = 0;
+	i = 0;
+	ms->parsed = realloc2;
+	realloc = realloc_redir(ms);//< infile// << infile// > infile// >> infile
+	while (ms->parsed[i])
+	{
+		if ((is_token_char(ms->parsed[i][0]) && !ms->parsed[i][1]) 
+			|| (is_token_char(ms->parsed[i][0]) && is_token_char(ms->parsed[i][1]) && !ms->parsed[i][2]))
 		{
 			realloc[k] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
 			i += 2;
@@ -186,27 +333,7 @@ int redirection(t_minishell *ms)
 	realloc[k] = 0;
 	ms->parsed = realloc;
 	// i = 0;
-	// while (ms->parsed[i])
-	// {
-	// 	if (ft_strchr(ms->parsed[i], '<') && !is_token(ms->parsed[i][0]))
-	// 	{
-	// 		ft_printf("JE SUIS LA \n");
-	// 		split_token = ft_split(ms->parsed[i], '<');
-	// 		j = 0;
-	// 		ms->parsed[i] = ft_strdup(split_token[j]);
-	// 		ft_printf("PARSED %s\n", ms->parsed[i]);
-	// 		j++;
-	// 		i++;
-	// 		while (split_token[j])
-	// 		{
-	// 			ms->parsed[i] = ft_strdup_token(split_token[j], '<');
-	// 			ft_printf("PARSED %s\n", ms->parsed[i]);
-	// 			i++;
-	// 			j++;
-	// 		}
-	// 	}
-	// 	i++;
-	// }
+
 	//ms->parsed[i] = 0;
 	ms->parsed = redir_first(realloc);
 	return (1);

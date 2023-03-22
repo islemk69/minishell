@@ -6,25 +6,27 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/19 18:47:06 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:45:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int is_pipe(char *str)
+int is_token(char *str, char c)
 {
 	int i;
+	int token;
 
+	
+	token = 0;
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] == '|' && str[i - 1] != '\"' && str[i + 1] != '\"'))
-			return (1);
+		if ((str[i] == c && str[i - 1] != '\"' && str[i + 1] != '\"'))
+			token++;
 		i++;
 	}
-	i = 0;
-	return (0);
+	return (token);
 }
 
 char	*quote_2(char *line, char *str)
@@ -165,7 +167,7 @@ int check_new_line(t_minishell *ms)
         del_char(ms);
     else
         ms->new_line = ft_strdup(ms->line);
-    if (is_pipe(ms->new_line))
+    if (is_token(ms->new_line, '|'))
 	{
 		if (!ft_pipe(ms))
         	return (0);
