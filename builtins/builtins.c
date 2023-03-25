@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 03:12:46 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/25 15:45:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,25 +150,18 @@ int	built_in_pwd(char **split)
 	return (0);
 }
 
-
 ///////////////////export//////////
 
 int built_in_export(t_env **env, char **split)
 {
-	if (!ft_strncmp(split[0], "export\0,", 1) && ft_strchr(split[1], '='))
+	if (!ft_strncmp(split[0], "export\0,", 7) && ft_strchr(split[1], '='))
 	{
 		t_env	*cell;
 		
-		char *m = ft_gc_malloc(sizeof(char) * (ft_strlen(split[1]) + 1));
-		int i = 0;
-		
-		while (split[1][i])
-		{
-			m[i] = split[1][i];
-			i++;
-		}
-		m[i] = 0;
-		cell = create_cell(m, NULL);
+		char *key = get_key(split[1]);
+		char *value = get_value(split[1]);
+
+		cell = create_cell(key, value);
 		if (!cell)
 		{
 			return (0);
@@ -181,28 +174,35 @@ int built_in_export(t_env **env, char **split)
 
 ////////////////////////unset/////////////////////////////
 
-int	built_in_unset(t_env **env, char **split)
+int built_in_unset(t_env** env, char **cmd) 
 {
-	(void)env;
-	if (!ft_strncmp(split[0], "unset\0", 6) && split[1])
-	{
-		// t_env *occur;
-		// t_env *previous;
+    t_env* current = *env;
+    t_env* previous = NULL;
 
-		// occur = (*env);
-		// while (ft_strncmp(occur->str, split[1], ft_strlen(split[1])))
-		// {
-		// 	previous = occur;
-		// 	occur = occur->next;
-		// }
-		// occur = occur->next;
-		// previous->next = occur->next;
-		// return (1);
+    // Parcourir la liste chaînée
+	if (!ft_strncmp(cmd[0], "unset\0", 6))
+	{
+		if (!cmd[1])
+			return (1);
+		while (current != NULL) 
+		{
+			// Si la clé correspond, supprimer le nœud
+			if (strcmp(current->key, cmd[1]) == 0) 
+			{
+				// Si le nœud à supprimer est la tête de liste
+				if (previous == NULL) 
+					*env = current->next;
+				else
+					previous->next = current->next;
+				return (1);
+			}
+			previous = current;
+			current = current->next;
+		}
 		return (1);
 	}
 	return (0);
 }
-
 
 int builtins(t_minishell *ms, char **split, t_env **env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/24 17:40:11 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/25 12:25:29 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static int	start_minishell(t_minishell *ms)
 		}
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
-		// int i = 0;
-		// while (ms->parsed[i])
-		// {
-		// 	ft_printf("%s\n", ms->parsed[i]);
-		// 	i++;
-		// }
+		int i = 0;
+		while (ms->parsed[i])
+		{
+			ft_printf("%s\n", ms->parsed[i]);
+			i++;
+		}
 		exec_cmd(ms, &ms->head_env);
 		free(ms->line);
 	}

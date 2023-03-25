@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 03:30:35 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/25 12:57:54 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,18 +246,10 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			}
 			else
 			{
-				if (ms->outfile_exist == 0)
-				{
-					if (dup2(ms->fd[1], 1) == -1)
-						error ("dup3");
-				}
-				else
-					dup(1);
+				dup(1);
 			}
 			if (builtins(ms, str, env) == 1)
 				exit (0);
-			input_last_cmd(str, ms, env);
-			inputx_index(str, ms);
 			if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
 			{
 				nb_pipe--;
