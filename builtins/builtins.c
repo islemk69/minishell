@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 15:45:48 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/25 18:36:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,17 +179,14 @@ int built_in_unset(t_env** env, char **cmd)
     t_env* current = *env;
     t_env* previous = NULL;
 
-    // Parcourir la liste chaînée
 	if (!ft_strncmp(cmd[0], "unset\0", 6))
 	{
 		if (!cmd[1])
 			return (1);
 		while (current != NULL) 
 		{
-			// Si la clé correspond, supprimer le nœud
 			if (strcmp(current->key, cmd[1]) == 0) 
 			{
-				// Si le nœud à supprimer est la tête de liste
 				if (previous == NULL) 
 					*env = current->next;
 				else
