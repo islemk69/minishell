@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 18:36:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/25 23:08:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int built_in_unset(t_env** env, char **cmd)
 {
     t_env* current = *env;
     t_env* previous = NULL;
-
+	
 	if (!ft_strncmp(cmd[0], "unset\0", 6))
 	{
 		if (!cmd[1])

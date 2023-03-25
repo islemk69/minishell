@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 13:27:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/25 23:13:31 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ ____  >___|  /\\___  "RED">____/____/\n"CYAN"      \\/        \\/      \
   "YELLOW"\\/     \\/     \\/      "WHITE"     \n\" \n\
 "
 
+extern int	g_exit_status;
+
+typedef struct s_data	t_data;
 
 typedef struct s_env {
 	char			*key;
@@ -119,5 +122,7 @@ int	redirection(t_minishell *ms);
 char	*get_key(char *line);
 
 char	*get_value(char *line);
+
+void	signal_handler_parent(int signum);
 
 #endif

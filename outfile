@@ -1,1 +1,19 @@
-     17      17     131
+asd=ds
+builtins
+exec
+exit
+include
+infile
+infile2
+init_env
+Libft
+main.c
+main.o
+Makefile
+minishell
+minishell-tester
+outasdfile
+outfile
+parsing
+subject
+utils
