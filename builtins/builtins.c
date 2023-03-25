@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/18 16:00:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/25 03:12:46 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	inputx_index(char **split, t_minishell *ms)
 		}
 		HIST_ENTRY *index_hist = history_get(index);
 		if (index_hist != NULL) {
-			ms->line = index_hist->line;
+			ms->line = (char *)index_hist->line;
 		}
 		return (1);
 	}

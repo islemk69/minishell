@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/22 14:41:19 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/24 17:40:58 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char **realloc_redir(t_minishell *ms)
 			size++;
 		i++;
 	}
-	ft_printf("SIZE%d\n", size);
+	//ft_printf("SIZE%d\n", size);
 	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
 	if (!realloc)
 		return (NULL);
