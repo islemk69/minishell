@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 03:02:58 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/03/25 03:30:35 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	remove_heredoc(char **tab)
 	while (tab[i] && tab[i][0] == '<')
 	{
 		if (tab[i][1] == '<')
-			remove(tab[i] + 2);
+			unlink(tab[i] + 2);
 		i++;
 	}
 }
