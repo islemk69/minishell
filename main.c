@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 23:39:30 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/25 23:51:15 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static int	start_minishell(t_minishell *ms)
 	ms->line = NULL;
 	ms->parsed = NULL;
 	signal(SIGINT, signal_handler_parent);
-	//signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		// ft_printf("okok");
 		ms->line = readline(ms->prompt);
 		if (!ms->line)
-			return(0);
+			return(free(ms->line), 0);
 		if (is_empty(ms->line))
 			continue ;
 		add_history(ms->line);
