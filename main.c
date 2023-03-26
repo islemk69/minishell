@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 23:51:15 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/27 00:19:52 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	start_minishell(t_minishell *ms)
 			ft_printf("%s\n", ms->parsed[i]);
 			i++;
 		}
-		exec_cmd(ms, &ms->head_env);
+		if (!exec_cmd(ms, &ms->head_env))
+			return (free(ms->line), 0);
 		free(ms->line);
 	}
 }

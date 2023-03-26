@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 23:13:31 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/26 23:28:46 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,9 @@ char	*get_key(char *line);
 char	*get_value(char *line);
 
 void	signal_handler_parent(int signum);
+
+void	signal_handler_heredoc(int signum);
+
+char	**split_string(char *str);
 
 #endif

@@ -6,11 +6,12 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/25 23:35:33 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/26 23:54:55 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 
 static int	check_command(t_minishell *ms, char *input_cmd)
 {
@@ -50,6 +51,7 @@ int	here_doc(t_minishell *ms, char *tab)
 	ms->infile = open(tab, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 	{
+		g_exit_status = 1;
 		ms->line_here = readline(">");
 		if (!ms->line_here)
 			return (free(ms->line_here), 0);
@@ -171,7 +173,10 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
 		if (ms->parsed[i][1] == '<')
-			here_doc(ms, ms->parsed[i] + 2);
+		{
+			if (!here_doc(ms, ms->parsed[i] + 2))
+				return (0);
+		}
 		i++;
 	}
 	id = fork();
@@ -210,12 +215,15 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	cpt = 0;
 	while (ms->parsed[i])
 	{
-		split = ft_split(ms->parsed[i], ' ');
+		split = split_string(ms->parsed[i]);
 		j = 0;
 		while (split[j] && split[j][0] == '<')
 		{
 			if (split[j][1] == '<')
-				here_doc(ms, split[j] + 2);
+			{
+				if (!here_doc(ms, split[j] + 2))
+					return (0);
+			}
 			j++;
 		}
 		i++;
@@ -223,7 +231,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	i = 0;
 	while (ms->parsed[i])
 	{
-		split = ft_split(ms->parsed[i], ' ');
+		split = split_string(ms->parsed[i]);
 		if (pipe(ms->fd) == -1)
 			error("pipe");
 		id = fork();

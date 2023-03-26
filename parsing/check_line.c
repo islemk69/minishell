@@ -6,11 +6,12 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/21 16:45:22 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/27 00:26:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 
 int is_token(char *str, char c)
 {
@@ -40,6 +41,8 @@ char	*quote_2(char *line, char *str)
 	i2 = 0;
 	while (line[i2])
 	{
+		if ((ft_strchr(line, '$')))
+			return (line);
 		if (line[i2] && ft_strchr("\'\"", line[i2]))
 		{
 			c = line[i2++];
@@ -108,7 +111,9 @@ void new(t_minishell *ms, char **space)
     i = 0;
     while (space[i])
     {
-		if((space[i][0] == '\"' || space[i][0] == '\'') && !space[i][1])
+		if (space[i][0] == '\"' && space[i][ft_strlen(space[i]) - 2] == '\"')
+			quot[i] = ft_strdup(space[i]);
+		else if((space[i][0] == '\"' || space[i][0] == '\'') && !space[i][1])
 			quot[i] = ft_strdup(space[i]);
 		else
         	quot[i] = ft_strdup(quote(space[i]));
@@ -139,7 +144,7 @@ int   ft_pipe(t_minishell *ms)
 	j = -1;
     while (pipe[++j])
     {
-        space = ft_split(pipe[j], ' ');
+        space = split_string(pipe[j]);
         new(ms, space);
 		if (!redirection(ms))
 			return (0);
@@ -181,7 +186,7 @@ int check_new_line(t_minishell *ms)
 	}
     else
 	{
-		space = ft_split(ms->new_line, ' ');
+		space = split_string(ms->new_line);
         new(ms, space);
 		if (!redirection(ms))
 			return (0);
