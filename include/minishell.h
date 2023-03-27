@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/26 23:28:46 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:41:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ void	error(char *str);
 
 int		builtins(t_minishell *ms, char **split, t_env **env);
 
+int built_in_export(t_env **env, char **split);
+
+int built_in_unset(t_env** env, char **cmd);
+
+int	input_env(t_env **env, char **split);
+
+int	input_cd(char **split, t_env **env);
+
+int	built_in_pwd(char **split);
+
 char	*ft_find_path(t_env **env, char *srch);
 
 t_env	*create_cell(char *var, char *content);
@@ -116,7 +126,6 @@ int		is_built_in(char *str);
 
 void	wait_pid(int i);
 
-
 int	redirection(t_minishell *ms);
 
 char	*get_key(char *line);
@@ -128,5 +137,25 @@ void	signal_handler_parent(int signum);
 void	signal_handler_heredoc(int signum);
 
 char	**split_string(char *str);
+
+int	check_command(t_minishell *ms, char *input_cmd);
+
+int count_pipe(t_minishell *ms);
+
+void	access_file(char **tab);
+
+char	**check_redir(t_minishell *ms, char **tab);
+
+void	remove_heredoc(char **tab);
+
+int		here_doc(t_minishell *ms, char *tab);
+
+int		exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe);
+
+int	exec_one_pipe(t_minishell *ms, t_env **env);
+
+char	**check_redir(t_minishell *ms, char **tab);
+
+int		check_write_exit(t_minishell *ms);
 
 #endif

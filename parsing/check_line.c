@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 00:26:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:15:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,6 @@ int   ft_pipe(t_minishell *ms)
 	ms->joined[j] = 0;
 	return(1);
 }
-
-
 
 int check_new_line(t_minishell *ms)
 {
