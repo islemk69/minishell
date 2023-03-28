@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 15:54:49 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/28 21:32:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				str = check_redir(ms, split);
 			else
 				str = split;
+			rm_quote_last(str);
 			check_command(ms, str[0]);
 			close(ms->fd[0]);
 			if (nb_pipe != 0)

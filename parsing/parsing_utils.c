@@ -6,96 +6,55 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 23:27:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/26 23:28:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/28 21:07:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char** split_string(char* str) {
+    int len = strlen(str);
+    char** result = (char**) malloc((len + 1) * sizeof(char*));
+    int i = 0;
+    int j = 0;
+    int in_quotes = 0;
+    char quote_type = '\0';
+	int result_len = 0;
 
-static int	count_words(char *str)
-{
-	int	i;
-	int	count;
+    while (i < len) {
+        if (str[i] == '\'' || str[i] == '\"') {
+            if (in_quotes && str[i] == quote_type) {
+                in_quotes = 0;
+            } else if (!in_quotes) {
+                in_quotes = 1;
+                quote_type = str[i];
+                i++;
+            }
+        }
 
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if ((str[i] == ' ' || str[i] == '\t') && str[i + 1] != ' '
-			&& str[i + 1] != '\t' && str[i + 1] != '\0')
-			count++;
-		i++;
-	}
-	if (str[0] != '\0')
-		count++;
-	return (count);
-}
+        if (!in_quotes && (str[i] == ' ' || str[i] == '\t')) {
+            if (i > j) {
+                int word_len = i - j;
+                char* word = (char*) malloc((word_len + 1) * sizeof(char));
+                strncpy(word, str + j, word_len);
+                word[word_len] = '\0';
+                result[result_len++] = word;
+            }
+            j = i + 1;
+        }
 
-static int	word_len(char *str, int i)
-{
-	int	len;
+        i++;
+    }
 
-	len = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\t')
-	{
-		if ((str[i] == '\"' || str[i] == '\'') && len == 0)
-		{
-			len++;
-			i++;
-			while (str[i] && str[i] != str[i - 1])
-			{
-				len++;
-				i++;
-			}
-		}
-		else
-		{
-			len++;
-			i++;
-		}
-	}
-	return (len);
-}
+    if (i > j) {
+        int word_len = i - j;
+        char* word = (char*) malloc((word_len + 1) * sizeof(char));
+        strncpy(word, str + j, word_len);
+        word[word_len] = '\0';
+        result[result_len++] = word;
+    }
 
-static char	*copy_word(char *str, int i, int len)
-{
-	char	*word;
+    result[result_len] = NULL;
 
-	word = (char*)ft_gc_malloc(sizeof(char) * (len + 1));
-	if (!word)
-		return (NULL);
-	ft_strncpy(word, &str[i], len);
-	word[len] = '\0';
-	return (word);
-}
-
-char	**split_string(char *str)
-{
-	int		i;
-	int		j;
-	int		words;
-	char	**result;
-
-	words = count_words(str);
-	result = (char**)ft_gc_malloc(sizeof(char*) * (words + 1));
-	if (!result)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] != ' ' && str[i] != '\t')
-		{
-			result[j] = copy_word(str, i, word_len(str, i));
-			if (!result[j])
-				return (NULL);
-			j++;
-			i += word_len(str, i);
-		}
-		else
-			i++;
-	}
-	result[j] = NULL;
-	return (result);
+    return result;
 }

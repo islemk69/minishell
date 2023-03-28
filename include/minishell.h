@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 17:41:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/28 21:31:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,9 @@ int	exec_one_pipe(t_minishell *ms, t_env **env);
 char	**check_redir(t_minishell *ms, char **tab);
 
 int		check_write_exit(t_minishell *ms);
+
+char	*quote(char *line);
+
+void rm_quote_last(char **cmds);
 
 #endif

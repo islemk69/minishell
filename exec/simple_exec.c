@@ -6,12 +6,23 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 15:55:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/28 21:28:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void rm_quote_last(char **cmds)
+{
+	char *tmp;
+	
+	while (*cmds)
+	{
+		tmp = *cmds;
+		*cmds = quote(tmp);	
+		cmds++;
+	}
+}
 
 int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
@@ -37,6 +48,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 			str = check_redir(ms, ms->parsed);
 		else 
 			str = ms->parsed;
+		rm_quote_last(str);
 		check_command(ms, str[0]);
 		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
 		{

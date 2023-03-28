@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 14:15:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/28 21:21:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void new(t_minishell *ms, char **space)
     i = 0;
     while (space[i])
     {
-		if (space[i][0] == '\"' && space[i][ft_strlen(space[i]) - 2] == '\"')
+		if (space[i][0] == '\"' && space[i][ft_strlen(space[i]) - 1] == '\"')
 			quot[i] = ft_strdup(space[i]);
 		else if((space[i][0] == '\"' || space[i][0] == '\'') && !space[i][1])
 			quot[i] = ft_strdup(space[i]);
