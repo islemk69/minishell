@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 17:30:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 00:14:40 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	exec_cmd(t_minishell *ms, t_env **env)
 {
 	int		nb_pipe;
 
-	nb_pipe = count_pipe(ms);
+	nb_pipe = count_token(ms->line, '|');
 	if (nb_pipe == 0)
 	{
 		if (!exec_one_pipe(ms, env))

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 17:49:05 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 00:13:27 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,37 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	return (0);
 }
 
-int count_pipe(t_minishell *ms)
+int	count_token(char *str, char c)
 {
-	int	pipe;
-	int i;
+	int	count;
+	bool	in_quotes;
+	char	current_quote;
 
-	i = 0;
-	pipe = 0;
-	while (ms->line[i])
+	count = 0;
+	in_quotes = false;
+	current_quote = '\0';
+	while (*str)
 	{
-		if (ms->line[i] == '|' && ms->line[i - 1] != '\"' && ms->line[i + 1] != '\"')
-			pipe++;
-		i++;
+		if (*str == '\'' || *str == '\"')
+		{
+			if (in_quotes && *str == current_quote)
+			{
+				in_quotes = false;
+				current_quote = '\0';
+			}
+			else if (!in_quotes)
+			{
+				in_quotes = true;
+				current_quote = *str;
+			}
+		}
+		else if (*str == c && !in_quotes)
+			count++;
+		str++;
 	}
-	return (pipe);
+	return (count);
 }
+
 
 void	access_file(char **tab)
 {

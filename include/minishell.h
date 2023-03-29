@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/28 21:31:33 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 00:14:29 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 # define PURPLE "\033[1;35m"
 # define CYAN "\033[1;36m"
@@ -140,7 +141,7 @@ char	**split_string(char *str);
 
 int	check_command(t_minishell *ms, char *input_cmd);
 
-int count_pipe(t_minishell *ms);
+int	count_token(char *str, char c);
 
 void	access_file(char **tab);
 

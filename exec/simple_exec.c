@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/28 21:28:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:15:58 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int		id;
 	char	**str;
+	char	*tmp;
 
 	if (builtins(ms, ms->parsed, env) == 1)
 			return (1);
@@ -36,6 +37,8 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	{
 		if (ms->parsed[i][1] == '<')
 		{
+			tmp = ms->parsed[i];
+			ms->parsed[i] = quote(tmp);
 			if (!here_doc(ms, ms->parsed[i] + 2))
 				return (0);
 		}
@@ -45,10 +48,15 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	if (id == 0)
 	{
 		if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
+		{
+			rm_quote_last(ms->parsed);
 			str = check_redir(ms, ms->parsed);
-		else 
+		}
+		else
+		{
+			rm_quote_last(ms->parsed);
 			str = ms->parsed;
-		rm_quote_last(str);
+		}	
 		check_command(ms, str[0]);
 		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
 		{

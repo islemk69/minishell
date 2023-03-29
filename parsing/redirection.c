@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/26 23:56:36 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:08:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,25 +151,40 @@ int check_double_token(char **str)
 	return (1);
 }
 
-int is_redir(char *str)
+int	is_redir(char *str)
 {
-	int i;
-	int token;
+	int	count;
+	bool	in_quotes;
+	char	current_quote;
+	int i = 0;
 
-	
-	token = 0;
-	i = 0;
+	count = 0;
+	in_quotes = false;
+	current_quote = '\0';
 	while (str[i])
 	{
-		if ((str[i] == '>' && str[i - 1] != '\"' && str[i + 1] != '\"')
-		|| (str[i] == '<' && str[i - 1] != '\"' && str[i + 1] != '\"'))
-			token++;
-		if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' && str[i + 1] == '>'))
-			i += 2;
-		else
-			i++;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (in_quotes && str[i] == current_quote)
+			{
+				in_quotes = false;
+				current_quote = '\0';
+			}
+			else if (!in_quotes)
+			{
+				in_quotes = true;
+				current_quote = str[i];
+			}
+		}
+		else if ((str[i] == '<' || str[i] == '>') && !in_quotes)
+		{
+			if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' && str[i + 1] == '>'))
+				i++;
+			count++;
+		}
+		i++;
 	}
-	return (token);
+	return (count);
 }
 
 char **realloc_stick(t_minishell *ms)

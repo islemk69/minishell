@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/28 21:21:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:58:29 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,7 @@ void new(t_minishell *ms, char **space)
     i = 0;
     while (space[i])
     {
-		if (space[i][0] == '\"' && space[i][ft_strlen(space[i]) - 1] == '\"')
-			quot[i] = ft_strdup(space[i]);
-		else if((space[i][0] == '\"' || space[i][0] == '\'') && !space[i][1])
-			quot[i] = ft_strdup(space[i]);
-		else
-        	quot[i] = ft_strdup(quote(space[i]));
+		quot[i] = ft_strdup(space[i]);
         i++;
     }
 	quot[i] = 0;
@@ -170,7 +165,7 @@ int check_new_line(t_minishell *ms)
         del_char(ms);
     else
         ms->new_line = ft_strdup(ms->line);
-    if (is_token(ms->new_line, '|'))
+    if (count_token(ms->line, '|'))
 	{
 		if (!ft_pipe(ms))
         	return (0);
