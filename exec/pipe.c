@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/28 21:32:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:04:03 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	char	**split;
 	int		cpt;
 	char	**str;
+	char	*tmp;
 	int j;
 
 	split = NULL;
@@ -35,6 +36,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		{
 			if (split[j][1] == '<')
 			{
+				tmp = split[j];
+				split[j] = quote(tmp);
 				if (!here_doc(ms, split[j] + 2))
 					return (0);
 			}
@@ -53,10 +56,15 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		{
 			ms->outfile_exist = 0;
 			if (split[0][0] == '<' || split[0][0] == '>')
+			{
+				rm_quote_last(ms->parsed);
 				str = check_redir(ms, split);
+			}
 			else
+			{
+				rm_quote_last(ms->parsed);
 				str = split;
-			rm_quote_last(str);
+			}
 			check_command(ms, str[0]);
 			close(ms->fd[0]);
 			if (nb_pipe != 0)
@@ -77,7 +85,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			{
 				nb_pipe--;
 				i++;
-				ft_dprintf(""RED"bash: %s: command not found"CYAN"\n", str[0]);
+				ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", str[0]);
 			}
 			exit(0);
 		}
