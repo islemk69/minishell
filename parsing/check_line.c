@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 18:36:49 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 00:16:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,12 @@ int check_new_line(t_minishell *ms)
     else
 	{
 		space = split_string(ms->new_line);
+		int j = 0;
+		while (space[j])
+		{
+			ft_printf("%s\n", space[j]);
+			j++;
+		}
         new(ms, space);
 		if (!redirection(ms))
 			return (0);

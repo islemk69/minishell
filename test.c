@@ -2,46 +2,79 @@
 #include <stdlib.h>
 #include <string.h>
 
-char *extract_dollard(char *str)
-{
-	int	i = 0;
-	int j;
-	int flg = 0;
-	int size = 0;
-	char *realloc;
-	
-	while (str[i] != '$')
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-			flg = 1;
-		i++;
-		size++;
-	}
-	j = i;
-	if (flg)
-		return (str);
-	while (str[i] && str[i] != '\"' && str[i] != '\'' && str[i] != '$')
-		i++;
-	j = i;
-	while (str[i])
-	{
-		size++;
-		i++;
-	}
-	i = 0;
-	printf("SIZE %d\n", size);
-	realloc = malloc(sizeof(char) * (size + 1));
-	while (str[j])
-	{
-		realloc[i] = str[j];
-		j++;
-		i++;
-	}
-	realloc[i] = 0;
-	return (realloc);
-}
+char** split_string(char* str) {
+    int num_words = 0;
+    int in_quotes = 0;
+    char quote_type = '\0';
 
+    // Compte le nombre de mots dans la chaîne
+    for (int i = 0; i < ft_strlen(str); i++) {
+        char c = str[i];
+
+        if (c == '\'' || c == '\"') {
+            if (!in_quotes) {
+                in_quotes = 1;
+                quote_type = c;
+            } else if (c == quote_type && str[i - 1] != '\\') {
+                in_quotes = 0;
+                quote_type = '\0';
+            }
+        }
+
+        if ((c == ' ' || c == '\t') && !in_quotes) {
+            num_words++;
+        }
+    }
+
+    // Alloue la mémoire nécessaire pour le tableau de mots
+    char** words = malloc(sizeof(char*) * (num_words + 1));
+    int word_index = 0;
+
+    // Construit chaque mot et l'ajoute au tableau
+    char* cur_word = malloc(sizeof(char) * ft_strlen(str));
+    int cur_word_len = 0;
+    in_quotes = 0;
+
+    for (int i = 0; i < ft_strlen(str); i++) {
+        char c = str[i];
+
+        if (c == '\'' || c == '\"') {
+            if (!in_quotes) {
+                in_quotes = 1;
+                quote_type = c;
+            } else if (c == quote_type && str[i - 1] != '\\') {
+                in_quotes = 0;
+                quote_type = '\0';
+            }
+        }
+
+        if ((c == ' ' || c == '\t') && !in_quotes) {
+            if (cur_word_len > 0) {
+                cur_word[cur_word_len] = '\0';
+                words[word_index++] = cur_word;
+                cur_word = malloc(sizeof(char) * ft_strlen(str));
+                cur_word_len = 0;
+            }
+        } else {
+            cur_word[cur_word_len++] = c;
+        }
+    }
+
+    if (cur_word_len > 0) {
+        cur_word[cur_word_len] = '\0';
+        words[word_index++] = cur_word;
+    } else {
+        free(cur_word);
+    }
+
+    words[word_index] = NULL;
+    return words;
+}
 int main() {
-    char *str = "sadasds$asdsdad";
-	printf("%s\n", extract_dollard(str));
+    char str[] = "\"\"   \'\' \'\' \'\'   \"\"";
+    char** words = split_string(str);
+    for (int i = 0; words[i] != NULL; i++) {
+        printf("%s\n", words[i]);
+    }
+    return 0;
 }
