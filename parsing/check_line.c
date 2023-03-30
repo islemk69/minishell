@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 13:58:29 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:36:49 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	*quote_2(char *line, char *str)
 	i2 = 0;
 	while (line[i2])
 	{
-		if ((ft_strchr(line, '$')))
-			return (line);
 		if (line[i2] && ft_strchr("\'\"", line[i2]))
 		{
 			c = line[i2++];

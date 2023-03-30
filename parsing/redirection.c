@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 14:08:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/29 19:49:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,39 @@ char *strcpy_token_2(char* src, int *s_int, int mod) {
 }
 
 
+char *extract_dollard(char *str)
+{
+	int	i = 0;
+	int j;
+	int size = 0;
+	char *realloc;
+	
+	while (str[i] != '$')
+		i++;
+	if (str[0] == '\"' || str[0] == '\'')
+		return (str);
+	while (str[i] && str[i] != '\"' && str[i] != '\'' && str[i] != '$')
+		i++;
+	j = i;
+	while (str[i])
+	{
+		size++;
+		i++;
+	}
+	i = 0;
+	ft_printf("SIZE %d\n", size);
+	realloc = ft_gc_malloc(sizeof(char) * (size + 1));
+	while (str[j])
+	{
+		realloc[i] = str[j];
+		j++;
+		i++;
+	}
+	realloc[i] = 0;
+	ft_printf("REALLOC %S\n", realloc);
+	return (realloc);
+}
+
 int redirection(t_minishell *ms)
 {
 	int		i;
@@ -352,5 +385,17 @@ int redirection(t_minishell *ms)
 
 	//ms->parsed[i] = 0;
 	ms->parsed = redir_first(realloc);
+	i = 0;
+	char *tmp2;
+	while (ms->parsed[i])
+	{
+		if (ft_strchr(ms->parsed[i], '$'))
+		{
+			ft_printf("ahaha\n");
+			tmp2 = ms->parsed[i];
+			ms->parsed[i] = extract_dollard(tmp2);
+		}
+		i++;
+	}
 	return (1);
 }
