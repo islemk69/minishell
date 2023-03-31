@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 15:04:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:34:12 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	split = NULL;
 	save_stdin = dup(0);
 	add_history(ms->line);
+	get_path(ms);
 	i = 0;
 	cpt = 0;
 	while (ms->parsed[i])
@@ -57,12 +58,13 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			ms->outfile_exist = 0;
 			if (split[0][0] == '<' || split[0][0] == '>')
 			{
-				rm_quote_last(ms->parsed);
+				rm_quote_last(split);
 				str = check_redir(ms, split);
 			}
 			else
 			{
-				rm_quote_last(ms->parsed);
+				ft_printf("je remove les quote\n");
+				rm_quote_last(split);
 				str = split;
 			}
 			check_command(ms, str[0]);
@@ -76,9 +78,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				}
 			}
 			else
-			{
 				dup(1);
-			}
 			if (builtins(ms, str, env) == 1)
 				exit (0);
 			if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)

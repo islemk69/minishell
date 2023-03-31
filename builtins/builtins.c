@@ -6,21 +6,24 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 14:27:36 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:14:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+
+
 int is_built_in(char *str)
 {
-	if (!ft_strncmp(str, "history\0", ft_strlen(str)) 
-		|| !ft_strncmp(str, "cd\0", ft_strlen(str)) 
+	if (!*str)
+		return (0);
+	if (!ft_strncmp(str, "cd\0", ft_strlen(str)) 
 		|| !ft_strncmp(str, "export\0", ft_strlen(str)) 
 		|| !ft_strncmp(str, "pwd\0", ft_strlen(str))
 		|| !ft_strncmp(str, "unset\0", ft_strlen(str))
-		|| !ft_strncmp(str, "!!\0", ft_strlen(str))
-		|| (str[0] == '!' && str[1] != '!' && str[1] != ' '))
+		|| !ft_strncmp(str, "env\0", ft_strlen(str))
+		|| !ft_strncmp(str, "./minishell\0", ft_strlen(str)))
 	{
 		ft_printf("je suis un builtin\n");
 		return (1);
@@ -31,11 +34,15 @@ int is_built_in(char *str)
 int builtins(t_minishell *ms, char **split, t_env **env)
 {
 	(void)ms;
-	if (input_env(env, split) 
-			|| input_cd(split, env) || built_in_pwd(split) 
-			|| built_in_export(env, split) || built_in_unset(env, split))
+	if (is_built_in(split[0]))
 	{
-		return (1);
+		rm_quote_last(ms->parsed);
+		if (input_env(env, split) 
+				|| input_cd(split, env) || built_in_pwd(split) 
+				|| built_in_export(env, split) || built_in_unset(env, split))
+		{
+			return (1);
+		}
 	}
 	return (0);
 }

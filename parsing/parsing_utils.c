@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/26 23:27:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 00:16:25 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 13:39:18 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,17 @@ char **split_string(char *str)
         }
         i++;
     }
-
     // Alloue la mémoire nécessaire pour le tableau de mots
-    words = ft_calloc((num_words + 1), sizeof(char *));
+    words = ft_gc_malloc((num_words + 1) * sizeof(char *));
+	if (!words)
+		return (NULL);
     int word_index = 0;
 
     // Construit chaque mot et l'ajoute au tableau
     i = 0;
-    char *cur_word = ft_calloc((ft_strlen(str) + 1), sizeof(char));
+    char *cur_word = ft_gc_malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (!cur_word)
+		return (NULL);
     int cur_word_len = 0;
     in_quotes = 0;
     while (str[i])
@@ -80,7 +83,9 @@ char **split_string(char *str)
             {
                 cur_word[cur_word_len] = '\0';
                 words[word_index++] = cur_word;
-                cur_word = ft_calloc((ft_strlen(str) + 1), sizeof(char));
+                cur_word = ft_gc_malloc((ft_strlen(str) + 1) * sizeof(char));
+				if (!cur_word)
+					return (NULL);
                 cur_word_len = 0;
             }
         }

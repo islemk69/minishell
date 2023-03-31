@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 18:29:18 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:03:34 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,13 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	char	**str;
 	char	*tmp;
 
-	if (builtins(ms, ms->parsed, env) == 1)
-			return (1);
 	int i = 0;
+	if (builtins(ms, ms->parsed, env))
+	{
+			get_path(ms);
+			return (1);
+	}
+	get_path(ms);
 	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
 		if (ms->parsed[i][1] == '<')
@@ -56,13 +60,13 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		{
 			rm_quote_last(ms->parsed);
 			str = ms->parsed;
-		}	
-		check_command(ms, str[0]);
-		if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
+		}
+		if (!check_command(ms, str[0]))
 		{
 			ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", str[0]);
-			exit(0);
+			exit (0);
 		}
+		execve(ms->path_cmd, str, refresh_env(env));
 	}
 	wait(NULL);
 	remove_heredoc(ms->parsed);

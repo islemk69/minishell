@@ -6,11 +6,28 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 00:13:27 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:15:49 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int get_path(t_minishell *ms)
+{
+	char *path;
+	
+	path = ft_find_path(&ms->head_env, "PATH");
+	if (!path)
+	{
+		ms->path_env = NULL;
+		return (0);
+	}
+	ft_printf("Il y a PATH\n");
+	ms->path_env = ft_split(path, ':');
+	if (!ms->path_env)
+		return (0);
+	return (1);
+}
 
 int	check_command(t_minishell *ms, char *input_cmd)
 {
@@ -18,16 +35,19 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	int		i;
 
 	i = 0;
+	if (!ms->path_env || !*input_cmd)
+		return (0);
 	while (ms->path_env[i])
 	{
 		tmp = ft_strjoin(ms->path_env[i], "/");
 		ms->path_cmd = ft_strjoin(tmp, input_cmd);
-		if (access(ms->path_cmd, X_OK) != -1 || is_built_in(input_cmd))
+		if (is_built_in(input_cmd) || access(ms->path_cmd, X_OK) != -1 )
 			return (1);
 		i++;
 	}
 	return (0);
 }
+
 
 int	count_token(char *str, char c)
 {
