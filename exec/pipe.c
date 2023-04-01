@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:12:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:35:59 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 
 	split = NULL;
 	save_stdin = dup(0);
-	add_history(ms->line);
 	get_path(ms);
 	i = 0;
 	cpt = 0;
