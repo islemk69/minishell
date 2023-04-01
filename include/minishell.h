@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 04:53:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:10:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,14 @@ typedef struct s_env {
 typedef struct s_minishell
 {
 	t_env	*head_env;
-	char	**joined;
 	char	**parsed;
 	char	**path_env;
 	char	**new_env;
 	char	*prompt;
 	char	*line;
 	char	**input_cmd;
-	char	**split_pipe;
-	char	**history;
 	char	*path_cmd;
-	char	*tmp;
-	char	*new_line;
 	int		fd[2];
-	int		flg;
 	int		infile;
 	int		outfile;
 	char	*line_here;
@@ -109,7 +103,7 @@ void	ft_lstad_back(t_env **lst, t_env *new);
 
 void	lstclear(t_env **lst);
 
-int	check_new_line(t_minishell *ms);
+int	parsing(char *line, t_minishell *ms);
 
 size_t	ft_strlen_dtab(char **s);
 
@@ -127,7 +121,7 @@ int		is_built_in(char *str);
 
 void	wait_pid(int i);
 
-int	redirection(char **space);
+char	**redirection(char **space);
 
 char	*get_key(char *line);
 
@@ -165,6 +159,6 @@ void rm_quote_last(char **cmds);
 
 int get_path(t_minishell *ms);
 
-int	check_quote(char *str);
+int check_line(char *line);
 
 #endif

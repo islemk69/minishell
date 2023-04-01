@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 16:14:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:11:53 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int is_built_in(char *str)
 		|| !ft_strncmp(str, "env\0", ft_strlen(str))
 		|| !ft_strncmp(str, "./minishell\0", ft_strlen(str)))
 	{
-		ft_printf("je suis un builtin\n");
+		//ft_printf("je suis un builtin\n");
 		return (1);
 	}
 	return (0);

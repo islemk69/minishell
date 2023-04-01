@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 23:04:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:12:24 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,6 @@ char *extract_dollard(char *str)
 		i++;
 	}
 	i = 0;
-	ft_printf("SIZE %d\n", size);
 	realloc = ft_gc_malloc(sizeof(char) * (size + 1));
 	while (str[j])
 	{
@@ -302,11 +301,10 @@ char *extract_dollard(char *str)
 		i++;
 	}
 	realloc[i] = 0;
-	ft_printf("REALLOC %S\n", realloc);
 	return (realloc);
 }
 
-int redirection(char **space)
+char **redirection(char **space)
 {
 	int		i;
 	char	**realloc;
@@ -324,7 +322,7 @@ int redirection(char **space)
 	//realloc = NULL;
 	realloc2 = NULL;
 	if (!check_double_token(space))
-		return (ft_dprintf("Error token\n"), 0);
+		return (ft_dprintf("Error token\n"), NULL);
 	realloc2 = realloc_stick(space);
 	while (space[i])
 	{
@@ -397,5 +395,5 @@ int redirection(char **space)
 	// 	}
 	// 	i++;
 	// }
-	return (1);
+	return (space);
 }

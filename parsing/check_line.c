@@ -1,107 +1,125 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_line.c                                       :+:      :+:    :+:   */
+/*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 04:53:17 by ikaismou         ###   ########.fr       */
+/*   Created: 2023/04/01 04:34:06 by ikaismou          #+#    #+#             */
+/*   Updated: 2023/04/01 15:02:32 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 
-char	*quote_2(char *line, char *str)
+static int custom_msg(char *line, int pos, char c)
 {
-	int		i;
-	int		i2;
-	char	c;
-
-	str = ft_calloc(sizeof(char), (ft_strlen(line) - 2 + 1));
-	i = 0;
-	i2 = 0;
-	while (line[i2])
-	{
-		if (line[i2] && ft_strchr("\'\"", line[i2]))
-		{
-			c = line[i2++];
-			while (line[i2] && line[i2] != c)
-				str[i++] = line[i2++];
-			i2++;
-		}
-		else if (line[i2])
-			str[i++] = line[i2++];
-	}
-	str[i] = 0;
-	return (str);
-}
-
-char	*quote(char *line)
-{
-	char	*str;
-
-	str = NULL;
-	if (!line)
-		return (0);
-	if (ft_strchr(line, '\'') || ft_strchr(line, '\"'))
-		str = quote_2(line, str);
-	else
-		return (line);
-	return (str);
-}
-
-int   ft_pipe(t_minishell *ms)
-{
-    char	**pipe;
-	char	**space;
-	char	*tmp;
-	int		i;
-    int		j;
+	char *npipe;
+	int size;
+	int save = pos;
 	
-    pipe = ft_split_token(ms->line);
-	if (!pipe)
-		return(0);
-	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(pipe) + 1));
-	j = 0;
-    while (pipe[j])
-    {
-        space = split_string(pipe[j]);
-		if (!redirection(space))
-			return (0);
-		ms->joined[j] = 0;
-		i = 0;
-		while (space[i])
-		{
-			tmp = ft_strjoin_gnl(ms->joined[j], space[i]);
-			ms->joined[j] = ft_strdup(ft_strjoin_gnl(tmp, " "));
-			i++;
-		}
-		j++;
-    }
-	ms->joined[j] = 0;
-	return(1);
+	size = 0;
+	while (line[save] && line[save] == c)
+	{
+		size++;
+		save++;
+	}
+	npipe = ft_gc_malloc(sizeof(char) * (size + 1));
+	size = 0;
+	while (line[pos] && line[pos] == c)
+	{
+		npipe[size] = line[pos];
+		pos++;
+		size++; 
+	}
+	npipe[size] = 0;
+	ft_dprintf(""RED"bash: syntax error near unexpected token `%s'\n"WHITE"", npipe);
+	return (0);
 }
 
-int check_new_line(t_minishell *ms)
+
+static int check_quote(char* str) 
 {
-	char **space;
-	//int i = 0;
-	if(!check_quote(ms->line))
-		return(ft_dprintf("Error : Quote"), 0);
-    if (count_token(ms->line, '|'))
+    int single_quote;
+    int double_quote;
+    int len;
+    int i;
+
+    single_quote = 0;
+    double_quote = 0;
+    len = ft_strlen(str);
+    i = 0;
+
+			while (i < len) 
+			{
+				if (str[i] == '\'') 
+				{
+					if (double_quote == 0 || (double_quote == 1 && str[i-1] == '\\'))
+						single_quote = (single_quote + 1) % 2;
+				} 
+				else if (str[i] == '\"') 
+				{
+					if (single_quote == 0 || (single_quote == 1 && str[i-1] == '\\')) 
+						double_quote = (double_quote + 1) % 2;
+				}
+				i++;
+			}
+
+    if (single_quote == 0 && double_quote == 0) 
+        return 1;
+    return (ft_dprintf(""RED"bash: syntax error quote not closed \"'\" or '\"'\n"WHITE""), 0);
+}
+
+static int check_pipe(char* string) {
+    char quote = '\0';
+    int i = 0;
+    while (string[i] != '\0') 
 	{
-		if (!ft_pipe(ms))
-        	return (0);
-		ms->parsed = ms->joined;
-	}
-    else
+        if (string[i] == '"' || string[i] == '\'') 
+		{
+            if (quote == '\0') 
+			{
+                quote = string[i];
+            } 
+			else if (quote == string[i]) 
+			{
+                quote = '\0';
+            }
+        } 
+		else if (string[i] == '|' && string[i+1] == '|' && quote == '\0')
+            return (custom_msg(string, i + 1, '|'));
+        i++;
+    }
+    return 1;
+}
+
+
+static int check_wrong_redir(char* string) {
+    char quote = '\0';
+    int i = 0;
+    while (string[i] != '\0') 
 	{
-		space = split_string(ms->line);
-		if (!redirection(space))
-			return (0);
-		ms->parsed = space;
-	}
+        if (string[i] == '"' || string[i] == '\'') 
+		{
+            if (quote == '\0') 
+                quote = string[i];
+			else if (quote == string[i]) 
+                quote = '\0';
+        } 
+		else if (string[i] == '<' && string[i+1] == '<'  && string[i+2] == '<' && quote == '\0')
+			return (custom_msg(string, i + 2, '<'));
+		else if (string[i] == '>' && string[i+1] == '>'  && string[i+2] == '>' && quote == '\0')
+            return (custom_msg(string, i + 2, '>'));
+        i++;
+    }
+    return 1;
+}
+
+
+int check_line(char *line)
+{
+	if (!check_wrong_redir(line) || !check_pipe(line) || !check_quote(line))
+		return (0);
 	return (1);
 }

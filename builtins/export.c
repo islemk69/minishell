@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 03:59:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:12:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int built_in_export(t_env **env, char **split)
 			return (1);
 		}
 		char *key = get_key(split[1]);
-		ft_printf("%s\n", key);
 		char *value = get_value(split[1]);
 		cell = create_cell(key, value);
 		if (!cell)

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 03:30:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:11:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,17 @@ static int	start_minishell(t_minishell *ms)
 		if (is_empty(ms->line))
 			continue ;
 		add_history(ms->line);
-		if (!check_new_line(ms))
+		if (!parsing(ms->line, ms))
 		{
 			free(ms->line);
-			ft_printf("AHHHHHHHH\n");
 			continue;
 		}
+		// int i = 0;
+		// while (ms->parsed[i])
+		// {
+		// 	ft_printf("%s\n", ms->parsed[i]);
+		// 	i++;
+		// }
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
 		if (!exec_cmd(ms, &ms->head_env))
@@ -50,9 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		return (ft_dprintf(""RED"Error : Number of Arguments\n"CYAN""), 0);
 	system(SHELLSCRIPT);
-	ft_printf("test1\n");
 	init_env(&ms, envp);
-	ft_printf("test\n");
 	if (!start_minishell(&ms))
 		return (ft_gc_free_all(), 0);
 	return(0);

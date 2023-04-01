@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 18:29:33 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 15:11:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	init_env(t_minishell *ms, char **envp)
 	ms->head_env = NULL;
 	if (!envp[i] || !envp)
 	{
-		ft_printf("je usis passe\n");
 		while (i < 2)
 		{
 			if (i == 0)
@@ -133,7 +132,6 @@ int	init_env(t_minishell *ms, char **envp)
 	}
 	while (envp[i])
 	{
-		ft_printf("je usis passe\n");
 		if (!ft_strncmp(envp[i], "USER=", 5))
 			get_prompt(ms, envp[i]);
 		key = get_key(envp[i]);
