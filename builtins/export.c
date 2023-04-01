@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 14:48:01 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:59:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,18 @@ int built_in_export(t_env **env, char **split)
 	if (!ft_strncmp(split[0], "export\0,", 7) && ft_strchr(split[1], '='))
 	{
 		t_env	*cell;
+		t_env	*print;
 		
+		if (!split[1])
+		{
+			print = *env;
+			while (print)
+			{
+				ft_printf("declare -x %s=%s\n", print->key, print->value);
+				print = print->next;
+			}
+			return (1);
+		}
 		char *key = get_key(split[1]);
 		ft_printf("%s\n", key);
 		char *value = get_value(split[1]);

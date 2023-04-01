@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 03:10:30 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:32:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,9 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	char	*tmp;
 
 	int i = 0;
-	if (builtins(ms, ms->parsed, env))
-	{
-			get_path(ms);
-			return (1);
-	}
 	get_path(ms);
+	if (builtins(ms, ms->parsed, env))
+			return (1);
 	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
 		if (ms->parsed[i][1] == '<')
