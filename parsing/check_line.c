@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 03:30:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 04:53:17 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int check_new_line(t_minishell *ms)
 {
 	char **space;
 	//int i = 0;
-
+	if(!check_quote(ms->line))
+		return(ft_dprintf("Error : Quote"), 0);
     if (count_token(ms->line, '|'))
 	{
 		if (!ft_pipe(ms))
