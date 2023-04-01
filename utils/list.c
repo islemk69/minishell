@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:29:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/13 12:16:47 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 23:12:18 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_env	*create_cell(char *var, char *content)
 {
 	t_env	*cell;
 
-	cell = ft_gc_malloc(sizeof(t_env));
+	cell = malloc(sizeof(t_env));
 	if (!cell)
 		return (cell);
 	cell->key = var;
@@ -66,4 +66,20 @@ int	lstsize(t_env *lst)
 		i++;
 	}
 	return (i);
+}
+
+
+void	lstclear(t_env **lst)
+{
+	t_env	*tmp;
+
+	if (lst)
+	{
+		while (*lst)
+		{
+			tmp = (*lst)->next;
+			free(*lst);
+			*lst = tmp;
+		}
+	}
 }

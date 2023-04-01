@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:10:33 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 23:21:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,7 @@ void rm_quote_last(char **cmds);
 int get_path(t_minishell *ms);
 
 int check_line(char *line);
+
+void	lstclear(t_env **lst);
 
 #endif

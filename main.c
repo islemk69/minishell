@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:11:48 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 23:22:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	start_minishell(t_minishell *ms)
 	{
 		ms->line = readline(ms->prompt);
 		if (!ms->line)
-			return(0);
+			return(free(ms->line), 0);
 		if (is_empty(ms->line))
 			continue ;
 		add_history(ms->line);
@@ -57,6 +57,9 @@ int	main(int argc, char **argv, char **envp)
 	system(SHELLSCRIPT);
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))
+	{
+		lstclear(&ms.head_env);
 		return (ft_gc_free_all(), 0);
+	}
 	return(0);
 }
