@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/29 19:49:48 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 23:04:16 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,15 @@ char *ft_strdup_token(const char *s1, char c)
 	return (ptr);
 }
 
-char **realloc_redir(t_minishell *ms)
+char **realloc_redir(char **space)
 {
 	int i = 0;
 	int size = 0;
 	char **realloc;
-	while (ms->parsed[i])
+	while (space[i])
 	{
-		if ((is_token_char(ms->parsed[i][0]) && !ms->parsed[i][1]) 
-			|| (is_token_char(ms->parsed[i][0]) && is_token_char(ms->parsed[i][1]) && !ms->parsed[i][2]))
+		if ((is_token_char(space[i][0]) && !space[i][1]) 
+			|| (is_token_char(space[i][0]) && is_token_char(space[i][1]) && !space[i][2]))
 		{
 			size++;
 			i++;
@@ -187,7 +187,7 @@ int	is_redir(char *str)
 	return (count);
 }
 
-char **realloc_stick(t_minishell *ms)
+char **realloc_stick(char **space)
 {
 	int i = 0;
 	int size = 0;
@@ -195,12 +195,12 @@ char **realloc_stick(t_minishell *ms)
 	char **realloc;
 	
 	token = 0;
-	while (ms->parsed[i])
+	while (space[i])
 	{
-		token = is_redir(ms->parsed[i]);
-		if (!is_token_char(ms->parsed[i][0]) && token)
+		token = is_redir(space[i]);
+		if (!is_token_char(space[i][0]) && token)
 			size += token + 1;
-		else if (is_token_char(ms->parsed[i][0]) && token > 1)
+		else if (is_token_char(space[i][0]) && token > 1)
 			size += token;
 		else
 			size++;
@@ -306,7 +306,7 @@ char *extract_dollard(char *str)
 	return (realloc);
 }
 
-int redirection(t_minishell *ms)
+int redirection(char **space)
 {
 	int		i;
 	char	**realloc;
@@ -323,38 +323,38 @@ int redirection(t_minishell *ms)
 	token = 0;
 	//realloc = NULL;
 	realloc2 = NULL;
-	if (!check_double_token(ms->parsed))
+	if (!check_double_token(space))
 		return (ft_dprintf("Error token\n"), 0);
-	realloc2 = realloc_stick(ms);
-	while (ms->parsed[i])
+	realloc2 = realloc_stick(space);
+	while (space[i])
 	{
 		s_int = 0;
-		token = is_redir(ms->parsed[i]);
-		if (!is_token_char(ms->parsed[i][0]) && token)
+		token = is_redir(space[i]);
+		if (!is_token_char(space[i][0]) && token)
 		{
 			u = 1;
-			realloc2[k] =  strcpy_token(ms->parsed[i], &s_int);
+			realloc2[k] =  strcpy_token(space[i], &s_int);
 			k++;
 			while (u <= token)
 			{
-				realloc2[k] = strcpy_token_2(ms->parsed[i], &s_int, 0);
+				realloc2[k] = strcpy_token_2(space[i], &s_int, 0);
 				k++;
 				u++;
 			}
 		}
-		else if (is_token_char(ms->parsed[i][0]) && token > 1)
+		else if (is_token_char(space[i][0]) && token > 1)
 		{
 			u = 0;
 			while (u < token)
 			{
-				realloc2[k] = strcpy_token_2(ms->parsed[i], &s_int, 1);
+				realloc2[k] = strcpy_token_2(space[i], &s_int, 1);
 				k++;
 				u++;
 			}
 		}
 		else
 		{
-			realloc2[k] = ft_strdup(ms->parsed[i]);
+			realloc2[k] = ft_strdup(space[i]);
 			k++;
 		}
 		token = 0;
@@ -363,39 +363,39 @@ int redirection(t_minishell *ms)
 	realloc2[k] = 0;
 	k = 0;
 	i = 0;
-	ms->parsed = realloc2;
-	realloc = realloc_redir(ms);//< infile// << infile// > infile// >> infile
-	while (ms->parsed[i])
+	space = realloc2;
+	realloc = realloc_redir(space);//< infile// << infile// > infile// >> infile
+	while (space[i])
 	{
-		if ((is_token_char(ms->parsed[i][0]) && !ms->parsed[i][1]) 
-			|| (is_token_char(ms->parsed[i][0]) && is_token_char(ms->parsed[i][1]) && !ms->parsed[i][2]))
+		if ((is_token_char(space[i][0]) && !space[i][1]) 
+			|| (is_token_char(space[i][0]) && is_token_char(space[i][1]) && !space[i][2]))
 		{
-			realloc[k] = ft_strjoin_gnl(ms->parsed[i], ms->parsed[i + 1]);
+			realloc[k] = ft_strjoin_gnl(space[i], space[i + 1]);
 			i += 2;
 			k++;
 			continue;
 		}
-		realloc[k] = ft_strdup(ms->parsed[i]);
+		realloc[k] = ft_strdup(space[i]);
 		k++;
 		i++;
 	}
 	realloc[k] = 0;
-	ms->parsed = realloc;
+	space = realloc;
 	// i = 0;
 
-	//ms->parsed[i] = 0;
-	ms->parsed = redir_first(realloc);
+	//space[i] = 0;
+	space = redir_first(realloc);
 	i = 0;
-	char *tmp2;
-	while (ms->parsed[i])
-	{
-		if (ft_strchr(ms->parsed[i], '$'))
-		{
-			ft_printf("ahaha\n");
-			tmp2 = ms->parsed[i];
-			ms->parsed[i] = extract_dollard(tmp2);
-		}
-		i++;
-	}
+	// char *tmp2;
+	// while (space[i])
+	// {
+	// 	if (ft_strchr(space[i], '$'))
+	// 	{
+	// 		ft_printf("ahaha\n");
+	// 		tmp2 = space[i];
+	// 		space[i] = extract_dollard(tmp2);
+	// 	}
+	// 	i++;
+	// }
 	return (1);
 }

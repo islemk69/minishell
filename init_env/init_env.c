@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 14:10:33 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/03/31 18:29:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	init_env(t_minishell *ms, char **envp)
 	int		i;
 
 	i = 0;
+	ms->head_env = NULL;
 	if (!envp[i] || !envp)
 	{
 		ft_printf("je usis passe\n");

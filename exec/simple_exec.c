@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 16:03:34 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:10:30 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	id = fork();
 	if (id == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
 		{
 			rm_quote_last(ms->parsed);

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 15:54:55 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:30:26 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ static int	start_minishell(t_minishell *ms)
 		}
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
-		 int i = 0;
-		 while (ms->parsed[i])
-		 {
-		 	ft_printf("%s\n", ms->parsed[i]);
-		 	i++;
-		 }
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
 		free(ms->line);

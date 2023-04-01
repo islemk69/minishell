@@ -6,29 +6,12 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 00:16:36 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:30:09 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-int is_token(char *str, char c)
-{
-	int i;
-	int token;
-
-	
-	token = 0;
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] == c && str[i - 1] != '\"' && str[i + 1] != '\"'))
-			token++;
-		i++;
-	}
-	return (token);
-}
 
 char	*quote_2(char *line, char *str)
 {
@@ -69,59 +52,6 @@ char	*quote(char *line)
 	return (str);
 }
 
-static int del_char(t_minishell *ms)
-{
-    int size;
-    int i;
-	int j;
-    
-    i = 0;
-    size = 0;
-    while (ms->line[i++])
-    {
-        if (ms->line[i] != 92 && ms->line[i] != ';')
-            size++;
-    }
-    ms->new_line = ft_gc_malloc(sizeof(char) * (size + 1));
-    if (!ms->new_line)
-        return (0);
-    i = -1;
-    j = 0;
-    while (ms->line[++i])
-    {
-        if (ms->line[i] != 92 && ms->line[i] != ';')
-            ms->new_line[j++] = ms->line[i];
-    }
-    ms->new_line[j] = 0;
-	return (1);
-}
-
-void new(t_minishell *ms, char **space)
-{
-    int i;
-    char **quot;
-
-	i = 0;
-	while(space[i])
-		i++;
-    quot = (char**)ft_gc_malloc(sizeof(char *) * (i + 1));
-	ms->parsed = (char **)ft_gc_malloc(sizeof(char *) * (i + 1));
-    i = 0;
-    while (space[i])
-    {
-		quot[i] = ft_strdup(space[i]);
-        i++;
-    }
-	quot[i] = 0;
-    i = 0;
-    while (quot[i])
-    {
-        ms->parsed[i] = ft_strdup(quot[i]);
-        i++;
-    }
-    ms->parsed[i] = 0;
-}
-
 int   ft_pipe(t_minishell *ms)
 {
     char	**pipe;
@@ -130,25 +60,25 @@ int   ft_pipe(t_minishell *ms)
 	int		i;
     int		j;
 	
-    pipe = ft_split_token(ms->new_line);
+    pipe = ft_split_token(ms->line);
 	if (!pipe)
 		return(0);
-	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen(*pipe) + 1));
-	j = -1;
-    while (pipe[++j])
+	ms->joined = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(pipe) + 1));
+	j = 0;
+    while (pipe[j])
     {
         space = split_string(pipe[j]);
-        new(ms, space);
-		if (!redirection(ms))
+		if (!redirection(space))
 			return (0);
 		ms->joined[j] = 0;
-		i = -1;
-		while (ms->parsed[++i])
+		i = 0;
+		while (space[i])
 		{
-			tmp = ft_strjoin_gnl(ms->joined[j], ms->parsed[i]);
+			tmp = ft_strjoin_gnl(ms->joined[j], space[i]);
 			ms->joined[j] = ft_strdup(ft_strjoin_gnl(tmp, " "));
+			i++;
 		}
-		ms->parsed[i] = 0;
+		j++;
     }
 	ms->joined[j] = 0;
 	return(1);
@@ -156,37 +86,21 @@ int   ft_pipe(t_minishell *ms)
 
 int check_new_line(t_minishell *ms)
 {
-	char	**space;
-    int i;
-    
-    if (ft_strchr(ms->line, 92) || ft_strchr(ms->line, ';'))
-        del_char(ms);
-    else
-        ms->new_line = ft_strdup(ms->line);
+	char **space;
+	//int i = 0;
+
     if (count_token(ms->line, '|'))
 	{
 		if (!ft_pipe(ms))
         	return (0);
-		ms->parsed = ft_gc_malloc(sizeof(char *) * (ft_strlen(*ms->joined) + 1));
-		i = 0;
-		while(ms->joined[i])
-		{
-			ms->parsed[i] = ft_strdup(ms->joined[i]);
-			i++;
-		}
+		ms->parsed = ms->joined;
 	}
     else
 	{
-		space = split_string(ms->new_line);
-		int j = 0;
-		while (space[j])
-		{
-			ft_printf("%s\n", space[j]);
-			j++;
-		}
-        new(ms, space);
-		if (!redirection(ms))
+		space = split_string(ms->line);
+		if (!redirection(space))
 			return (0);
+		ms->parsed = space;
 	}
 	return (1);
 }

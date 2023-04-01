@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 15:11:51 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:14:50 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		is_built_in(char *str);
 
 void	wait_pid(int i);
 
-int	redirection(t_minishell *ms);
+int	redirection(char **space);
 
 char	*get_key(char *line);
 

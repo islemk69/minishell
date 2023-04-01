@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 15:56:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:06:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	here_doc(t_minishell *ms, char *tab)
 	ms->infile = open(tab, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 	{
-		g_exit_status = 1;
 		ms->line_here = readline(">");
 		if (!ms->line_here)
 			return (free(ms->line_here), 0);
