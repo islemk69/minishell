@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 23:20:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/02 23:31:53 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ char **ft_pipe(char *line)
 	int		i;
     int		j;
 	
-    pipe = ft_split_token(line);
+    pipe = ft_split_token(line, '|');
 	if (!pipe)
 		return(0);
 	join = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(pipe) + 1));
 	j = -1;
     while (pipe[++j])
     {
-        space = split_string(pipe[j]);
+        space = ft_split_token(pipe[j], ' ');
 		if (!redirection(space))
 			return (0);
 		join[j] = 0;
@@ -96,7 +96,7 @@ int parsing(char *line, t_minishell *ms)
 	}
     else
 	{
-		space = split_string(line);
+		space = ft_split_token(line, ' ');
 		ms->parsed = redirection(space);
 		if (!ms->parsed)
 			return (0);

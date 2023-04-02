@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:35:59 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/02 23:26:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	cpt = 0;
 	while (ms->parsed[i])
 	{
-		split = split_string(ms->parsed[i]);
+		split = ft_split_token(ms->parsed[i], ' ');
 		j = 0;
 		while (split[j] && split[j][0] == '<')
 		{
@@ -48,7 +48,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	i = 0;
 	while (ms->parsed[i])
 	{
-		split = split_string(ms->parsed[i]);
+		split = ft_split_token(ms->parsed[i], ' ');
 		if (pipe(ms->fd) == -1)
 			error("pipe");
 		id = fork();
