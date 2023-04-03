@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/02 23:26:37 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 17:56:59 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	while (ms->parsed[i])
 	{
 		split = ft_split_token(ms->parsed[i], ' ');
+		int z = 0;
+		while (split[z])
+		{
+			ft_printf("split %d : %s\n", z, split[z]);
+			z++;
+		}
 		if (pipe(ms->fd) == -1)
 			error("pipe");
 		id = fork();

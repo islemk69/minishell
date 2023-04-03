@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:19:13 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:02:39 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 char	**check_redir(t_minishell *ms, char **tab)
 {
-	int		i;
+	int i;
 	char	**realloc;
 	int		size;
 	int		j;
+	char	*tab2;
 
 	j = 0;
 	size = 0;
@@ -31,12 +32,15 @@ char	**check_redir(t_minishell *ms, char **tab)
 			i++;
 		i--;
 		if (tab[i][1] == '<')
-			ms->infile = open(tab[i] + 2, O_RDONLY);
+		{
+			tab2 = ft_strjoin(".", tab[i] + 2);
+			ms->infile = open(tab2, O_RDONLY);
+		}
 		if (tab[i][1] != '<')
 			ms->infile = open(tab[i] + 1, O_RDONLY);
 		if (ms->infile < 0)
 		{
-			ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE"", ms->parsed[i]);
+			ft_dprintf(""RED"bash: %s: No such file or directory\n", ms->parsed[i]);
 			exit (0);
 		}
 		if (dup2(ms->infile, 0) == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 03:06:02 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:00:18 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 void	remove_heredoc(char **tab)
 {
-	int	i;
+	int		i;
+	char	*tab2;
 	
 	i = 0;
 	while (tab[i] && tab[i][0] == '<')
 	{
 		if (tab[i][1] == '<')
-			unlink(tab[i] + 2);
+		{
+			tab2 = ft_strjoin(".", tab[i] + 2);
+			unlink(tab2);
+		}
 		i++;
 	}
 }
 
 int	here_doc(t_minishell *ms, char *tab)
 {
-	ms->infile = open(tab, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	char	*tab2 = ft_strjoin(".", tab);
+	ms->infile = open(tab2, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 	{
+		//g_exit_status = 1;
 		ms->line_here = readline(">");
 		if (!ms->line_here)
 			return (free(ms->line_here), 0);

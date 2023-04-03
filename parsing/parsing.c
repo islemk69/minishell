@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 17:00:31 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:04:25 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,6 @@ char **ft_pipe(char *line)
     while (pipe[++j])
     {
         space = ft_split_token(pipe[j], ' ');
-		int o = 0;
-		while (space[o])
-		{
-			ft_printf("SPACE %s\n", space[o]);
-			o++;
-		}
 		space = redirection(space);
 		if (!space)
 			return (0);

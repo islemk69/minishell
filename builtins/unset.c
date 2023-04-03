@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:47 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/31 15:27:14 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 17:55:51 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int built_in_unset(t_env** env, char **cmd)
 			return (1);
 		while (current != NULL) 
 		{
-			if (strcmp(current->key, cmd[1]) == 0) 
+			if (ft_strncmp(current->key, cmd[1], ft_strlen(current->key)) == 0) 
 			{
 				if (previous == NULL) 
 					*env = current->next;

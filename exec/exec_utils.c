@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:19:31 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 17:59:25 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,21 +83,22 @@ int	count_token(char *str, char c)
 void	access_file(char **tab)
 {
 	int	i;
-
+	char	*tab2;
 	i = 0;
 	while (tab[i] && tab[i][0] == '<')
 	{
 		if (tab[i][1] == '<')
 		{
-			if (access(tab[i] + 2, F_OK) != 0)
+			tab2 = ft_strjoin(".", tab[i] + 2);
+			if (access(tab2, F_OK) != 0)
 			{
-				ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE"", tab[i] + 2);
+				ft_dprintf(""RED"bash: %s: No such file or directory\n", tab[i] + 2);
 				exit (0);
 			}
 		}
 		else if (access(tab[i] + 1, F_OK) != 0)
 		{
-			ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE"", tab[i] + 1);
+			ft_dprintf(""RED"bash: %s: No such file or directory\n", tab[i] + 1);
 			exit (0);
 		}
 		i++;
