@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 00:02:00 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:25:20 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static int	start_minishell(t_minishell *ms)
 	ms->parsed = NULL;
 	signal(SIGINT, signal_handler_parent);
 	signal(SIGQUIT, SIG_IGN);
+	ms->prompt = ft_strjoin(ms->prompt, " ");
 	while (1)
 	{
 		ms->line = readline(ms->prompt);
@@ -44,7 +45,6 @@ static int	start_minishell(t_minishell *ms)
 			return (free(ms->line), 0);
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
-		ft_printf("je suis passe\n");
 		free(ms->line);
 	}
 }

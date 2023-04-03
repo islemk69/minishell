@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/02 23:31:53 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/03 17:00:31 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,14 @@ char **ft_pipe(char *line)
     while (pipe[++j])
     {
         space = ft_split_token(pipe[j], ' ');
-		if (!redirection(space))
+		int o = 0;
+		while (space[o])
+		{
+			ft_printf("SPACE %s\n", space[o]);
+			o++;
+		}
+		space = redirection(space);
+		if (!space)
 			return (0);
 		join[j] = 0;
 		i = -1;
