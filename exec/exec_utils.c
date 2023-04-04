@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 17:59:25 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/04 14:17:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	i = 0;
 	if (!ms->path_env || !*input_cmd)
 		return (0);
+	if (input_cmd[0] == '/' || (input_cmd[0] == '.' && input_cmd[1] == '/'))
+	{
+		if (access(input_cmd, X_OK) != -1)
+		{
+			ms->path_cmd = input_cmd;
+			return (1);
+		}
+		return (0);
+	}
 	while (ms->path_env[i])
 	{
 		tmp = ft_strjoin(ms->path_env[i], "/");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 18:08:25 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/04 14:18:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	start_minishell(t_minishell *ms)
 	ms->parsed = NULL;
 	signal(SIGINT, signal_handler_parent);
 	signal(SIGQUIT, SIG_IGN);
-	ms->prompt = ft_strjoin(ms->prompt, " ");
 	while (1)
 	{
 		ms->line = readline(ms->prompt);
