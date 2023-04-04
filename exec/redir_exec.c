@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 18:49:43 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/04 19:33:21 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,25 @@ char	**check_redir(t_minishell *ms, char **tab)
 			{
 				ms->outfile = open(tab[i] + 2, O_CREAT | O_RDWR | O_APPEND, 0644);
 				if (ms->outfile < 0)
-					ft_dprintf(""RED"bash: %s: Permission denied\n", tab[i] + 2);
+				{
+					ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 2);
+					exit (0);
+				}
 			}
 			else
 			{
 				ms->outfile = open(tab[i] + 1, O_CREAT | O_RDWR | O_TRUNC, 0644);
 				if (ms->outfile < 0)
-					ft_dprintf(""RED"bash: %s: Permission denied\n", tab[i] + 1);
+				{
+					ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 1);
+					exit (0);
+				}
 			}
-			if (dup2(ms->outfile, 1) == -1)
-				error ("dup6");
 		}
 		i++;
 	}
-	if (ms->outfile < 0)
-		exit (0);
+	if (dup2(ms->outfile, 1) == -1)
+		error ("dup6");
 	i--;
 	realloc = ft_gc_malloc(sizeof(char *) * (size - i));
 	i++;
