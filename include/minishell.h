@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 23:21:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:41:28 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,9 @@ int get_path(t_minishell *ms);
 int check_line(char *line);
 
 void	lstclear(t_env **lst);
+
+void	dollar_exist(t_minishell *ms);
+
+void	check_dollar(t_minishell *ms);
 
 #endif

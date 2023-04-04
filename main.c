@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 14:18:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:17:15 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ static int	start_minishell(t_minishell *ms)
 			ft_printf("error token parsing\n");
 			free(ms->line);
 			continue;
-		}
-		int i = 0;
-		while (ms->parsed[i])
-		{
-			ft_printf("%s\n", ms->parsed[i]);
-			i++;
 		}
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);

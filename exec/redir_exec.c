@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 18:02:39 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/04 18:49:43 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,50 @@ char	**check_redir(t_minishell *ms, char **tab)
 		{
 			tab2 = ft_strjoin(".", tab[i] + 2);
 			ms->infile = open(tab2, O_RDONLY);
+			if (ms->infile < 0)
+			{
+				ft_dprintf(""RED"bash: %s: No such file or directory\n", tab[i] + 2);
+				exit (0);
+			}
 		}
 		if (tab[i][1] != '<')
-			ms->infile = open(tab[i] + 1, O_RDONLY);
-		if (ms->infile < 0)
 		{
-			ft_dprintf(""RED"bash: %s: No such file or directory\n", ms->parsed[i]);
-			exit (0);
+			ms->infile = open(tab[i] + 1, O_RDONLY);
+			if (ms->infile < 0)
+			{
+				ft_dprintf(""RED"bash: %s: No such file or directory\n", tab[i] + 1);
+				exit (0);
+			}
 		}
 		if (dup2(ms->infile, 0) == -1)
 			error ("dup");
 		i++;
 	}
 	while (tab[i] && tab[i][0] == '>')
-		i++;
-	i--;
-	if (tab[i][0] == '>')
 	{
-		ms->outfile_exist = 1;
-		if (tab[i][1] == '>')
-			ms->outfile = open(tab[i] + 2, O_CREAT | O_RDWR | O_APPEND, 0644);
-		else
-			ms->outfile = open(tab[i] + 1, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (dup2(ms->outfile, 1) == -1)
-			error ("dup6");
+		if (tab[i][0] == '>')
+		{
+			ms->outfile_exist = 1;
+			if (tab[i][1] == '>')
+			{
+				ms->outfile = open(tab[i] + 2, O_CREAT | O_RDWR | O_APPEND, 0644);
+				if (ms->outfile < 0)
+					ft_dprintf(""RED"bash: %s: Permission denied\n", tab[i] + 2);
+			}
+			else
+			{
+				ms->outfile = open(tab[i] + 1, O_CREAT | O_RDWR | O_TRUNC, 0644);
+				if (ms->outfile < 0)
+					ft_dprintf(""RED"bash: %s: Permission denied\n", tab[i] + 1);
+			}
+			if (dup2(ms->outfile, 1) == -1)
+				error ("dup6");
+		}
+		i++;
 	}
+	if (ms->outfile < 0)
+		exit (0);
+	i--;
 	realloc = ft_gc_malloc(sizeof(char *) * (size - i));
 	i++;
 	while (tab[i])

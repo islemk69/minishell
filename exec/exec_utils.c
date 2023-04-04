@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 14:17:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:17:09 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,3 +113,40 @@ void	access_file(char **tab)
 		i++;
 	}
 }
+
+// void	dollar_exist(t_minishell *ms)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	j = 0;
+// 	while (ms->parsed[i])
+// 	{
+// 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
+// 		{
+// 			while (ms->parsed[i][j])
+// 			{
+				
+// 				j++;
+// 			}
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void	check_dollar(t_minishell *ms)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (ms->parsed[i])
+// 	{
+// 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
+// 		{
+// 			dollar_exist(ms);
+// 			return;
+// 		}
+// 		i++;
+// 	}
+// }
