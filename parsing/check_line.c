@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 04:34:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 00:19:51 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:18:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,14 @@ static int check_pipe(char* string)
 	pipe = ft_split_token(string, ' ');
 	if(pipe[0][0] == '|')
 		return(custom_msg(pipe[0], 0, '|'));
-	else if (pipe[ft_strlen_dtab(pipe) - 1][0] == '|') 
-		return (custom_msg(pipe[ft_strlen_dtab(pipe) - 1], 0 , '|'));
 	else if (pipe[ft_strlen_dtab(pipe) - 1][ft_strlen(pipe[ft_strlen_dtab(pipe) - 1]) - 1] == '|') 
 		return (custom_msg(pipe[ft_strlen_dtab(pipe) - 1], ft_strlen(pipe[ft_strlen_dtab(pipe) - 1]) - 1 , '|'));
+	while (pipe[i])
+	{
+		if (pipe[i][ft_strlen(pipe[i]) - 1] == '|' && pipe[i + 1][0] == '|')
+			return (custom_msg(pipe[i + 1], 0, '|'));
+		i++;
+	}
     while (string[i] != '\0') 
 	{
         if (string[i] == '"' || string[i] == '\'') 
