@@ -3,16 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 18:17:15 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/05 17:56:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
 int	g_exit_status = 0;
+
+int urandom(char *str)
+{
+	unsigned char c;
+	
+	if (!str || !*str)
+			return (0);
+	while (*str)
+	{
+		if (*str < 0)
+			return (ft_dprintf("Your are a Nazi\n"), 0);
+		c = (unsigned char)*str;
+		if (c > 127)
+			return (ft_dprintf("Your are a Nazi\n"), 0);
+		str++;
+	}	
+	return (1);
+}
 
 static int	start_minishell(t_minishell *ms)
 {
@@ -23,7 +41,7 @@ static int	start_minishell(t_minishell *ms)
 	while (1)
 	{
 		ms->line = readline(ms->prompt);
-		if (!ms->line)
+		if (!urandom(ms->line))
 			return(free(ms->line), 0);
 		if (is_empty(ms->line))
 			continue ;
