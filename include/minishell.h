@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 17:41:28 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/06 23:57:10 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 #define DQUOTE 34
 #define DOLLAR 36
 #define TILDE 126
+#define SYNT_ERR "bash: syntax error near unexpected token"
 #define SHELLSCRIPT "\
 #/bin/bash \n\
 echo -e \""CYAN"       .__       .__       "YELLOW".__           "RED"\

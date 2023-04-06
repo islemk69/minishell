@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/06 23:10:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/06 23:51:36 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	g_exit_status = 0;
 
-int urandom(char *str)
+int	urandom(char *str)
 {
-	unsigned char c;
-	
+	unsigned char	c;
+
 	if (!str || !*str)
-			return (0);
+		return (0);
 	while (*str)
 	{
 		if (*str < 0)
@@ -42,7 +42,7 @@ static int	start_minishell(t_minishell *ms)
 	{
 		ms->line = readline(ms->prompt);
 		if (!urandom(ms->line))
-			return(free(ms->line), 0);
+			return (free(ms->line), 0);
 		if (is_empty(ms->line))
 			continue ;
 		add_history(ms->line);
@@ -50,13 +50,7 @@ static int	start_minishell(t_minishell *ms)
 		{
 			ft_printf("error token parsing\n");
 			free(ms->line);
-			continue;
-		}
-		int o = 0;
-		while (ms->parsed[o])
-		{
-			ft_printf("%s\n", ms->parsed[o]);
-			o++;
+			continue ;
 		}
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
@@ -80,5 +74,5 @@ int	main(int argc, char **argv, char **envp)
 		lstclear(&ms.head_env);
 		return (ft_gc_free_all(), 0);
 	}
-	return(0);
+	return (0);
 }
