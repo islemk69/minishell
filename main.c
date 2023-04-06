@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/05 17:56:37 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/06 23:10:40 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int urandom(char *str)
 	while (*str)
 	{
 		if (*str < 0)
-			return (ft_dprintf("Your are a Nazi\n"), 0);
+			return (ft_dprintf(""RED"Your are a Nazi\n"WHITE""), 0);
 		c = (unsigned char)*str;
 		if (c > 127)
-			return (ft_dprintf("Your are a Nazi\n"), 0);
+			return (ft_dprintf(""RED"Your are a Nazi\n"WHITE""), 0);
 		str++;
 	}	
 	return (1);
@@ -52,6 +52,12 @@ static int	start_minishell(t_minishell *ms)
 			free(ms->line);
 			continue;
 		}
+		int o = 0;
+		while (ms->parsed[o])
+		{
+			ft_printf("%s\n", ms->parsed[o]);
+			o++;
+		}
 		if (!check_write_exit(ms))
 			return (free(ms->line), 0);
 		if (!exec_cmd(ms, &ms->head_env))
@@ -66,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	if (argc > 1)
-		return (ft_dprintf(""RED"Error : Number of Arguments\n"CYAN""), 0);
+		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);
 	system(SHELLSCRIPT);
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))

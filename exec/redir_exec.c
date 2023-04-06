@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 19:33:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/06 23:36:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 			ms->infile = open(tab2, O_RDONLY);
 			if (ms->infile < 0)
 			{
-				ft_dprintf(""RED"bash: %s: No such file or directory\n", tab[i] + 2);
+				ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 2);
 				exit (0);
 			}
 		}
@@ -46,7 +46,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 			ms->infile = open(tab[i] + 1, O_RDONLY);
 			if (ms->infile < 0)
 			{
-				ft_dprintf(""RED"bash: %s: No such file or directory\n", tab[i] + 1);
+				ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 1);
 				exit (0);
 			}
 		}
@@ -54,34 +54,37 @@ char	**check_redir(t_minishell *ms, char **tab)
 			error ("dup");
 		i++;
 	}
-	while (tab[i] && tab[i][0] == '>')
+	if (tab[i][0] == '>')
 	{
-		if (tab[i][0] == '>')
+		while (tab[i] && tab[i][0] == '>')
 		{
-			ms->outfile_exist = 1;
-			if (tab[i][1] == '>')
+			if (tab[i][0] == '>')
 			{
-				ms->outfile = open(tab[i] + 2, O_CREAT | O_RDWR | O_APPEND, 0644);
-				if (ms->outfile < 0)
+				ms->outfile_exist = 1;
+				if (tab[i][1] == '>')
 				{
-					ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 2);
-					exit (0);
+					ms->outfile = open(tab[i] + 2, O_CREAT | O_RDWR | O_APPEND, 0644);
+					if (ms->outfile < 0)
+					{
+						ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 2);
+						exit (0);
+					}
+				}
+				else
+				{
+					ms->outfile = open(tab[i] + 1, O_CREAT | O_RDWR | O_TRUNC, 0644);
+					if (ms->outfile < 0)
+					{
+						ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 1);
+						exit (0);
+					}
 				}
 			}
-			else
-			{
-				ms->outfile = open(tab[i] + 1, O_CREAT | O_RDWR | O_TRUNC, 0644);
-				if (ms->outfile < 0)
-				{
-					ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 1);
-					exit (0);
-				}
-			}
+			i++;
 		}
-		i++;
+		if (dup2(ms->outfile, 1) == -1)
+			error ("dup6");
 	}
-	if (dup2(ms->outfile, 1) == -1)
-		error ("dup6");
 	i--;
 	realloc = ft_gc_malloc(sizeof(char *) * (size - i));
 	i++;

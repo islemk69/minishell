@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:12:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/05 21:22:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,7 +322,7 @@ char **redirection(char **space)
 	//realloc = NULL;
 	realloc2 = NULL;
 	if (!check_double_token(space))
-		return (ft_dprintf("Error token\n"), NULL);
+		return (ft_dprintf(""RED"Error token\n"WHITE""), NULL);
 	realloc2 = realloc_stick(space);
 	while (space[i])
 	{
