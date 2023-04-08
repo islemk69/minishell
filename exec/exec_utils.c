@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/06 23:44:46 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/08 21:48:55 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,23 @@ int	check_command(t_minishell *ms, char *input_cmd)
 {
 	char	*tmp;
 	int		i;
+	struct stat info;
 
 	i = 0;
 	if (!ms->path_env || !*input_cmd)
 		return (0);
 	if (input_cmd[0] == '/' || (input_cmd[0] == '.' && input_cmd[1] == '/'))
 	{
-		if (access(input_cmd, X_OK) != -1)
+		if (stat(input_cmd, &info) == 0 && S_ISDIR(info.st_mode)) 
+			ft_dprintf(""RED"bash: %s: Is a directory\n"WHITE"", input_cmd);
+		else 
 		{
-			ms->path_cmd = input_cmd;
-			return (1);
+			if (access(input_cmd, X_OK) != -1)
+			{
+				ms->path_cmd = input_cmd;
+				return (1);
+			}
+			ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", input_cmd);
 		}
 		return (0);
 	}
@@ -53,6 +60,7 @@ int	check_command(t_minishell *ms, char *input_cmd)
 			return (1);
 		i++;
 	}
+	ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", input_cmd);
 	return (0);
 }
 

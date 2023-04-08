@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:30:22 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/08 21:47:34 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 			str = ms->parsed;
 		}
 		if (!check_command(ms, str[0]))
-		{
-			ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", str[0]);
 			exit (0);
-		}
 		execve(ms->path_cmd, str, refresh_env(env));
 	}
 	wait(NULL);

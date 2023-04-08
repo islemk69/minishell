@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/06 23:57:10 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/08 21:36:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
+#include <sys/stat.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
