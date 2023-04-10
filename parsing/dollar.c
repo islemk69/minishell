@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/11 00:08:25 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/11 00:14:35 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			env = NULL;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ')
+			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ' && tab[i] != '$')
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -115,7 +115,7 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			dollar = NULL;
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ')
+			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ' && tab[i] != '$')
 			{
 				tmp[j] = tab[i];
 				i++;
