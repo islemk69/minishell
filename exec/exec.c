@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/04 18:17:45 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/10 23:14:28 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 int	exec_cmd(t_minishell *ms, t_env **env)
 {
 	int		nb_pipe;
-
+	
+	check_dollar(ms);
+	int i = 0;
+	while (ms->parsed[i])
+	{
+		ft_printf("ms->parsed[%d] : %s\n", i , ms->parsed[i]);
+		i++;
+	}
 	nb_pipe = count_token(ms->line, '|');
 	if (nb_pipe == 0)
 	{
-		//dollar_exist(ms);
 		if (!exec_one_pipe(ms, env))
 			return (0);
 	}

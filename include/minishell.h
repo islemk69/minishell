@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 15:47:00 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/10 23:10:17 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include "libft.h"
+# include "../Libft/libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 #include <sys/stat.h>
@@ -164,8 +164,6 @@ int get_path(t_minishell *ms);
 int check_line(char *line);
 
 void	lstclear(t_env **lst);
-
-void	dollar_exist(t_minishell *ms);
 
 void	check_dollar(t_minishell *ms);
 
