@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/08 17:38:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/11 00:42:59 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			{
 				nb_pipe--;
 				i++;
-				ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", str[0]);
 			}
 			exit(0);
 		}
