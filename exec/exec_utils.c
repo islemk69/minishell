@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 22:34:35 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/11 00:36:54 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	check_command(t_minishell *ms, char *input_cmd)
 			return (1);
 		i++;
 	}
-	ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", input_cmd);
 	return (0);
 }
 
