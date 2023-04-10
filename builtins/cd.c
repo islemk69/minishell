@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:19:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/01 15:41:13 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:34:05 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	input_cd(char **split, t_env **env)
 {
 	if (split[0] && !ft_strncmp(split[0], "cd\0", 3))
 	{
+		ft_printf("CD :%s\n", split[0]);
 		if (!split[1])
 		{
 			if (chdir(ft_find_path(env, "HOME")) == -1)

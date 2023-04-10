@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/08 21:36:48 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:47:00 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char	**split_string(char *str);
 
 int	check_command(t_minishell *ms, char *input_cmd);
 
-int	count_token(char *str, char c);
+int	count_token(char *str, char c);\
 
 void	access_file(char **tab);
 
