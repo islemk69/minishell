@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/13 13:39:44 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/11 00:02:31 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_find_path(t_env **env, char *srch)
 	head = *env;
 	while (head)
 	{
-		if (!ft_strncmp(head->key, srch, ft_strlen(srch)))
+		if (!ft_strncmp(head->key, srch, ft_strlen(srch) + 1))
 			return (head->value);
 		head = head->next;
 	}

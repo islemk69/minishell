@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/10 23:06:17 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/11 00:08:25 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 		if (tab[i] == '$' && s_quot == 0)
 		{
 			i++;
+			env = NULL;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			j = 0;
 			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ')
@@ -63,7 +64,9 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				j++;
 			}
 			tmp[j] = 0;
-			env = ft_find_path(&ms->head_env, tmp);
+			if (tmp[0])
+				env = ft_find_path(&ms->head_env, tmp);
+			//ft_printf(" env %s\n", env);
 			if (env)
 				count += ft_strlen(env);
 			continue;
@@ -119,7 +122,9 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				j++;
 			}
 			tmp[j] = 0;
-			dollar = ft_find_path(&ms->head_env, tmp);
+			//ft_printf("tmp : %s\n", tmp);
+			if (tmp[0])
+				dollar = ft_find_path(&ms->head_env, tmp);
 			if (dollar != 0)
 			{
 				j = 0;
