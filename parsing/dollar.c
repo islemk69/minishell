@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/11 00:14:35 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/17 12:11:43 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,15 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
 		{
 			i++;
 			env = NULL;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ' && tab[i] != '$')
+			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
+					&& tab[i] != ' ' && tab[i] != '$')
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -109,13 +111,15 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
 		{
 			i++;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			dollar = NULL;
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' && tab[i] != ' ' && tab[i] != '$')
+			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
+					&& tab[i] != ' ' && tab[i] != '$')
 			{
 				tmp[j] = tab[i];
 				i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 23:10:17 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/17 12:20:50 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ void	error(char *str);
 
 int		builtins(t_minishell *ms, char **split, t_env **env);
 
-int built_in_export(t_env **env, char **split);
+int		built_in_export(t_env **env, char **split);
 
-int built_in_unset(t_env** env, char **cmd);
+int		built_in_unset(t_env** env, char **cmd);
 
-int	input_env(t_env **env, char **split);
+int		input_env(t_env **env, char **split);
 
-int	input_cd(char **split, t_env **env);
+int		input_cd(char **split, t_env **env);
 
-int	built_in_pwd(char **split);
+int		built_in_pwd(char **split);
 
 char	*ft_find_path(t_env **env, char *srch);
 
@@ -105,7 +105,7 @@ void	ft_lstad_back(t_env **lst, t_env *new);
 
 void	lstclear(t_env **lst);
 
-int	parsing(char *line, t_minishell *ms);
+int		parsing(char *line, t_minishell *ms);
 
 size_t	ft_strlen_dtab(char **s);
 
@@ -135,9 +135,9 @@ void	signal_handler_heredoc(int signum);
 
 char	**split_string(char *str);
 
-int	check_command(t_minishell *ms, char *input_cmd);
+int		check_command(t_minishell *ms, char *input_cmd);
 
-int	count_token(char *str, char c);\
+int		count_token(char *str, char c);\
 
 void	access_file(char **tab);
 
@@ -149,7 +149,7 @@ int		here_doc(t_minishell *ms, char *tab);
 
 int		exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 
-int	exec_one_pipe(t_minishell *ms, t_env **env);
+int		exec_one_pipe(t_minishell *ms, t_env **env);
 
 char	**check_redir(t_minishell *ms, char **tab);
 
@@ -157,14 +157,16 @@ int		check_write_exit(t_minishell *ms);
 
 char	*quote(char *line);
 
-void rm_quote_last(char **cmds);
+void	rm_quote_last(char **cmds);
 
-int get_path(t_minishell *ms);
+int		get_path(t_minishell *ms);
 
-int check_line(char *line);
+int		check_line(char *line);
 
 void	lstclear(t_env **lst);
 
 void	check_dollar(t_minishell *ms);
+
+char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
 
 #endif

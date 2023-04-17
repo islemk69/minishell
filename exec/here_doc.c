@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 18:00:18 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/17 12:22:11 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ int	here_doc(t_minishell *ms, char *tab)
 		if (!ft_strncmp(tab, ms->line_here, ft_strlen(tab))
 				&& (ft_strlen(tab) == ft_strlen(ms->line_here)))
 			break ;
+		if (ft_strnstr(ms->line_here, "$", ft_strlen(ms->line_here)) != 0)
+			ms->line_here = ft_strdup(dollar_exist(ms, ms->line_here, 0, 0));
 		write(ms->infile, ms->line_here, ft_strlen(ms->line_here));
 		write(ms->infile, "\n", 1);
-		free(ms->line_here);
+		//free(ms->line_here);
 	}
 	free(ms->line_here);
 	close(ms->infile);
