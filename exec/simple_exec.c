@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 15:45:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:31:31 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		{
 			tmp = ms->parsed[i];
 			ms->parsed[i] = quote(tmp);
-			if (!here_doc(ms, ms->parsed[i] + 2))
+			if (!here_doc(ms, ms->parsed[i] + 2, tmp + 2))
 				return (0);
 		}
 		i++;

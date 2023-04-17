@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 12:20:50 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/17 14:36:24 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char	**check_redir(t_minishell *ms, char **tab);
 
 void	remove_heredoc(char **tab);
 
-int		here_doc(t_minishell *ms, char *tab);
+int		here_doc(t_minishell *ms, char *tab, char *tmp);
 
 int		exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 

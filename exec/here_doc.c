@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 13:14:49 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:15:34 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ void	remove_heredoc(char **tab)
 	}
 }
 
-int	here_doc(t_minishell *ms, char *tab)
+ 
+
+int	here_doc(t_minishell *ms, char *tab, char *w_quote)
 {
 	int		dollar;
 	char	*tab2;
 	char	*tmp;
+	
 	
 	tab2 = ft_strjoin(".", tab);
 	ms->infile = open(tab2, O_CREAT | O_RDWR | O_TRUNC, 0644);
@@ -47,7 +50,8 @@ int	here_doc(t_minishell *ms, char *tab)
 		if (!ft_strncmp(tab, ms->line_here, ft_strlen(tab))
 				&& (ft_strlen(tab) == ft_strlen(ms->line_here)))
 			break ;
-		if (ft_strnstr(ms->line_here, "$", ft_strlen(ms->line_here)) != 0)
+		if (ft_strnstr(ms->line_here, "$", ft_strlen(ms->line_here)) != 0
+			&& (!ft_strchr(w_quote, '"') && !ft_strchr(w_quote, '\'')))
 		{
 			dollar = 1;
 			tmp = ms->line_here;

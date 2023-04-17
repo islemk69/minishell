@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/11 00:42:59 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/17 15:52:04 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			{
 				tmp = split[j];
 				split[j] = quote(tmp);
-				if (!here_doc(ms, split[j] + 2))
+				if (!here_doc(ms, split[j] + 2, tmp))
 					return (0);
 			}
 			j++;
