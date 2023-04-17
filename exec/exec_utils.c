@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/11 00:42:31 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/17 17:14:25 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,4 @@ void	access_file(char **tab)
 		}
 		i++;
 	}
-}
+} //test
