@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 17:27:48 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/18 18:40:56 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static int	start_minishell(t_minishell *ms)
 			free(ms->line);
 			continue ;
 		}
-		if (!check_write_exit(ms))
-			return (free(ms->line), 0);
+		// if (!check_write_exit(ms))
+		// 	return (0);
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
 		free(ms->line);

@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:45:36 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/18 17:19:56 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/18 18:49:06 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_ctrl_c(int signum, siginfo_t *info, void *context)
 	(void)info;
 	(void)context;
 	write(1, "\n", 1);
-	rl_replace_line("", 0);
+	//rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_global.g_status = 128 + signum;

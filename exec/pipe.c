@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 17:43:04 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/18 18:37:59 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	int		save_stdin;
 	char	**split;
 	int		cpt;
-	char	**str;
 	char	*tmp;
 	int j;
 
@@ -65,14 +64,14 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			if (split[0][0] == '<' || split[0][0] == '>')
 			{
 				rm_quote_last(split);
-				str = check_redir(ms, split);
+				ms->new_parsed = check_redir(ms, split);
 			}
 			else
 			{
 				rm_quote_last(split);
-				str = split;
+				ms->new_parsed = split;
 			}
-			check_command(ms, str[0]);
+			check_command(ms, ms->new_parsed[0]);
 			close(ms->fd[0]);
 			if (nb_pipe != 0)
 			{
@@ -84,9 +83,9 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			}
 			else
 				dup(1);
-			if (builtins(ms, str, env) == 1)
+			if (builtins(ms, ms->new_parsed, env, 1) == 1)
 				exit (0);
-			if (execve(ms->path_cmd, str, refresh_env(env)) == - 1)
+			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == - 1)
 			{
 				nb_pipe--;
 				i++;

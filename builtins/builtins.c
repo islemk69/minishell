@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 16:08:58 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:40:07 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int is_built_in(char *str)
 		|| !ft_strncmp(str, "pwd\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "unset\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "env\0", ft_strlen(str) + 1)
-		|| !ft_strncmp(str, "exit\0", ft_strlen(str) + 1)
+		|| !ft_strncmp(str, "exit", ft_strlen(str))
 		|| !ft_strncmp(str, "./minishell\0", ft_strlen(str) + 1))
 	{
 		return (1);
@@ -31,7 +31,7 @@ int is_built_in(char *str)
 	return (0);
 }
 
-int builtins(t_minishell *ms, char **split, t_env **env)
+int builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 {
 	(void)ms;
 	//rm_quote_last(ms->parsed);
@@ -39,7 +39,8 @@ int builtins(t_minishell *ms, char **split, t_env **env)
 	{
 		if (input_env(env, split) 
 				|| input_cd(split, env) || built_in_pwd(split) 
-				|| built_in_export(env, split) || built_in_unset(env, split))
+				|| built_in_export(env, split) || built_in_unset(env, split)
+				|| !check_write_exit(ms, pipe))
 		{
 			return (1);
 		}

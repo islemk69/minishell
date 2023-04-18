@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 17:44:49 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/18 18:38:11 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ void rm_quote_last(char **cmds)
 int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int		id;
-	char	**str;
 	char	*tmp;
 
 	int i = 0;
 	get_path(ms);
-	if (builtins(ms, ms->parsed, env))
+	if (builtins(ms, ms->parsed, env, 0))
 			return (1);
 	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
@@ -52,16 +51,16 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
 		{
 			rm_quote_last(ms->parsed);
-			str = check_redir(ms, ms->parsed);
+			ms->new_parsed = check_redir(ms, ms->parsed);
 		}
 		else
 		{
 			rm_quote_last(ms->parsed);
-			str = ms->parsed;
+			ms->new_parsed = ms->parsed;
 		}
-		if (!check_command(ms, str[0]))
+		if (!check_command(ms, ms->new_parsed[0]))
 			exit (0);
-		execve(ms->path_cmd, str, refresh_env(env));
+		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
 	}
 	wait(NULL);
 	remove_heredoc(ms->parsed);

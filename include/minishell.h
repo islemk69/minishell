@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 18:10:25 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/18 18:48:54 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_env {
 typedef struct s_minishell
 {
 	t_env	*head_env;
+	char	**new_parsed;
 	char	**parsed;
 	char	**path_env;
 	char	**new_env;
@@ -85,15 +86,14 @@ typedef struct s_global
 
 t_global	g_global;
 
-int		check_write_exit(t_minishell *ms);
-
 int		init_env(t_minishell *ms, char **envp);
 
 int		exec_cmd(t_minishell *ms, t_env **env);
 
 void	error(char *str);
 
-int		builtins(t_minishell *ms, char **split, t_env **env);
+int		builtins(t_minishell *ms, char **split, t_env **env,
+		int pipe);
 
 int		built_in_export(t_env **env, char **split);
 
@@ -161,7 +161,7 @@ int		exec_one_pipe(t_minishell *ms, t_env **env);
 
 char	**check_redir(t_minishell *ms, char **tab);
 
-int		check_write_exit(t_minishell *ms);
+int		check_write_exit(t_minishell *ms, int pipe);
 
 char	*quote(char *line);
 
@@ -176,5 +176,9 @@ void	lstclear(t_env **lst);
 void	check_dollar(t_minishell *ms);
 
 char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
+
+void	set_interactive_signals(void);
+
+void	unplug_signals(void);
 
 #endif
