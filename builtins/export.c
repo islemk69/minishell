@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 16:10:15 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:10:09 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int built_in_export(t_env **env, char **split)
 			if (split[i][0] == '=')
 			{
 				ft_dprintf("bash: export: `%s': not a valid identifier\n", split[i]);
+				g_global.g_status = 1;
 				i++;
 				continue ;
 			}
@@ -57,6 +58,7 @@ int built_in_export(t_env **env, char **split)
 			if (!check_key(key_value[0]))
 			{
 				ft_dprintf("bash: export: `%s': not a valid identifier\n", split[i]);
+				g_global.g_status = 1;
 				i++;
 				continue ;
 			}

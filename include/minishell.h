@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 14:36:24 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/17 18:10:25 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ typedef struct s_minishell
 	char	*line_here;
 	int		outfile_exist;
 }				t_minishell;
+
+typedef struct s_global
+{
+	int			g_status;
+	//t_m_free	*m_free;
+}				t_global;
+
+t_global	g_global;
 
 int		check_write_exit(t_minishell *ms);
 

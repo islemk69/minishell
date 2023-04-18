@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 15:49:39 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:10:56 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	built_in_pwd(char **split)
 	{
 		str = getcwd(0, 0);
 		if (!str)
+		{
 			perror("getcwd()");
+			g_global.g_status = 1;
+		}
 		ft_printf("%s\n", str);
 		return (1);
 	}

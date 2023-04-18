@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/17 13:44:27 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/17 17:56:10 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				{
 					count++;
 					i++;
+					continue;
 				}
-				continue;
 			}
 			i++;
 			env = NULL;
@@ -130,8 +130,8 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					realloc[k] = tab[i];
 					k++;
 					i++;
+					continue;
 				}
-				continue;
 			}
 			i++;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));

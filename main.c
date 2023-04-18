@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/11 00:43:52 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/17 17:59:34 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static int	start_minishell(t_minishell *ms)
 {
 	ms->line = NULL;
 	ms->parsed = NULL;
-	signal(SIGINT, signal_handler_parent);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		ms->line = readline(ms->prompt);
@@ -65,6 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell	ms;
 
 	(void)argv;
+	
 	if (argc > 1)
 		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);
 	system(SHELLSCRIPT);
