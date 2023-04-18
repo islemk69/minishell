@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 16:31:31 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:44:49 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	id = fork();
 	if (id == 0)
 	{
+		set_exec_signals();
 		if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
 		{
 			rm_quote_last(ms->parsed);

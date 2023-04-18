@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 15:52:04 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:43:04 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		id = fork();
 		if (id == 0)
 		{
+			set_exec_signals();
 			ms->outfile_exist = 0;
 			if (split[0][0] == '<' || split[0][0] == '>')
 			{
