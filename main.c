@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 17:59:34 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/18 17:27:48 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	start_minishell(t_minishell *ms)
 	ms->parsed = NULL;
 	while (1)
 	{
+		set_interactive_signals();
 		ms->line = readline(ms->prompt);
 		if (!urandom(ms->line))
 			return (free(ms->line), 0);
