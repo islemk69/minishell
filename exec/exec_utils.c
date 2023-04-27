@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/17 17:18:39 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/27 04:53:18 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_command(t_minishell *ms, char *input_cmd)
 				return (1);
 			}
 			ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", input_cmd);
+			exit(127);
 		}
 		return (0);
 	}
@@ -61,6 +62,7 @@ int	check_command(t_minishell *ms, char *input_cmd)
 		i++;
 	}
 	ft_dprintf(""RED"bash: %s: command not found"WHITE"\n", input_cmd);
+	exit(127);
 	return (0);
 }
 
@@ -109,13 +111,13 @@ void	access_file(char **tab)
 			if (access(tab2, F_OK) != 0)
 			{
 				ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE"", tab[i] + 2);
-				exit (0);
+				exit (1);
 			}
 		}
 		else if (access(tab[i] + 1, F_OK) != 0)
 		{
 			ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE, tab[i] + 1);
-			exit (0);
+			exit (1);
 		}
 		i++;
 	}

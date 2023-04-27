@@ -6,11 +6,11 @@
 #    By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/04/17 17:56:52 by hamzaelouar      ###   ########.fr        #
+#    Updated: 2023/04/27 14:37:15 by hamzaelouar      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc 
+CC = gcc -g
 
 SRCS = main.c init_env/init_env.c exec/exec.c utils/error.c builtins/builtins.c \
 		utils/find_path.c utils/list.c parsing/parsing.c utils/wait.c parsing/redirection.c \
@@ -29,7 +29,7 @@ HEAD = include/minishell.h
 RM = rm -f
 
 %.o: %.c Makefile ${HEAD}
-		${CC} ${FLAGS} -ILibft -c $< -o $@ 
+		${CC} ${FLAGS} -ILibft -c $< -o $@
 
 all: Libft $(NAME)
 

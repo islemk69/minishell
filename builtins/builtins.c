@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 18:40:07 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/27 05:18:34 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 		if (input_env(env, split) 
 				|| input_cd(split, env) || built_in_pwd(split) 
 				|| built_in_export(env, split) || built_in_unset(env, split)
-				|| !check_write_exit(ms, pipe))
+				|| !check_write_exit(ms, split, pipe))
 		{
 			return (1);
 		}

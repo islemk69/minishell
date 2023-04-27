@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 18:37:59 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/27 14:29:12 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	while (ms->parsed[i])
 	{
 		split = ft_split_token(ms->parsed[i], ' ');
-		int z = 0;
-		while (split[z])
-		{
-			ft_printf("split %d : %s\n", z, split[z]);
-			z++;
-		}
+		// int z = 0;
+		// while (split[z])
+		// {
+		// 	ft_printf("split %d : %s\n", z, split[z]);
+		// 	z++;
+		// }
 		if (pipe(ms->fd) == -1)
 			error("pipe");
 		id = fork();
@@ -84,7 +84,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			else
 				dup(1);
 			if (builtins(ms, ms->new_parsed, env, 1) == 1)
-				exit (0);
+				exit(g_global.g_status);
 			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == - 1)
 			{
 				nb_pipe--;
@@ -114,7 +114,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		nb_pipe--;
 	}
 	close(save_stdin);
-	wait_pid(cpt);
+	wait_pid(ms, cpt);
+	g_global.g_status = WEXITSTATUS(ms->status);
 	i = 0;
 	while (ms->parsed[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 17:30:54 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/27 14:29:20 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	exec_cmd(t_minishell *ms, t_env **env)
 	
 	unplug_signals();
 	check_dollar(ms);
-	int i = 0;
-	while (ms->parsed[i])
-	{
-		ft_printf("ms->parsed[%d] : %s\n", i , ms->parsed[i]);
-		i++;
-	}
+	// int i = 0;
+	// while (ms->parsed[i])
+	// {
+	// 	ft_printf("ms->parsed[%d] : %s\n", i , ms->parsed[i]);
+	// 	i++;
+	// }
 	nb_pipe = count_token(ms->line, '|');
 	if (nb_pipe == 0)
 	{

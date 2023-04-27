@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 18:48:54 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/27 05:19:01 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_minishell
 	int		outfile;
 	char	*line_here;
 	int		outfile_exist;
+	int		status;
 }				t_minishell;
 
 typedef struct s_global
@@ -129,7 +130,7 @@ char	**refresh_env(t_env **env);
 
 int		is_built_in(char *str);
 
-void	wait_pid(int i);
+void	wait_pid(t_minishell *ms, int i);
 
 char	**redirection(char **space);
 
@@ -161,7 +162,7 @@ int		exec_one_pipe(t_minishell *ms, t_env **env);
 
 char	**check_redir(t_minishell *ms, char **tab);
 
-int		check_write_exit(t_minishell *ms, int pipe);
+int		check_write_exit(t_minishell *ms, char **split, int pipe);
 
 char	*quote(char *line);
 
@@ -180,5 +181,9 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
 void	set_interactive_signals(void);
 
 void	unplug_signals(void);
+
+void	set_exec_signals(void);
+
+void	set_heredoc_signals(void);
 
 #endif

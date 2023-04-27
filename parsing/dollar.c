@@ -6,7 +6,7 @@
 /*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/17 17:56:10 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/27 14:29:40 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,12 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					continue;
 				}
 			}
+			if (tab[i + 1] == '?')
+			{
+				count += ft_strlen(ft_itoa(g_global.g_status));
+				i += 2;
+				continue ;
+			}
 			i++;
 			env = NULL;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
@@ -77,7 +83,6 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			tmp[j] = 0;
 			if (tmp[0])
 				env = ft_find_path(&ms->head_env, tmp);
-			//ft_printf(" env %s\n", env);
 			if (env)
 				count += ft_strlen(env);
 			continue;
@@ -132,6 +137,18 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					i++;
 					continue;
 				}
+			}
+			if (tab[i + 1] == '?')
+			{
+				tmp = ft_itoa(g_global.g_status);
+				while (*tmp)
+				{
+					realloc[k] = *tmp;
+					k++;
+					tmp++;
+				}
+				i += 2;
+				continue ;
 			}
 			i++;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));

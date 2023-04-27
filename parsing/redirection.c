@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/05 21:22:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/27 14:29:46 by hamzaelouar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char **realloc_redir(char **space)
 			size++;
 		i++;
 	}
-	//ft_printf("SIZE%d\n", size);
 	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
 	if (!realloc)
 		return (NULL);
