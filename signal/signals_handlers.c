@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:45:36 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/27 14:27:35 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/28 13:13:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	handle_ctrl_d_exec(int signum, siginfo_t *info, void *context)
 	(void) info;
 	(void) context;
 	ft_printf("Quit (core dumped)\n");
+	//write(1, "\n", 1);
 	g_global.g_status = 128 + signum;
 	return (exit(g_global.g_status));
 }

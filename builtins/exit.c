@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:40:24 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/27 06:03:50 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/28 14:41:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	check_write_exit(t_minishell *ms, char **split, int pipe)
 {
 	if (!ft_strncmp(ms->line, "exit", 4))
 	{
-		//write(1, "👳‍ <== SALAM\n", ft_strlen("👳‍ <== SALAM\n"));
 		return (ft_built_in_exit(split, pipe), 0);
 	}
 	return (1);

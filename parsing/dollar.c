@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/27 14:29:40 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/28 14:20:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

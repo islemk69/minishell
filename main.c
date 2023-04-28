@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/18 18:40:56 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/28 13:19:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv, char **envp)
 	
 	if (argc > 1)
 		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);
-	system(SHELLSCRIPT);
+	//system(SHELLSCRIPT);
 	ms.new_env = NULL;
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))

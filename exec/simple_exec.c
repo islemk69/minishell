@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/27 04:26:52 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/28 14:49:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

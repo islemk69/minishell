@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/10 15:46:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/28 14:53:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 			if (ms->infile < 0)
 			{
 				ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 2);
-				exit (0);
+				exit (1);
 			}
 		}
 		if (tab[i][1] != '<')
@@ -47,7 +47,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 			if (ms->infile < 0)
 			{
 				ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 1);
-				exit (0);
+				exit (1);
 			}
 		}
 		if (dup2(ms->infile, 0) == -1)
@@ -67,7 +67,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 					if (ms->outfile < 0)
 					{
 						ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 2);
-						exit (0);
+						exit (1);
 					}
 				}
 				else
@@ -76,7 +76,7 @@ char	**check_redir(t_minishell *ms, char **tab)
 					if (ms->outfile < 0)
 					{
 						ft_dprintf(""RED"bash: %s: Permission denied\n"WHITE"", tab[i] + 1);
-						exit (0);
+						exit (1);
 					}
 				}
 			}
