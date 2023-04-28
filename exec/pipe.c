@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/27 14:29:12 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/04/28 17:17:49 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			}
 			else
 				dup(1);
-			if (builtins(ms, ms->new_parsed, env, 1) == 1)
+			if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 				exit(g_global.g_status);
 			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == - 1)
 			{

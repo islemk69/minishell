@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 15:03:01 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:20:50 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int built_in_export(t_env **env, char **split)
 	t_env	*cell;
 	t_env	*print;
 	
-	if (!ft_strncmp(split[0], "export\0,", 7) && ft_strchr(split[1], '='))
+	if (!ft_strncmp(split[0], "export\0,", 7))
 	{
 		if (!split[1])
 		{

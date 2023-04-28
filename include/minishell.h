@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 13:42:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:10:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		exec_cmd(t_minishell *ms, t_env **env);
 
 void	error(char *str);
 
-int		builtins(t_minishell *ms, char **split, t_env **env,
+int		pipe_builtins(t_minishell *ms, char **split, t_env **env,
 		int pipe);
 
 int		built_in_export(t_env **env, char **split);
@@ -187,5 +187,8 @@ void	set_exec_signals(void);
 void	set_heredoc_signals(void);
 
 int		built_in_echo(char **split);
+
+int child_builtins(t_minishell *ms, char **split, t_env **env);
+int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 17:10:41 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/28 18:10:32 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	// 	}
 	// 	i++;
 	// }
+	if (parent_builtins(ms, ms->parsed, env, 0))
+		return (1);
 	id = fork();
 	if (id == 0)
 	{
@@ -67,7 +69,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 			rm_quote_last(ms->parsed);
 			ms->new_parsed = ms->parsed;
 		}
-		if (builtins(ms, ms->new_parsed, env, 0))
+		if (child_builtins(ms, ms->new_parsed, env))
 			exit(0);
 		if (!check_command(ms, ms->new_parsed[0]))
 			exit (0);
