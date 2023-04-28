@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 16:37:15 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/04/28 17:10:41 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 			exit (0);
 		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
 	}
-	waitpid(1, &ms->status, 1);
+	waitpid(-1, &ms->status, 0);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	remove_heredoc(ms->parsed);
 	return (1);
