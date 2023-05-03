@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 17:17:49 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:27:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,59 +19,58 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	int		save_stdin;
 	char	**split;
 	int		cpt;
-	char	*tmp;
-	int j;
+	//char	*tmp;
+	//int j;
 
 	split = NULL;
 	save_stdin = dup(0);
 	get_path(ms);
 	i = 0;
 	cpt = 0;
-	while (ms->parsed[i])
-	{
-		split = ft_split_token(ms->parsed[i], ' ');
-		j = 0;
-		while (split[j] && split[j][0] == '<')
-		{
-			if (split[j][1] == '<')
-			{
-				tmp = split[j];
-				split[j] = quote(tmp);
-				if (!here_doc(ms, split[j] + 2, tmp))
-					return (0);
-			}
-			j++;
-		}
-		i++;
-	}
+	//while (ms->parsed[i])
+	//{
+	//	split = ft_split_token(ms->parsed[i], ' ');
+	//	j = 0;
+	//	while (split[j] && split[j][0] == '<')
+	//	{
+	//		if (split[j][1] == '<')
+	//		{
+	//			tmp = split[j];
+	//			split[j] = quote(tmp);
+	//			if (!here_doc(ms, split[j] + 2, tmp))
+	//				return (0);
+	//		}
+	//		j++;
+	//	}
+	//	i++;
+	//}
 	i = 0;
 	while (ms->parsed[i])
 	{
+		ms->infile = 0;
+		ms->outfile = 0;
+		ms->infile_stra = NULL;
+		ms->outfile_exist = 0;
 		split = ft_split_token(ms->parsed[i], ' ');
-		// int z = 0;
-		// while (split[z])
-		// {
-		// 	ft_printf("split %d : %s\n", z, split[z]);
-		// 	z++;
-		// }
 		if (pipe(ms->fd) == -1)
 			error("pipe");
+		if (split[0][0] == '<' || split[0][0] == '>')
+		{
+			rm_quote_last(split);
+			ms->new_parsed = open_files(ms, split);
+		}
+		else
+		{
+			rm_quote_last(split);
+			ms->new_parsed = split;
+		}
 		id = fork();
 		if (id == 0)
 		{
 			set_exec_signals();
-			ms->outfile_exist = 0;
-			if (split[0][0] == '<' || split[0][0] == '>')
-			{
-				rm_quote_last(split);
-				ms->new_parsed = check_redir(ms, split);
-			}
-			else
-			{
-				rm_quote_last(split);
-				ms->new_parsed = split;
-			}
-			check_command(ms, ms->new_parsed[0]);
+			check_redir(ms);
+			if (!check_command(ms, ms->new_parsed[0]))
+				exit (0);
 			close(ms->fd[0]);
 			if (nb_pipe != 0)
 			{
@@ -125,3 +124,5 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	}
 	return (1);
 }
+
+//32 50 53 56 58 101 103 110 113 131 132 140 141

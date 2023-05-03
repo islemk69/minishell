@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:21:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/03/27 14:24:55 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 14:07:32 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int input_env(t_env **env, char **split)
 	{
 		while (head)
 		{
-			ft_printf("%s=%s\n", head->key, head->value);
+			printf("%s=%s\n", head->key, head->value);
 			head = head->next;
 		}
 		return (1);

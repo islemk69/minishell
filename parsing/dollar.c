@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/04/28 14:20:22 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 17:51:00 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				s_quot = 0;
 		}
 		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && tab[i + 1] != 0 && s_quot == 0)
 		{
 			if (i != 0)
 			{
@@ -104,6 +104,7 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	char	*tmp;
 	char	*dollar;
 	char	*realloc;
+	//char *case = "$";
 	
 	k = 0;	
 	i = 0;
@@ -126,7 +127,7 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				s_quot = 0;
 		}
 		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$'  && tab[i + 1] != 0 && s_quot == 0)
 		{
 			if (i != 0)
 			{
@@ -185,6 +186,35 @@ char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	return (realloc);
 }
 
+char **real_null(char **ms_parsed)
+{
+	int i = 0;
+	int count = 0;
+	char **new_ms;
+	int j;
+	while (ms_parsed[i])
+	{
+		if (ms_parsed[i][0])
+			count++;
+		i++;
+	}
+	new_ms = ft_gc_malloc(sizeof(char *) * (count + 1));
+	i = 0;
+	j = 0;
+	while (ms_parsed[i])
+	{
+		if (ms_parsed[i][0])
+		{
+			new_ms[j] = ft_strdup(ms_parsed[i]);
+			j++;
+		}
+		i++;
+	}
+	new_ms[j] = 0;
+	return (new_ms);
+}
+
+
 void	check_dollar(t_minishell *ms)
 {
 	int	i;
@@ -201,4 +231,6 @@ void	check_dollar(t_minishell *ms)
 			d_quot, s_quot));
 		i++;
 	}
+	if (ms->parsed[0] && ms->parsed[1])
+		ms->parsed = real_null(ms->parsed);
 }

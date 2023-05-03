@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 13:30:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:58:03 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	built_in_pwd(char **split)
 		str = getcwd(0, 0);
 		if (!str)
 		{
-			perror("getcwd()");
 			g_global.g_status = 1;
+			perror("getcwd()");
 		}
-		ft_printf("%s\n", str);
+		printf("%s\n", str);
+		g_global.g_status = 0;
 		return (1);
 	}
 	return (0);

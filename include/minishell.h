@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 18:10:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:48:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define PURPLE "\033[1;35m"
 # define CYAN "\033[1;36m"
 # define YELLOW "\033[1;33m"
-# define WHITE "\033[1;37m"
-# define RED "\033[1;31m"
+# define WHITE "\001\033[1;37m\002"
+# define RED "\001\033[1;31m\002"
 # define CMD_ERR "Error : Command not found\n"
 # define PROMPT "42@guest> "
 # define ERR_PROMPT "❌ Minishell> "
@@ -70,7 +70,11 @@ typedef struct s_minishell
 	char	*prompt;
 	char	*line;
 	char	**input_cmd;
+	char	*infile_str;
+	char	*infile_stra;
+	char	*outfile_str;
 	char	*path_cmd;
+	bool	overflow;
 	int		fd[2];
 	int		infile;
 	int		outfile;
@@ -95,6 +99,8 @@ void	error(char *str);
 
 int		pipe_builtins(t_minishell *ms, char **split, t_env **env,
 		int pipe);
+		
+int	ft_atoi2(const char *str, t_minishell *ms);
 
 int		built_in_export(t_env **env, char **split);
 
@@ -148,19 +154,19 @@ int		check_command(t_minishell *ms, char *input_cmd);
 
 int		count_token(char *str, char c);\
 
-void	access_file(char **tab);
+void	access_file(char **tab, t_minishell *ms);
 
-char	**check_redir(t_minishell *ms, char **tab);
+void	check_redir(t_minishell *ms);
 
 void	remove_heredoc(char **tab);
 
 int		here_doc(t_minishell *ms, char *tab, char *tmp);
 
+void	access_file2(char **tab);
+
 int		exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 
 int		exec_one_pipe(t_minishell *ms, t_env **env);
-
-char	**check_redir(t_minishell *ms, char **tab);
 
 int		check_write_exit(t_minishell *ms, char **split, int pipe);
 
@@ -190,5 +196,9 @@ int		built_in_echo(char **split);
 
 int child_builtins(t_minishell *ms, char **split, t_env **env);
 int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
+
+char	**open_files(t_minishell *ms, char **tab);
+
+char	**check_redir2(t_minishell *ms, char **tab);
 
 #endif

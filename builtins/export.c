@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 18:20:50 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:03:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,16 @@ int built_in_export(t_env **env, char **split)
 			print = *env;
 			while (print)
 			{
-				add_quote = ft_gc_malloc(sizeof(char) * ft_strlen(print->value) + 3);
-				add_quote[0] = '\"';
-				int u = 1;
-				int k = 0;
-				while (print->value[u])
-				{
-					add_quote[u] = print->value[k];
-					u++;
-					k++;
-				}
-				add_quote[u] = '\"';
-				add_quote[u + 1] = 0;
-				ft_printf("declare -x %s=%s\n", print->key, add_quote);
+				add_quote = ft_strjoin("\"", print->value);
+				add_quote = ft_strjoin(add_quote, "\"");
+				printf("declare -x %s=%s\n", print->key, add_quote);
 				print = print->next;
 			}
 			return (1);
 		}
 		while (split[i])
 		{
-			if (split[i][0] == '=')
+			if (split[i][0] == '=' || (split[i][0] >= '0' && split[i][0] <= '9'))
 			{
 				ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"WHITE"", split[i]);
 				g_global.g_status = 1;

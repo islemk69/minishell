@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 19:11:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 16:46:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	urandom(char *str)
 {
 	unsigned char	c;
 
-	if (!str || !*str)
+	if (!str)
 		return (0);
 	while (*str)
 	{
@@ -47,7 +47,7 @@ static int	start_minishell(t_minishell *ms)
 		add_history(ms->line);
 		if (!parsing(ms->line, ms))
 		{
-			ft_printf("error token parsing\n");
+			printf("error token parsing\n");
 			free(ms->line);
 			continue ;
 		}

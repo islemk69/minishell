@@ -6,15 +6,18 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:40:24 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 18:39:49 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:59:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_exit_code(char **split, int in_pipe)
+void	ft_exit_code(char **split, int in_pipe, t_minishell *ms)
 {
-	g_global.g_status = ft_atoi(split[1]);
+	ms->overflow = false;
+	g_global.g_status = ft_atoi2(split[1], ms);
+	if (ms->overflow == true)
+		g_global.g_status = 2;
 	if (!in_pipe)
 		return (exit(g_global.g_status));
 }
@@ -35,15 +38,15 @@ void	ft_numarg_check(char **split)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(split[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			return (exit(255));
+			return (exit(2));
 		}
 	}
 }
 
-void	ft_built_in_exit(char **split, int in_pipe)
+void	ft_built_in_exit(char **split, int in_pipe, t_minishell *ms)
 {
 	if (!in_pipe)
-		ft_printf("exit\n");
+		printf("exit\n");
 	if (!split[1] || !*split[1])
 		return (exit(g_global.g_status));
 	ft_numarg_check(split);
@@ -54,14 +57,14 @@ void	ft_built_in_exit(char **split, int in_pipe)
 		g_global.g_status = 1;
 	}
 	else
-		ft_exit_code(split, in_pipe);
+		ft_exit_code(split, in_pipe, ms);
 }
 
 int	check_write_exit(t_minishell *ms, char **split, int pipe)
 {
 	if (!ft_strncmp(ms->line, "exit", 4))
 	{
-		return (ft_built_in_exit(split, pipe), 0);
+		return (ft_built_in_exit(split, pipe, ms), 0);
 	}
 	return (1);
 }

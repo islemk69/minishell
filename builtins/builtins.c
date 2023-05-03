@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 18:42:58 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/02 21:45:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int is_built_in2(char *str)
 int pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 {
 	(void)ms;
-	rm_quote_last(split);
+	//rm_quote_last(split);
 	if (is_built_in(split[0]))
 	{
 		if (input_env(env, split) 

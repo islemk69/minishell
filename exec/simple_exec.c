@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/28 18:10:32 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/03 18:11:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
 		{
 			rm_quote_last(ms->parsed);
-			ms->new_parsed = check_redir(ms, ms->parsed);
+			ms->new_parsed = check_redir2(ms, ms->parsed);
 		}
 		else
 		{
@@ -71,8 +71,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		}
 		if (child_builtins(ms, ms->new_parsed, env))
 			exit(0);
-		if (!check_command(ms, ms->new_parsed[0]))
-			exit (0);
+		check_command(ms, ms->new_parsed[0]);
 		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
 	}
 	waitpid(-1, &ms->status, 0);
