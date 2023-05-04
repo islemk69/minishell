@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/27 14:29:46 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/05/04 15:51:47 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,30 +242,50 @@ char *strcpy_token_2(char* src, int *s_int, int mod) {
 	char *sdup;
 	(void)mod;
 	int save = *s_int;
+	//int s_quot = 0;
+	int d_quot = 0;
 	
-	while(src[save] && is_token_char(src[save]))
+	while (is_token_char(src[save]))
 	{
 		size++;
-        save ++;
+		save++;
 	}
-    while (src[save] && !is_token_char(src[save])) 
+    while (src[save]) 
 	{
-        size++;
+		if (src[save] == '"')
+		{
+			if (d_quot == 0)
+				d_quot = 1;
+			else
+				d_quot = 0;
+		}
+		if (is_token_char(src[save]) && !d_quot)
+			break;
+		size++;
 		save++;
     }
 	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
 	j = 0;
-	while(src[*s_int] && is_token_char(src[*s_int]))
+	while (is_token_char(src[*s_int]))
 	{
 		sdup[j] = src[*s_int];
-        j++;
-        *s_int += 1;
+		j++;
+		*s_int += 1;
 	}
-    while (src[*s_int] && !is_token_char(src[*s_int])) 
+	while (src[*s_int]) 
 	{
-        sdup[j] = src[*s_int];
-        j++;
-        *s_int += 1;
+		if (src[*s_int] == '"')
+		{
+			if (d_quot == 0)
+				d_quot = 1;
+			else
+				d_quot = 0;
+		}
+		if (is_token_char(src[*s_int]) && !d_quot)
+			break;
+		sdup[j] = src[*s_int];
+		j++;
+		*s_int += 1;
     }
 	sdup[j] = 0;
     return (sdup);
@@ -326,7 +346,7 @@ char **redirection(char **space)
 	while (space[i])
 	{
 		s_int = 0;
-		token = is_redir(space[i]);
+		token = is_redir(space[i]);	
 		if (!is_token_char(space[i][0]) && token)
 		{
 			u = 1;

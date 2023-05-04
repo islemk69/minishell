@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 18:03:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:33:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int built_in_export(t_env **env, char **split)
 			print = *env;
 			while (print)
 			{
+				if (!print->value)
+				{
+					printf("declare -x %s\n", print->key);
+					print = print->next;
+					continue ;
+				}
 				add_quote = ft_strjoin("\"", print->value);
 				add_quote = ft_strjoin(add_quote, "\"");
 				printf("declare -x %s=%s\n", print->key, add_quote);

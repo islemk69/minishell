@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 18:48:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:19:28 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,6 @@ int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 char	**open_files(t_minishell *ms, char **tab);
 
-char	**check_redir2(t_minishell *ms, char **tab);
+char	**check_redir2(t_minishell *ms);
 
 #endif

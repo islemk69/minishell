@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/03 18:04:25 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/05/04 17:40:24 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ char **ft_pipe(char *line)
 int parsing(char *line, t_minishell *ms)
 {
 	char **space;
-	//int i = 0;
 	if(!check_line(line))
 		return(0);
     if (count_token(line, '|'))
@@ -102,5 +101,11 @@ int parsing(char *line, t_minishell *ms)
 		if (!ms->parsed)
 			return (0);
 	}
+	//int i = 0;
+	//while (ms->parsed[i])
+	//{
+	//	printf("%s\n", ms->parsed[i]);
+	//	i++;
+	//}
 	return (1);
 }

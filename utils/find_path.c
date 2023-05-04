@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamzaelouardi <hamzaelouardi@student.42    +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/11 00:02:31 by hamzaelouar      ###   ########.fr       */
+/*   Updated: 2023/05/04 18:41:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ char **refresh_env(t_env **env)
 	new_env = (char **)ft_gc_malloc(sizeof(char *) * (lstsize(*env) + 1));
 	while (head)
 	{
-		new_env[i] = (char *)ft_gc_malloc(sizeof(char) * (ft_strlen(head->key) + ft_strlen(head->value) + 2));
+		if (!head->value)
+		{
+			new_env[i] = (char *)ft_gc_malloc(sizeof(char) * (ft_strlen(head->key) + 1));
+		}
+		else
+			new_env[i] = (char *)ft_gc_malloc(sizeof(char) * (ft_strlen(head->key) + ft_strlen(head->value) + 2));
 		j = 0;
 		k = 0;
 		while (head->key[k])
@@ -31,6 +36,11 @@ char **refresh_env(t_env **env)
 			new_env[i][j] = head->key[k];
 			j++;
 			k++;
+		}
+		if (!head->value)
+		{
+			head = head->next;
+			continue ;
 		}
 		new_env[i][j] = '=';
 		j++;

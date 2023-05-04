@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 18:31:43 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:58:14 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	struct stat info;
 
 	i = 0;
-	if (!ms->path_env || !*input_cmd)
-	{
-		ft_dprintf(""RED"bash: %s: 1command not found"WHITE"\n", input_cmd);
-		exit(127);
-	}
 	if (input_cmd[0] == '/' || (input_cmd[0] == '.' && input_cmd[1] == '/'))
 	{
+		if (access(input_cmd, F_OK) != 0)
+		{
+			ms->path_cmd = input_cmd;
+			return (1);
+		}
 		if (stat(input_cmd, &info) == 0 && S_ISDIR(info.st_mode)) 
 		{
 			ft_dprintf(""RED"bash: %s: Is a directory\n"WHITE"", input_cmd);
@@ -64,6 +64,11 @@ int	check_command(t_minishell *ms, char *input_cmd)
 		}
 		return (0);
 	}
+	if (!ms->path_env || !*input_cmd)
+	{
+		ft_dprintf(""RED"bash: %s: 1command not found"WHITE"\n", input_cmd);
+		exit(127);
+	}
 	if (is_built_in(input_cmd))
 		return (1);
 	while (ms->path_env[i])
@@ -74,12 +79,13 @@ int	check_command(t_minishell *ms, char *input_cmd)
 			return (1);
 		i++;
 	}
-	ft_putstr_fd("bash: ", 2);
-	ft_putstr_fd(input_cmd, 2);
-	ft_putstr_fd("\n", 2);
+	ft_dprintf("bash: %s: Command not found\n", input_cmd);
 	exit(127);
 	return (0);
 }
+
+
+
 
 
 int	count_token(char *str, char c)

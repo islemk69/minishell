@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 16:46:01 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:58:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	main(int argc, char **argv, char **envp)
 	t_minishell	ms;
 
 	(void)argv;
-	
+	ms.infile = 0;
+		ms.outfile = 0;
+		ms.infile_stra = NULL;
+		ms.outfile_exist = 0;
 	if (argc > 1)
 		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);
 	//system(SHELLSCRIPT);

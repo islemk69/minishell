@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 17:28:05 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/04 15:58:01 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void print_error(char *cmd, char *type)
 
 void	check_redir(t_minishell *ms)
 {
-	(void)ms;
 	if (ms->infile_stra)
 	{
 		print_error(ms->infile_stra,  ": No Such File Directory\n");

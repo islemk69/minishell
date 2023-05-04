@@ -1,0 +1,19 @@
+builtins
+exec
+include
+infile
+init_env
+Libft
+main.c
+main.o
+Makefile
+minishell
+minishell_tester
+out
+outfile
+parsing
+"salut sa"
+salut sa
+signal
+subject
+utils

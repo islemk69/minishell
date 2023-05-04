@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 17:27:07 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:20:39 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,30 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	int		save_stdin;
 	char	**split;
 	int		cpt;
-	//char	*tmp;
-	//int j;
+	char	*tmp;
+	int j;
 
-	split = NULL;
 	save_stdin = dup(0);
 	get_path(ms);
 	i = 0;
 	cpt = 0;
-	//while (ms->parsed[i])
-	//{
-	//	split = ft_split_token(ms->parsed[i], ' ');
-	//	j = 0;
-	//	while (split[j] && split[j][0] == '<')
-	//	{
-	//		if (split[j][1] == '<')
-	//		{
-	//			tmp = split[j];
-	//			split[j] = quote(tmp);
-	//			if (!here_doc(ms, split[j] + 2, tmp))
-	//				return (0);
-	//		}
-	//		j++;
-	//	}
-	//	i++;
-	//}
+	while (ms->parsed[i])
+	{
+		split = ft_split_token(ms->parsed[i], ' ');
+		j = 0;
+		while (split[j] && split[j][0] == '<')
+		{
+			if (split[j][1] == '<')
+			{
+				tmp = split[j];
+				split[j] = quote(tmp);
+				if (!here_doc(ms, split[j] + 2, tmp))
+					return (0);
+			}
+			j++;
+		}
+		i++;
+	}
 	i = 0;
 	while (ms->parsed[i])
 	{
@@ -52,8 +51,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		ms->infile_stra = NULL;
 		ms->outfile_exist = 0;
 		split = ft_split_token(ms->parsed[i], ' ');
-		if (pipe(ms->fd) == -1)
-			error("pipe");
 		if (split[0][0] == '<' || split[0][0] == '>')
 		{
 			rm_quote_last(split);
@@ -64,6 +61,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			rm_quote_last(split);
 			ms->new_parsed = split;
 		}
+		if (pipe(ms->fd) == -1)
+			error("pipe");
 		id = fork();
 		if (id == 0)
 		{
