@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:45:36 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/04 17:03:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:36:59 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handle_ctrl_c(int signum, siginfo_t *info, void *context)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_global.g_status = 1;
+	g_global.g_status = 131;
 }
 
 void	handle_ctrl_d_exec(int signum, siginfo_t *info, void *context)
@@ -40,7 +40,7 @@ void	handle_ctrl_c_exec(int signum, siginfo_t *info, void *context)
 	(void)context;
 	(void)signum;
 	write(1, "\n", 1);
-	g_global.g_status = 1;
+	g_global.g_status = 131;
 	return (exit(g_global.g_status));
 }
 
@@ -50,6 +50,6 @@ void	handle_ctrl_c_heredoc(int signum, siginfo_t *info, void *context)
 	(void)context;
 	(void)signum;
 	write(1, "\n", 1);
-	g_global.g_status = 1;
+	g_global.g_status = 131;
 	return (exit(g_global.g_status));
 }

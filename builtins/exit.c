@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:40:24 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 18:59:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:47:21 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	ft_exit_code(char **split, int in_pipe, t_minishell *ms)
 	ms->overflow = false;
 	g_global.g_status = ft_atoi2(split[1], ms);
 	if (ms->overflow == true)
+	{
+		print_error(split[1],  ": numeric argument required\n");
 		g_global.g_status = 2;
+	}
 	if (!in_pipe)
 		return (exit(g_global.g_status));
 }
@@ -35,9 +38,7 @@ void	ft_numarg_check(char **split)
 		if (split[1][i] < '0'
 		|| split[1][i] > '9')
 		{
-			ft_putstr_fd("exit: ", 2);
-			ft_putstr_fd(split[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2);
+			ft_dprintf("exit: %s: numeric argument required\n", split[1]);
 			return (exit(2));
 		}
 	}

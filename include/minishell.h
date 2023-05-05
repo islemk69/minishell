@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 17:19:28 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:41:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ void	remove_heredoc(char **tab);
 
 int		here_doc(t_minishell *ms, char *tab, char *tmp);
 
-void	access_file2(char **tab);
+void	access_file2(t_minishell *ms);
 
 int		exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 
@@ -182,7 +182,7 @@ void	lstclear(t_env **lst);
 
 void	check_dollar(t_minishell *ms);
 
-char	*dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
+char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
 
 void	set_interactive_signals(void);
 
@@ -200,5 +200,7 @@ int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 char	**open_files(t_minishell *ms, char **tab);
 
 char	**check_redir2(t_minishell *ms);
+
+void print_error(char *cmd, char *type);
 
 #endif

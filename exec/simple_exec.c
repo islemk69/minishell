@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 17:38:05 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:20:51 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 		}
 		set_exec_signals();
 		if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
-		{
-			rm_quote_last(ms->parsed);
 			ms->new_parsed = check_redir2(ms);
-		}
 		else
 		{
 			rm_quote_last(ms->parsed);

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 18:58:14 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:50:18 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ int	check_command(t_minishell *ms, char *input_cmd)
 		}
 		if (stat(input_cmd, &info) == 0 && S_ISDIR(info.st_mode)) 
 		{
-			ft_dprintf(""RED"bash: %s: Is a directory\n"WHITE"", input_cmd);
+			print_error(input_cmd,  ": Is a directory\n");
 			exit(126);
 		}
 		else 
 		{
+			//printf("input-cmd %s\n", input_cmd);
 			if (access(input_cmd, F_OK) != 0)
 			{
-				ft_dprintf("bash: %s: No such file or directory\n", input_cmd);
+				print_error(input_cmd,  ": No such file or directory\n");
 				exit(127);
 			}
 			if (access(input_cmd, X_OK | R_OK) != 0)
 			{
-				ft_dprintf("bash: %s: Permission denied\n", input_cmd);
+				print_error(input_cmd,  ": Permission denied\n");
 				exit (126);
 			}
 			ms->path_cmd = input_cmd;
@@ -64,13 +65,13 @@ int	check_command(t_minishell *ms, char *input_cmd)
 		}
 		return (0);
 	}
-	if (!ms->path_env || !*input_cmd)
-	{
-		ft_dprintf(""RED"bash: %s: 1command not found"WHITE"\n", input_cmd);
-		exit(127);
-	}
 	if (is_built_in(input_cmd))
 		return (1);
+	if (!ms->path_env || !*input_cmd)
+	{
+		print_error(input_cmd,  ": command not found\n");
+		exit(127);
+	}
 	while (ms->path_env[i])
 	{
 		tmp = ft_strjoin_gnl(ms->path_env[i], "/");
@@ -79,7 +80,7 @@ int	check_command(t_minishell *ms, char *input_cmd)
 			return (1);
 		i++;
 	}
-	ft_dprintf("bash: %s: Command not found\n", input_cmd);
+	print_error(input_cmd,  ": command not found\n");
 	exit(127);
 	return (0);
 }
@@ -120,30 +121,36 @@ int	count_token(char *str, char c)
 }
 
 
-void	access_file2(char **tab)
+void	access_file2(t_minishell *ms)
 {
 	int	i;
 	char	*tab2;
 	i = 0;
-	while (tab[i] && tab[i][0] == '<')
+	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
-		if (tab[i][1] == '<')
+		if (ms->parsed[i][1] == '<')
 		{
-			tab2 = ft_strjoin(".", tab[i] + 2);
+			ms->parsed[i] = quote(ms->parsed[i]);
+			tab2 = ft_strjoin(".", ms->parsed[i] + 2);
 			if (access(tab2, F_OK) != 0)
 			{
-				ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE"", tab[i] + 2);
+				print_error(ms->parsed[i] + 2,  ": No such file or directory\n");
 				exit (1);
 			}
 		}
-		else if (access(tab[i] + 1, F_OK) != 0)
+		else
 		{
-			ft_dprintf(""RED"bash: %s: No such file or directory\n"WHITE, tab[i] + 1);
-			exit (1);
+			ms->parsed[i] = quote(ms->parsed[i]);
+			if (access(ms->parsed[i] + 1, F_OK) != 0)
+			{
+				print_error(ms->parsed[i] + 1,  ": No such file or directory\n");
+				exit (1);
+			}
 		}
 		i++;
 	}
 }
+
 
 void	access_file(char **tab, t_minishell *ms)
 {

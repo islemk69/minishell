@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/02 21:58:03 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:42:54 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,11 @@ int	built_in_pwd(char **split)
 	}
 	return (0);
 }
+
+
+
+/*
+	cat "mon fichier" $TEST ("salut sa va")
+	cat / "mon fichier" / "salut" "sa" "va"
+	realloc = split token
+*/

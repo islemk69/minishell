@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:47 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 17:40:38 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:11:25 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int built_in_unset(t_env** env, char **cmd)
 			return (1);
 		while (cmd[i])
 		{
-			printf("%s\n", cmd[i]);
 			current = *env;
     		previous = NULL;
 			while (current != NULL) 

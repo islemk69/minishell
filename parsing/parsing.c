@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 17:40:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:16:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int parsing(char *line, t_minishell *ms)
 		if (!ms->parsed)
 			return (0);
 	}
+	check_dollar(ms);
 	//int i = 0;
 	//while (ms->parsed[i])
 	//{
