@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 17:06:07 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:38:13 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,5 +208,7 @@ char	**check_redir2(t_minishell *ms);
 void print_error(char *cmd, char *type);
 
 char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot);
+
+int	open_infile(t_minishell *ms);
 
 #endif
