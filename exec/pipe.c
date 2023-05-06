@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 19:59:39 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 21:50:33 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 
 	save_stdin = dup(0);
 	get_path(ms);
-	if (!open_infile(ms))
+	if (!open_here_doc(ms))
 		return (0);
 	i = 0;
 	while (ms->parsed[i])

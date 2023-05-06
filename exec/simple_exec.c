@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 20:07:15 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 22:27:55 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 {
 	set_exec_signals();
 	if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
-		ms->new_parsed = check_redir2(ms);
+		ms->new_parsed = check_redir_simple(ms);
 	else
 	{
 		rm_quote_last(ms->parsed);
