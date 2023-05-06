@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/06 11:02:08 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 13:05:46 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			j = 0;
 			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-					&& tab[i] != ' ' && tab[i] != '$')
+					&& tab[i] != ' ' && tab[i] != '$' && (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -159,7 +159,7 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			dollar = NULL;
 			j = 0;
 			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-					&& tab[i] != ' ' && tab[i] != '$')
+					&& tab[i] != ' ' && tab[i] != '$' && (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;

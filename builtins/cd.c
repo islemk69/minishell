@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:19:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 18:46:40 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 12:39:19 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	input_cd(char **split, t_env **env)
 		else if (chdir(split[1]) == -1 && split[1])
 		{
 			g_global.g_status = 1;
-			print_error(split[1],  ": No such file or directory\n");
+			print_error(split[1], ": No such file or directory\n");
 		}
 		return (1);
 	}

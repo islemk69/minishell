@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:40:24 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 18:47:21 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 11:20:48 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit_code(char **split, int in_pipe, t_minishell *ms)
 	g_global.g_status = ft_atoi2(split[1], ms);
 	if (ms->overflow == true)
 	{
-		print_error(split[1],  ": numeric argument required\n");
+		print_error(split[1], ": numeric argument required\n");
 		g_global.g_status = 2;
 	}
 	if (!in_pipe)
