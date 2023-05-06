@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 18:41:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 15:43:01 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,10 @@ typedef struct s_global
 t_global	g_global;
 
 int		init_env(t_minishell *ms, char **envp);
+
+int	fill_list(t_env **env, char *key, char *value);
+
+void	get_prompt(t_minishell *ms, char *envp);
 
 int		exec_cmd(t_minishell *ms, t_env **env);
 

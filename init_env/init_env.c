@@ -3,68 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/02 20:26:52 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 15:43:56 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char* strcpy_no_null(char* dest, const char* src) {
-    char* ret = dest;
-    while (*src != '\0') {
-        *dest = *src;
-        dest++;
-        src++;
-    }
-    return ret;
-}
-
-void get_prompt(t_minishell *ms, char *envp)
+int	size_get_value(char *line)
 {
-	char *prompt;
-	int i = 3;
-	
-	prompt = envp + 5;
-	ms->prompt = ft_gc_malloc(sizeof(char) * (ft_strlen(prompt)) + 5);
-	ms->prompt = strcpy_no_null(ms->prompt, "42@");
-	while (*prompt)
-	{
-		ms->prompt[i] = *prompt;
-		i++;
-		prompt++;
-	}
-	ms->prompt[i] = '>';
-	i++;
-	ms->prompt[i] = 0;
-}
+	int		size;
+	int		i;
 
-char	*get_key(char *line)
-{
-	int size = 0;
-	char *new_line;
-	
-	while(line[size] != '=')
-		size++;
-	new_line = ft_gc_malloc(sizeof(char) * (size + 1));
 	size = 0;
-	while(line[size] != '=')
-	{
-		new_line[size] = line[size];
-		size++;
-	}
-	new_line[size] = 0;
-	return (new_line);
-}
-
-char	*get_value(char *line)
-{
-	int size = 0;
-	int	i = 0;
-	char *new_line;
-	
+	i = 0;
 	while (line[i] != '=')
 		i++;
 	i++;
@@ -73,7 +27,16 @@ char	*get_value(char *line)
 		size++;
 		i++;
 	}
-	new_line = ft_gc_malloc(sizeof(char) * (size + 1));
+	return (size);
+}
+
+char	*get_value(char *line)
+{
+	int		size;
+	int		i;
+	char	*new_line;
+
+	new_line = ft_gc_malloc(sizeof(char) * (size_get_value(line) + 1));
 	i = 0;
 	size = 0;
 	while (line[i] != '=')
@@ -89,27 +52,11 @@ char	*get_value(char *line)
 	return (new_line);
 }
 
-int	fill_list(t_env **env, char *key, char *value)
-{
-	t_env *cell;
-	
-	cell = create_cell(key, value);
-	if (!cell)
-		return (0);
-	ft_lstad_back(env, cell);
-	return (1);
-}
-
-
-
-int	init_env(t_minishell *ms, char **envp)
+int	init_env_null(t_minishell *ms, char **envp, int i)
 {
 	char	*key;
 	char	*value;
-	int		i;
 
-	i = 0;
-	ms->head_env = NULL;
 	if (!envp[i] || !envp)
 	{
 		while (i < 2)
@@ -130,6 +77,19 @@ int	init_env(t_minishell *ms, char **envp)
 		ms->prompt = "42@guest>";
 		return (1);
 	}
+	return (0);
+}
+
+int	init_env(t_minishell *ms, char **envp)
+{
+	char	*key;
+	char	*value;
+	int		i;
+
+	i = 0;
+	ms->head_env = NULL;
+	if (init_env_null(ms, envp, i))
+		return (1);
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "USER=", 5))
