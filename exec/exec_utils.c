@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 18:50:18 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:24:00 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	check_command(t_minishell *ms, char *input_cmd)
 		}
 		else 
 		{
-			//printf("input-cmd %s\n", input_cmd);
 			if (access(input_cmd, F_OK) != 0)
 			{
 				print_error(input_cmd,  ": No such file or directory\n");

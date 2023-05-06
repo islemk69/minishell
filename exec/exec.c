@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 17:16:07 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:38:01 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	exec_cmd(t_minishell *ms, t_env **env)
 {
 	int		nb_pipe;
-	
+
 	unplug_signals();
 	nb_pipe = count_token(ms->line, '|');
 	if (nb_pipe == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 18:20:51 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:00:22 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 			ms->new_parsed = ms->parsed;
 		}
 		if (child_builtins(ms, ms->new_parsed, env))
+		{
+			ft_gc_free_all();
 			exit(0);
+		}
 		check_command(ms, ms->new_parsed[0]);
 		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
 	}
