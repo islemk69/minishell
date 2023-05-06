@@ -6,12 +6,11 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 19:48:49 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:59:39 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 void	init_pipe(t_minishell *ms, int i)
 {

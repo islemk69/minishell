@@ -6,20 +6,20 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 19:53:34 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 19:59:15 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void rm_quote_last(char **cmds)
+void	rm_quote_last(char **cmds)
 {
-	char *tmp;
-	
+	char	*tmp;
+
 	while (*cmds)
 	{
 		tmp = *cmds;
-		*cmds = quote(tmp);	
+		*cmds = quote(tmp);
 		cmds++;
 	}
 }
