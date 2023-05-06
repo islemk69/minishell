@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/05 18:15:18 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/06 11:02:08 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ void	check_dollar(t_minishell *ms)
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
 		{
+			j = 0;
 			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
 			while (tmp[j])
 			{
@@ -261,6 +262,7 @@ void	check_dollar(t_minishell *ms)
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
 		{
+			j = 0;
 			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
 			while (tmp[j])
 			{
@@ -270,7 +272,7 @@ void	check_dollar(t_minishell *ms)
 			}
 			i++;
 			continue ;
-			//ms->parsed[i] = ft_strdup();
+
 		}
 		realloc[k] = ft_strdup(ms->parsed[i]);
 		k++;
