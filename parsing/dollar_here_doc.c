@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dollar.c                                           :+:      :+:    :+:   */
+/*   dollar_here_doc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/06 17:13:01 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/06 17:11:36 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	size_tmp(char *tab, int i)
+static int	size_tmp(char *tab, int i)
 {
 	int	count;
 
 	count = 0;
 	while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-			&& tab[i] != ' ' && tab[i] != '$' 
-			&& (ft_isalnum(tab[i]) || tab[i] == '_'))
+		    && tab[i] != ' ' && tab[i] != '$' 
+            && (ft_isalnum(tab[i]) || tab[i] == '_'))
 	{
 		count++;
 		i++;
@@ -27,7 +27,7 @@ int	size_tmp(char *tab, int i)
 	return (count);
 }
 
-int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
+static int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 {
 	int		i;
 	int		j;
@@ -54,7 +54,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				s_quot = 0;
 		}
 		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && tab[i + 1] != 0 && s_quot == 0)
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
 		{
 			if (i != 0)
 			{
@@ -77,7 +77,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			j = 0;
 			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
 					&& tab[i] != ' ' && tab[i] != '$' 
-					&& (ft_isalnum(tab[i]) || tab[i] == '_'))
+                    && (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -98,24 +98,20 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	return (count);
 }
 
-char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
+char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 {
 	int		i;
 	int		j;
 	int		k;
 	int		count;
 	char	*tmp;
-	int		flg = 0;
 	char	*dollar;
-	char	**realloc;
-	//char *case = "$";
+	char	*realloc;
 	
 	k = 0;	
 	i = 0;
 	count = countchar(ms, tab, d_quot, s_quot);
-	realloc = ft_gc_malloc(sizeof(char) * (1 + 1));
-	realloc[0] = ft_gc_malloc(sizeof(char) * (count + 1));
-	realloc[1] = 0;
+	realloc = ft_gc_malloc(sizeof(char) * (count + 1));
 	while (tab[i])
 	{
 		if (tab[i] == '"' && s_quot == 0)
@@ -133,13 +129,13 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				s_quot = 0;
 		}
 		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'  && tab[i + 1] != 0 && s_quot == 0)
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
 		{
 			if (i != 0)
 			{
 				if (tab[i - 1] == '<')
 				{
-					realloc[0][k] = tab[i];
+					realloc[k] = tab[i];
 					k++;
 					i++;
 					continue;
@@ -150,7 +146,7 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				tmp = ft_itoa(g_global.g_status);
 				while (*tmp)
 				{
-					realloc[0][k] = *tmp;
+					realloc[k] = *tmp;
 					k++;
 					tmp++;
 				}
@@ -163,127 +159,32 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			j = 0;
 			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
 					&& tab[i] != ' ' && tab[i] != '$' 
-					&& (ft_isalnum(tab[i]) || tab[i] == '_'))
+                    && (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
 				j++;
 			}
 			tmp[j] = 0;
+			//ft_printf("tmp : %s\n", tmp);
 			if (tmp[0])
-			{	
 				dollar = ft_find_path(&ms->head_env, tmp);
-			}
 			if (dollar != 0)
 			{
-				flg = 1;
 				j = 0;
 				while (dollar[j])
 				{
-					realloc[0][k] = dollar[j];
+					realloc[k] = dollar[j];
 					k++;
 					j++;
 				}
 			}
 			continue;
 		}
-		realloc[0][k] = tab[i];
-		k++;
-		i++;
-	}
-	realloc[0][k] = 0;
-	if (flg)
-		realloc = ft_split_token(realloc[0], ' ');
-	return (realloc);
-}
-
-char **real_null(char **ms_parsed)
-{
-	int i = 0;
-	int count = 0;
-	char **new_ms;
-	int j;
-	while (ms_parsed[i])
-	{
-		if (ms_parsed[i][0])
-			count++;
-		i++;
-	}
-	new_ms = ft_gc_malloc(sizeof(char *) * (count + 1));
-	i = 0;
-	j = 0;
-	while (ms_parsed[i])
-	{
-		if (ms_parsed[i][0])
-		{
-			new_ms[j] = ft_strdup(ms_parsed[i]);
-			j++;
-		}
-		i++;
-	}
-	new_ms[j] = 0;
-	return (new_ms);
-}
-
-
-void	check_dollar(t_minishell *ms)
-{
-	int	i;
-	int	d_quot;
-	int	s_quot;
-	char **tmp;
-	char **realloc;
-	int j = 0;
-	
-	d_quot = 0;
-	s_quot = 0;
-	i = 0;
-	int size = 0;
-	j = 0;
-
-	while (ms->parsed[i])
-	{
-		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
-		{
-			j = 0;
-			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
-			while (tmp[j])
-			{
-				size++;
-				j++;
-			}
-			i++;
-			continue ;
-		}
-		size++;
-		i++;
-	}
-	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
-	i = 0;
-	j = 0;
-	int k =0;
-	while (ms->parsed[i])
-	{
-		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
-		{
-			j = 0;
-			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
-			while (tmp[j])
-			{
-				realloc[k] = ft_strdup(tmp[j]);
-				j++;
-				k++;
-			}
-			i++;
-			continue ;
-
-		}
-		realloc[k] = ft_strdup(ms->parsed[i]);
+		realloc[k] = tab[i];
 		k++;
 		i++;
 	}
 	realloc[k] = 0;
-	if (realloc[0] && realloc[1])
-		realloc = real_null(realloc);
-	ms->parsed = realloc;
+	return (realloc);
 }
