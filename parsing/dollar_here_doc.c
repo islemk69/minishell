@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/06 17:11:36 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:05:31 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	size_tmp(char *tab, int i)
 	int	count;
 
 	count = 0;
-	while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-		    && tab[i] != ' ' && tab[i] != '$' 
-            && (ft_isalnum(tab[i]) || tab[i] == '_'))
+	while (tab[i] && tab[i] != '"' && tab[i] != '\''
+		&& tab[i] != ' ' && tab[i] != '$'
+		&& (ft_isalnum(tab[i]) || tab[i] == '_'))
 	{
 		count++;
 		i++;
@@ -53,7 +53,7 @@ static int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
+		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
 			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
 		{
 			if (i != 0)
@@ -62,7 +62,7 @@ static int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				{
 					count++;
 					i++;
-					continue;
+					continue ;
 				}
 			}
 			if (tab[i + 1] == '?')
@@ -75,9 +75,9 @@ static int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			env = NULL;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-					&& tab[i] != ' ' && tab[i] != '$' 
-                    && (ft_isalnum(tab[i]) || tab[i] == '_'))
+			while (tab[i] && tab[i] != '"' && tab[i] != '\''
+				&& tab[i] != ' ' && tab[i] != '$'
+				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -88,7 +88,7 @@ static int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				env = ft_find_path(&ms->head_env, tmp);
 			if (env)
 				count += ft_strlen(env);
-			continue;
+			continue ;
 		}
 		count++;
 		i++;
@@ -107,8 +107,8 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	char	*tmp;
 	char	*dollar;
 	char	*realloc;
-	
-	k = 0;	
+
+	k = 0;
 	i = 0;
 	count = countchar(ms, tab, d_quot, s_quot);
 	realloc = ft_gc_malloc(sizeof(char) * (count + 1));
@@ -128,7 +128,7 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
+		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
 			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
 		{
 			if (i != 0)
@@ -138,7 +138,7 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					realloc[k] = tab[i];
 					k++;
 					i++;
-					continue;
+					continue ;
 				}
 			}
 			if (tab[i + 1] == '?')
@@ -157,16 +157,15 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			dollar = NULL;
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-					&& tab[i] != ' ' && tab[i] != '$' 
-                    && (ft_isalnum(tab[i]) || tab[i] == '_'))
+			while (tab[i] && tab[i] != '"' && tab[i] != '\''
+				&& tab[i] != ' ' && tab[i] != '$'
+				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
 				j++;
 			}
 			tmp[j] = 0;
-			//ft_printf("tmp : %s\n", tmp);
 			if (tmp[0])
 				dollar = ft_find_path(&ms->head_env, tmp);
 			if (dollar != 0)
@@ -179,7 +178,7 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					j++;
 				}
 			}
-			continue;
+			continue ;
 		}
 		realloc[k] = tab[i];
 		k++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:14:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 19:13:37 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/07 15:33:48 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,27 @@ static int	ft_isspace(int c)
 		return (0);
 }
 
+int	ft_do_atoi(const char *str, int i, int signe, t_minishell *ms)
+{
+	long long	nbr;
+
+	nbr = 0;
+	while (ft_isdigit(str[i]) && str[i] != 0)
+	{
+		if (nbr != (nbr * 10 + (str[i] - '0')) / 10)
+			return ((int)overflow(signe, ms));
+		nbr = nbr * 10 + (str[i] - 48);
+		i++;
+	}
+	return (nbr * signe);
+}
+
 int	ft_atoi2(const char *str, t_minishell *ms)
 {
 	int			i;
-	long long	nbr;
 	long long	signe;
 
 	i = 0;
-	nbr = 0;
 	signe = 1;
 	if (!ft_strncmp(str, "-9223372036854775808", ft_strlen(str)))
 		return (0);
@@ -57,12 +70,5 @@ int	ft_atoi2(const char *str, t_minishell *ms)
 			return (0);
 		i++;
 	}
-	while (ft_isdigit(str[i]) && str[i] != 0)
-	{
-		if (nbr != (nbr * 10 + (str[i] - '0')) / 10)
-			return ((int)overflow(signe, ms));
-		nbr = nbr * 10 + (str[i] - 48);
-		i++;
-	}
-	return (nbr * signe);
+	return (ft_do_atoi(str, i, signe, ms));
 }

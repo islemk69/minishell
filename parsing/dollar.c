@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/06 17:13:01 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:01:18 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	size_tmp(char *tab, int i)
 	int	count;
 
 	count = 0;
-	while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-			&& tab[i] != ' ' && tab[i] != '$' 
-			&& (ft_isalnum(tab[i]) || tab[i] == '_'))
+	while (tab[i] && tab[i] != '"' && tab[i] != '\''
+		&& tab[i] != ' ' && tab[i] != '$'
+		&& (ft_isalnum(tab[i]) || tab[i] == '_'))
 	{
 		count++;
 		i++;
@@ -53,8 +53,9 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && tab[i + 1] != 0 && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
+			&& tab[i + 1] != 0 && s_quot == 0)
 		{
 			if (i != 0)
 			{
@@ -62,7 +63,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				{
 					count++;
 					i++;
-					continue;
+					continue ;
 				}
 			}
 			if (tab[i + 1] == '?')
@@ -75,9 +76,9 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			env = NULL;
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-					&& tab[i] != ' ' && tab[i] != '$' 
-					&& (ft_isalnum(tab[i]) || tab[i] == '_'))
+			while (tab[i] && tab[i] != '"' && tab[i] != '\''
+				&& tab[i] != ' ' && tab[i] != '$'
+				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -88,7 +89,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				env = ft_find_path(&ms->head_env, tmp);
 			if (env)
 				count += ft_strlen(env);
-			continue;
+			continue ;
 		}
 		count++;
 		i++;
@@ -105,12 +106,12 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	int		k;
 	int		count;
 	char	*tmp;
-	int		flg = 0;
+	int		flg;
 	char	*dollar;
 	char	**realloc;
-	//char *case = "$";
-	
-	k = 0;	
+
+	flg = 0;
+	k = 0;
 	i = 0;
 	count = countchar(ms, tab, d_quot, s_quot);
 	realloc = ft_gc_malloc(sizeof(char) * (1 + 1));
@@ -132,8 +133,9 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'  && tab[i + 1] != 0 && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
+			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
+			&& tab[i + 1] != 0 && s_quot == 0)
 		{
 			if (i != 0)
 			{
@@ -142,7 +144,7 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					realloc[0][k] = tab[i];
 					k++;
 					i++;
-					continue;
+					continue ;
 				}
 			}
 			if (tab[i + 1] == '?')
@@ -161,9 +163,9 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
 			dollar = NULL;
 			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\'' 
-					&& tab[i] != ' ' && tab[i] != '$' 
-					&& (ft_isalnum(tab[i]) || tab[i] == '_'))
+			while (tab[i] && tab[i] != '"' && tab[i] != '\''
+				&& tab[i] != ' ' && tab[i] != '$'
+				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
 			{
 				tmp[j] = tab[i];
 				i++;
@@ -185,7 +187,7 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 					j++;
 				}
 			}
-			continue;
+			continue ;
 		}
 		realloc[0][k] = tab[i];
 		k++;
@@ -197,12 +199,15 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	return (realloc);
 }
 
-char **real_null(char **ms_parsed)
+char	**real_null(char **ms_parsed)
 {
-	int i = 0;
-	int count = 0;
-	char **new_ms;
-	int j;
+	int		i;
+	int		count;
+	char	**new_ms;
+	int		j;
+
+	i = 0;
+	count = 0;
 	while (ms_parsed[i])
 	{
 		if (ms_parsed[i][0])
@@ -225,22 +230,20 @@ char **real_null(char **ms_parsed)
 	return (new_ms);
 }
 
-
 void	check_dollar(t_minishell *ms)
 {
-	int	i;
-	int	d_quot;
-	int	s_quot;
-	char **tmp;
-	char **realloc;
-	int j = 0;
-	
+	int		i;
+	int		d_quot;
+	int		s_quot;
+	char	**tmp;
+	char	**realloc;
+	int		j;
+	int		size;
+
 	d_quot = 0;
 	s_quot = 0;
 	i = 0;
-	int size = 0;
 	j = 0;
-
 	while (ms->parsed[i])
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
@@ -261,7 +264,7 @@ void	check_dollar(t_minishell *ms)
 	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
 	i = 0;
 	j = 0;
-	int k =0;
+	size = 0;
 	while (ms->parsed[i])
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
@@ -270,19 +273,18 @@ void	check_dollar(t_minishell *ms)
 			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
 			while (tmp[j])
 			{
-				realloc[k] = ft_strdup(tmp[j]);
+				realloc[size] = ft_strdup(tmp[j]);
 				j++;
-				k++;
+				size++;
 			}
 			i++;
 			continue ;
-
 		}
-		realloc[k] = ft_strdup(ms->parsed[i]);
-		k++;
+		realloc[size] = ft_strdup(ms->parsed[i]);
+		size++;
 		i++;
 	}
-	realloc[k] = 0;
+	realloc[size] = 0;
 	if (realloc[0] && realloc[1])
 		realloc = real_null(realloc);
 	ms->parsed = realloc;
