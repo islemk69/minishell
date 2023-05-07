@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 22:34:18 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/07 17:00:59 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../Libft/libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
-#include <sys/stat.h>
+# include <sys/stat.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
@@ -34,12 +34,12 @@
 # define PROMPT "42@guest> "
 # define ERR_PROMPT "❌ Minishell> "
 
-#define SQUOTE 39
-#define DQUOTE 34
-#define DOLLAR 36
-#define TILDE 126
-#define SYNT_ERR "bash: syntax error near unexpected token"
-#define SHELLSCRIPT "\
+# define SQUOTE 39
+# define DQUOTE 34
+# define DOLLAR 36
+# define TILDE 126
+# define SYNT_ERR "bash: syntax error near unexpected token"
+# define SHELLSCRIPT "\
 #/bin/bash \n\
 echo -e \""CYAN"       .__       .__       "YELLOW".__           "RED"\
 .__  .__   \n"CYAN"  _____ |__| ____ |__| "YELLOW"_____|  |__   ____ "\
@@ -50,11 +50,17 @@ ____  >___|  /\\___  "RED">____/____/\n"CYAN"      \\/        \\/      \
   "YELLOW"\\/     \\/     \\/      "WHITE"     \n\" \n\
 "
 
-extern int	g_exit_status;
-
 typedef struct s_data	t_data;
 
-typedef struct s_env {
+typedef struct s_global
+{
+	int			g_status;
+}				t_global;
+
+t_global				g_global;
+
+typedef struct s_env
+{
 	char			*key;
 	char			*value;
 	struct s_env	*next;
@@ -83,17 +89,9 @@ typedef struct s_minishell
 	int		status;
 }				t_minishell;
 
-typedef struct s_global
-{
-	int			g_status;
-	//t_m_free	*m_free;
-}				t_global;
-
-t_global	g_global;
-
 int		init_env(t_minishell *ms, char **envp);
 
-int	fill_list(t_env **env, char *key, char *value);
+int		fill_list(t_env **env, char *key, char *value);
 
 void	get_prompt(t_minishell *ms, char *envp);
 
@@ -101,14 +99,13 @@ int		exec_cmd(t_minishell *ms, t_env **env);
 
 void	error(char *str);
 
-int		pipe_builtins(t_minishell *ms, char **split, t_env **env,
-		int pipe);
-		
-int	ft_atoi2(const char *str, t_minishell *ms);
+int		pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
+
+int		ft_atoi2(const char *str, t_minishell *ms);
 
 int		built_in_export(t_env **env, char **split);
 
-int		built_in_unset(t_env** env, char **cmd);
+int		built_in_unset(t_env **env, char **cmd);
 
 int		input_env(t_env **env, char **split);
 
@@ -156,7 +153,7 @@ char	**split_string(char *str);
 
 int		check_command(t_minishell *ms, char *input_cmd);
 
-int		count_token(char *str, char c);\
+int		count_token(char *str, char c);
 
 void	access_file(char **tab, t_minishell *ms);
 
@@ -198,20 +195,20 @@ void	set_heredoc_signals(void);
 
 int		built_in_echo(char **split);
 
-int child_builtins(t_minishell *ms, char **split, t_env **env);
-int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
+int		child_builtins(t_minishell *ms, char **split, t_env **env);
+int		parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 char	**open_files(t_minishell *ms, char **tab);
 
 char	**check_redir_simple(t_minishell *ms);
 
-void print_error(char *cmd, char *type);
+void	print_error(char *cmd, char *type);
 
 int		error_exit(char *cmd, char *type, int exit);
 
 char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot);
 
-int	open_here_doc(t_minishell *ms);
+int		open_here_doc(t_minishell *ms);
 
 char	**ft_realloc_from_i(char **tab, int size, int i);
 

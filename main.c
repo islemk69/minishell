@@ -6,13 +6,11 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/07 15:50:29 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/07 16:53:19 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
-
-int	g_exit_status = 0;
 
 int	urandom(char *str)
 {
