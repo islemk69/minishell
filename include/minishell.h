@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/07 17:00:59 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/07 23:18:56 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@
 # define DOLLAR 36
 # define TILDE 126
 # define SYNT_ERR "bash: syntax error near unexpected token"
-# define SHELLSCRIPT "\
-#/bin/bash \n\
-echo -e \""CYAN"       .__       .__       "YELLOW".__           "RED"\
-.__  .__   \n"CYAN"  _____ |__| ____ |__| "YELLOW"_____|  |__   ____ "\
-RED"|  | |  |  \n"CYAN" /     \\|  |/    \\|  |"YELLOW"/  ___/  |  \
-\\_/ __ \\"RED"|  | |  |  \n"CYAN"|  Y Y  \\  |   |  \\  |"YELLOW"\\___ \
-\\|   Y  \\  ___/"RED"|  |_|  |__\n"CYAN"|__|_|  /__|___|  /__/"YELLOW"\
-____  >___|  /\\___  "RED">____/____/\n"CYAN"      \\/        \\/      \
-  "YELLOW"\\/     \\/     \\/      "WHITE"     \n\" \n\
-"
 
 typedef struct s_data	t_data;
 
@@ -69,6 +59,7 @@ typedef struct s_env
 typedef struct s_minishell
 {
 	t_env	*head_env;
+	char	**realloc;
 	char	**new_parsed;
 	char	**parsed;
 	char	**path_env;
@@ -86,7 +77,9 @@ typedef struct s_minishell
 	int		outfile;
 	char	*line_here;
 	int		outfile_exist;
+	int		flg;
 	int		status;
+	
 }				t_minishell;
 
 int		init_env(t_minishell *ms, char **envp);
@@ -196,6 +189,7 @@ void	set_heredoc_signals(void);
 int		built_in_echo(char **split);
 
 int		child_builtins(t_minishell *ms, char **split, t_env **env);
+
 int		parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 char	**open_files(t_minishell *ms, char **tab);
@@ -211,5 +205,33 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot);
 int		open_here_doc(t_minishell *ms);
 
 char	**ft_realloc_from_i(char **tab, int size, int i);
+
+int		size_tmp(char *tab, int i);
+
+void	check_quote_dollar(char c, int *s_quot, int *d_quot);
+
+void	check_path_count(t_minishell *ms, char *tab, int *i, int *count);
+
+int		special_dollar_count(char *tab, int *i, int *count);
+
+int		countchar(t_minishell *ms, char *tab, int d_quot, int s_quot);
+
+char	*ft_tmp_dollar(char *tab, int *i);
+
+char	**realloc_parsed_null(char **ms_parsed);
+
+char	**do_realloc_null(char **ms_parsed, int count);
+
+char	**change_parsed_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot);
+
+void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot);
+
+int		check_path_dollar(t_minishell *ms, char **realloc, char *tmp, int *k);
+
+int		change_special_dollar(char *tab, char **realloc, int *i, int *k);
+
+char	**realloc_dollar(t_minishell *ms, char **realloc, int size);
+
+int		size_new_parsed(t_minishell *ms);
 
 #endif

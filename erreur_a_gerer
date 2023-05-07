@@ -44,3 +44,5 @@ reecrire export
 	Ne fonctionne pas comme prevu mais doivent mettre un message d'erreur et exit 127 et non 0
 	./ls et /ls sont considerer comme un executable. 
 	quand on execute ces commandes on doit exit pour sortir d'abord de /ls puis encore exit pour sortir de minishell
+
+  les heredoc qui se cree quand je fait ctrl d

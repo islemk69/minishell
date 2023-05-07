@@ -6,214 +6,18 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/07 16:01:18 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/07 23:14:40 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	size_tmp(char *tab, int i)
+char	**do_real_null(char **ms_parsed, int count)
 {
-	int	count;
-
-	count = 0;
-	while (tab[i] && tab[i] != '"' && tab[i] != '\''
-		&& tab[i] != ' ' && tab[i] != '$'
-		&& (ft_isalnum(tab[i]) || tab[i] == '_'))
-	{
-		count++;
-		i++;
-	}
-	return (count);
-}
-
-int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
-{
-	int		i;
-	int		j;
-	int		count;
-	char	*tmp;
-	char	*env;
-
-	count = 0;
-	i = 0;
-	while (tab[i])
-	{
-		if (tab[i] == '"' && s_quot == 0)
-		{
-			if (d_quot == 0)
-				d_quot = 1;
-			else
-				d_quot = 0;
-		}
-		if (tab[i] == '\'' && d_quot == 0)
-		{
-			if (s_quot == 0)
-				s_quot = 1;
-			else
-				s_quot = 0;
-		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
-			&& tab[i + 1] != 0 && s_quot == 0)
-		{
-			if (i != 0)
-			{
-				if (tab[i - 1] == '<')
-				{
-					count++;
-					i++;
-					continue ;
-				}
-			}
-			if (tab[i + 1] == '?')
-			{
-				count += ft_strlen(ft_itoa(g_global.g_status));
-				i += 2;
-				continue ;
-			}
-			i++;
-			env = NULL;
-			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
-			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\''
-				&& tab[i] != ' ' && tab[i] != '$'
-				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
-			{
-				tmp[j] = tab[i];
-				i++;
-				j++;
-			}
-			tmp[j] = 0;
-			if (tmp[0])
-				env = ft_find_path(&ms->head_env, tmp);
-			if (env)
-				count += ft_strlen(env);
-			continue ;
-		}
-		count++;
-		i++;
-	}
-	d_quot = 0;
-	s_quot = 0;
-	return (count);
-}
-
-char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
-{
-	int		i;
-	int		j;
-	int		k;
-	int		count;
-	char	*tmp;
-	int		flg;
-	char	*dollar;
-	char	**realloc;
-
-	flg = 0;
-	k = 0;
-	i = 0;
-	count = countchar(ms, tab, d_quot, s_quot);
-	realloc = ft_gc_malloc(sizeof(char) * (1 + 1));
-	realloc[0] = ft_gc_malloc(sizeof(char) * (count + 1));
-	realloc[1] = 0;
-	while (tab[i])
-	{
-		if (tab[i] == '"' && s_quot == 0)
-		{
-			if (d_quot == 0)
-				d_quot = 1;
-			else
-				d_quot = 0;
-		}
-		if (tab[i] == '\'' && d_quot == 0)
-		{
-			if (s_quot == 0)
-				s_quot = 1;
-			else
-				s_quot = 0;
-		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
-			&& tab[i + 1] != 0 && s_quot == 0)
-		{
-			if (i != 0)
-			{
-				if (tab[i - 1] == '<')
-				{
-					realloc[0][k] = tab[i];
-					k++;
-					i++;
-					continue ;
-				}
-			}
-			if (tab[i + 1] == '?')
-			{
-				tmp = ft_itoa(g_global.g_status);
-				while (*tmp)
-				{
-					realloc[0][k] = *tmp;
-					k++;
-					tmp++;
-				}
-				i += 2;
-				continue ;
-			}
-			i++;
-			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
-			dollar = NULL;
-			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\''
-				&& tab[i] != ' ' && tab[i] != '$'
-				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
-			{
-				tmp[j] = tab[i];
-				i++;
-				j++;
-			}
-			tmp[j] = 0;
-			if (tmp[0])
-			{	
-				dollar = ft_find_path(&ms->head_env, tmp);
-			}
-			if (dollar != 0)
-			{
-				flg = 1;
-				j = 0;
-				while (dollar[j])
-				{
-					realloc[0][k] = dollar[j];
-					k++;
-					j++;
-				}
-			}
-			continue ;
-		}
-		realloc[0][k] = tab[i];
-		k++;
-		i++;
-	}
-	realloc[0][k] = 0;
-	if (flg)
-		realloc = ft_split_token(realloc[0], ' ');
-	return (realloc);
-}
-
-char	**real_null(char **ms_parsed)
-{
-	int		i;
-	int		count;
 	char	**new_ms;
 	int		j;
+	int		i;
 
-	i = 0;
-	count = 0;
-	while (ms_parsed[i])
-	{
-		if (ms_parsed[i][0])
-			count++;
-		i++;
-	}
 	new_ms = ft_gc_malloc(sizeof(char *) * (count + 1));
 	i = 0;
 	j = 0;
@@ -230,18 +34,28 @@ char	**real_null(char **ms_parsed)
 	return (new_ms);
 }
 
-void	check_dollar(t_minishell *ms)
+char	**real_null(char **ms_parsed)
 {
 	int		i;
-	int		d_quot;
-	int		s_quot;
-	char	**tmp;
-	char	**realloc;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (ms_parsed[i])
+	{
+		if (ms_parsed[i][0])
+			count++;
+		i++;
+	}
+	return (do_real_null(ms_parsed, count));
+}
+
+int	size_new_parsed(t_minishell *ms)
+{
+	int		i;
 	int		j;
 	int		size;
 
-	d_quot = 0;
-	s_quot = 0;
 	i = 0;
 	j = 0;
 	while (ms->parsed[i])
@@ -249,8 +63,8 @@ void	check_dollar(t_minishell *ms)
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
 		{
 			j = 0;
-			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
-			while (tmp[j])
+			ms->realloc = change_parsed_dollar(ms, ms->parsed[i], 0, 0);
+			while (ms->realloc[j])
 			{
 				size++;
 				j++;
@@ -261,19 +75,25 @@ void	check_dollar(t_minishell *ms)
 		size++;
 		i++;
 	}
-	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
+	return (i);
+}
+
+char	**realloc_dollar(t_minishell *ms, char **realloc, int size)
+{
+	int		i;
+	int		j;
+
 	i = 0;
 	j = 0;
-	size = 0;
 	while (ms->parsed[i])
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
 		{
 			j = 0;
-			tmp = dollar_exist(ms, ms->parsed[i], d_quot, s_quot);
-			while (tmp[j])
+			ms->realloc = change_parsed_dollar(ms, ms->parsed[i], 0, 0);
+			while (ms->realloc[j])
 			{
-				realloc[size] = ft_strdup(tmp[j]);
+				realloc[size] = ft_strdup(ms->realloc[j]);
 				j++;
 				size++;
 			}
@@ -284,7 +104,15 @@ void	check_dollar(t_minishell *ms)
 		size++;
 		i++;
 	}
-	realloc[size] = 0;
+	return (realloc[size] = 0, realloc);
+}
+
+void	check_dollar(t_minishell *ms)
+{
+	char	**realloc;
+
+	realloc = ft_gc_malloc(sizeof(char *) * (size_new_parsed(ms) + 1));
+	realloc = realloc_dollar(ms, realloc, 0);
 	if (realloc[0] && realloc[1])
 		realloc = real_null(realloc);
 	ms->parsed = realloc;
