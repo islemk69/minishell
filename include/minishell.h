@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 20:49:05 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:10:06 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,9 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot);
 int		countchar(t_minishell *ms, char *tab, int d_quot, int s_quot);
 
 int		size_tmp(char *tab, int i);
+
+void	get_prompt(t_minishell *ms, char *envp);
+
+int		fill_list(t_env **env, char *key, char *value);
 
 #endif
