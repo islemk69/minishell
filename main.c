@@ -6,15 +6,13 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 15:51:43 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 20:51:17 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
 t_global	g_global;
-
-int	g_exit_status = 0;
 
 int	urandom(char *str)
 {
@@ -53,8 +51,6 @@ static int	start_minishell(t_minishell *ms)
 			free(ms->line);
 			continue ;
 		}
-		// if (!check_write_exit(ms))
-		// 	return (0);
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
 		free(ms->line);
@@ -67,12 +63,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	ms.infile = 0;
-		ms.outfile = 0;
-		ms.infile_stra = NULL;
-		ms.outfile_exist = 0;
+	ms.outfile = 0;
+	ms.infile_stra = NULL;
+	ms.outfile_exist = 0;
 	if (argc > 1)
 		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);
-	//system(SHELLSCRIPT);
 	ms.new_env = NULL;
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))
