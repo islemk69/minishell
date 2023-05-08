@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 17:16:22 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:09:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int parsing(char *line, t_minishell *ms)
 	}
     else
 	{
-		space = ft_split_token(line, ' ');
+		space = ft_split_space(line);
 		ms->parsed = redirection(space);
 		if (!ms->parsed)
 			return (0);
