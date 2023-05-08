@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 16:55:48 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:56:15 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
-
-int is_built_in(char *str)
+int	is_built_in(char *str)
 {
 	if (!*str)
 		return (0);
-	if (!ft_strncmp(str, "cd\0", ft_strlen(str) + 1) 
-		|| !ft_strncmp(str, "export\0", ft_strlen(str) + 1) 
+	if (!ft_strncmp(str, "cd\0", ft_strlen(str) + 1)
+		|| !ft_strncmp(str, "export\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "pwd\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "unset\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "env\0", ft_strlen(str) + 1)
@@ -32,49 +30,32 @@ int is_built_in(char *str)
 	return (0);
 }
 
-int is_built_in2(char *str, t_env **env)
+int	is_built_in2(char *str, t_env **env)
 {
-	t_env	*head;
-
-	head = *env;
-	int shlvl;
 	if (!*str)
 		return (0);
-	if (!ft_strncmp(str, "cd\0", ft_strlen(str) + 1) 
-		|| !ft_strncmp(str, "export\0", ft_strlen(str) + 1) 
+	if (!ft_strncmp(str, "cd\0", ft_strlen(str) + 1)
+		|| !ft_strncmp(str, "export\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "unset\0", ft_strlen(str) + 1)
 		|| !ft_strncmp(str, "exit\0", ft_strlen(str) + 1))
 	{
 		return (1);
 	}
-	if (!ft_strncmp(str, "./minishell\0", ft_strlen(str) + 1))
-	{
-		while (head)
-		{
-			if (!ft_strncmp(head->key, "SHLVL\0", 6))
-			{
-				shlvl = ft_atoi(head->value);
-				shlvl++;
-				head->value = ft_strdup(ft_itoa(shlvl));
-			}
-			head = head->next;
-		}
+	if (iter_shlvl(str, env))
 		return (1);
-	}
 	return (0);
 }
 
-int pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
+int	pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 {
 	(void)ms;
-	//rm_quote_last(split);
 	if (is_built_in(split[0]))
 	{
-		if (input_env(env, split) 
-				|| input_cd(split, env) || built_in_pwd(split) 
-				|| built_in_export(env, split) || built_in_unset(env, split)
-				|| !check_write_exit(ms, split, pipe)
-				|| built_in_echo(split))
+		if (input_env(env, split)
+			|| input_cd(split, env) || built_in_pwd(split)
+			|| built_in_export(env, split) || built_in_unset(env, split)
+			|| !check_write_exit(ms, split, pipe)
+			|| built_in_echo(split))
 		{
 			return (1);
 		}
@@ -82,14 +63,14 @@ int pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 	return (0);
 }
 
-int child_builtins(t_minishell *ms, char **split, t_env **env)
+int	child_builtins(t_minishell *ms, char **split, t_env **env)
 {
 	(void)ms;
 	if (is_built_in(split[0]))
 	{
-		if (input_env(env, split) 
-				|| built_in_pwd(split) 
-				|| built_in_echo(split))
+		if (input_env(env, split)
+			|| built_in_pwd(split)
+			|| built_in_echo(split))
 		{
 			return (1);
 		}
@@ -97,21 +78,19 @@ int child_builtins(t_minishell *ms, char **split, t_env **env)
 	return (0);
 }
 
-
-int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
+int	parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 {
 	(void)ms;
 	if (is_built_in2(split[0], env))
 	{
 		rm_quote_last(split);
 		if (input_cd(split, env)
-				|| built_in_export(env, split) 
-				|| built_in_unset(env, split)
-				|| !check_write_exit(ms, split, pipe))
+			|| built_in_export(env, split)
+			|| built_in_unset(env, split)
+			|| !check_write_exit(ms, split, pipe))
 		{
 			return (1);
 		}
 	}
-
 	return (0);
 }

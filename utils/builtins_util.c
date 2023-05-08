@@ -1,33 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   builtins_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/27 14:20:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 22:19:17 by hel-ouar         ###   ########.fr       */
+/*   Created: 2023/05/08 22:54:37 by hel-ouar          #+#    #+#             */
+/*   Updated: 2023/05/08 23:59:48 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	built_in_pwd(char **split)
+int	iter_shlvl(char *str, t_env **env)
 {
-	char	*str;
+	t_env	*head;
+	int		shlvl;
 
-	if (split[0] && !ft_strncmp(split[0], "pwd\0", 4))
+	head = *env;
+	if (!ft_strncmp(str, "./minishell\0", ft_strlen(str) + 1))
 	{
-		str = getcwd(0, 0);
-		if (!str)
+		while (head)
 		{
-			g_global.g_status = 1;
-			perror("getcwd()");
+			if (!ft_strncmp(head->key, "SHLVL\0", 6))
+			{
+				shlvl = ft_atoi(head->value);
+				shlvl++;
+				head->value = ft_strdup(ft_itoa(shlvl));
+			}
+			head = head->next;
 		}
-		printf("%s\n", str);
-		free(str);
-		g_global.g_status = 0;
 		return (1);
 	}
 	return (0);
+}
+
+void	print_error_export(char *split)
+{
+	ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"\
+				WHITE"", split);
+	g_global.g_status = 1;
 }

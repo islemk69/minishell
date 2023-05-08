@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 21:10:06 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 23:59:58 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,9 @@ int		size_tmp(char *tab, int i);
 void	get_prompt(t_minishell *ms, char *envp);
 
 int		fill_list(t_env **env, char *key, char *value);
+
+int		iter_shlvl(char *str, t_env **env);
+
+void	print_error_export(char *split);
 
 #endif

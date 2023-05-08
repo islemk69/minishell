@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:21:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 17:42:50 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:15:29 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int input_env(t_env **env, char **split)
+int	input_env(t_env **env, char **split)
 {
-	t_env 	*head;
+	t_env	*head;
 
 	head = *env;
 	if (split[0] && !split[1] && !ft_strncmp(split[0], "env\0", 4))
