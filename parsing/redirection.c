@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/04 15:51:47 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:33:10 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ char *strcpy_token_2(char* src, int *s_int, int mod) {
 	char *sdup;
 	(void)mod;
 	int save = *s_int;
-	//int s_quot = 0;
+	int s_quot = 0;
 	int d_quot = 0;
 	
 	while (is_token_char(src[save]))
@@ -252,14 +252,21 @@ char *strcpy_token_2(char* src, int *s_int, int mod) {
 	}
     while (src[save]) 
 	{
-		if (src[save] == '"')
+		if (src[save] == '"' && s_quot == 0)
 		{
 			if (d_quot == 0)
 				d_quot = 1;
 			else
 				d_quot = 0;
 		}
-		if (is_token_char(src[save]) && !d_quot)
+		if (src[save] == '\'' && d_quot == 0)
+		{
+			if (s_quot == 0)
+				s_quot = 1;
+			else
+				s_quot = 0;
+		}
+		if (is_token_char(src[save]) && (!d_quot && !s_quot))
 			break;
 		size++;
 		save++;
@@ -272,16 +279,25 @@ char *strcpy_token_2(char* src, int *s_int, int mod) {
 		j++;
 		*s_int += 1;
 	}
+	s_quot = 0;
+	d_quot = 0;
 	while (src[*s_int]) 
 	{
-		if (src[*s_int] == '"')
+		if (src[*s_int] == '"' && s_quot == 0)
 		{
 			if (d_quot == 0)
 				d_quot = 1;
 			else
 				d_quot = 0;
 		}
-		if (is_token_char(src[*s_int]) && !d_quot)
+		if (src[*s_int] == '\'' && d_quot == 0)
+		{
+			if (s_quot == 0)
+				s_quot = 1;
+			else
+				s_quot = 0;
+		}
+		if (is_token_char(src[*s_int]) && (!d_quot && !s_quot))
 			break;
 		sdup[j] = src[*s_int];
 		j++;

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 17:18:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:37:54 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int is_token_char(char c);
 
 int		count_token(char *str, char c);\
 
-void	access_file(char **tab, t_minishell *ms);
+void	access_file(t_minishell *ms, char **tab);
 
 void	check_redir(t_minishell *ms);
 

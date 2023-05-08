@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 14:28:19 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:43:25 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,24 +130,33 @@ void	access_file2(t_minishell *ms)
 	int	i;
 	char	*tab2;
 	i = 0;
-	while (ms->parsed[i] && ms->parsed[i][0] == '<')
+	char **head;
+
+	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(ms->parsed) + 1));
+	while (ms->parsed[i])
 	{
-		if (ms->parsed[i][1] == '<')
+		head[i] = ft_strdup(ms->parsed[i]);
+		i++;
+	}
+	i = 0;
+	while (head[i] && head[i][0] == '<')
+	{
+		if (head[i][1] == '<')
 		{
-			ms->parsed[i] = quote(ms->parsed[i]);
-			tab2 = ft_strjoin(".", ms->parsed[i] + 2);
+			head[i] = quote(head[i]);
+			tab2 = ft_strjoin(".", head[i] + 2);
 			if (access(tab2, F_OK) != 0)
 			{
-				print_error(ms->parsed[i] + 2,  ": No such file or directory\n");
+				print_error(head[i] + 2,  ": No such file or directory\n");
 				exit (1);
 			}
 		}
 		else
 		{
-			ms->parsed[i] = quote(ms->parsed[i]);
-			if (access(ms->parsed[i] + 1, F_OK) != 0)
+			head[i] = quote(head[i]);
+			if (access(head[i] + 1, F_OK) != 0)
 			{
-				print_error(ms->parsed[i] + 1,  ": No such file or directory\n");
+				print_error(head[i] + 1,  ": No such file or directory\n");
 				exit (1);
 			}
 		}
@@ -156,26 +165,40 @@ void	access_file2(t_minishell *ms)
 }
 
 
-void	access_file(char **tab, t_minishell *ms)
+void	access_file(t_minishell *ms, char **tab)
 {
 	int	i;
 	char	*tab2;
+	char	**head;
+
 	i = 0;
-	while (tab[i] && tab[i][0] == '<')
+	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(tab) + 1));
+	while (tab[i])
 	{
-		if (tab[i][1] == '<')
+		head[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	i = 0;
+	while (head[i] && head[i][0] == '<')
+	{
+		if (head[i][1] == '<')
 		{
-			tab2 = ft_strjoin(".", tab[i] + 2);
+			head[i] = quote(head[i]);
+			tab2 = ft_strjoin(".", head[i] + 2);
 			if (access(tab2, F_OK) != 0)
 			{
-				ms->infile_stra = tab[i] + 2;
+				ms->infile_stra = head[i] + 2;
 				break ;
 			}
 		}
-		else if (access(tab[i] + 1, F_OK) != 0)
+		else
 		{
-			ms->infile_stra = tab[i] + 1;
-			break ;
+			head[i] = quote(head[i]);
+			if (access(head[i] + 1, F_OK) != 0)
+			{
+				ms->infile_stra = head[i] + 1;
+				break ;
+			}
 		}
 		i++;
 	}
