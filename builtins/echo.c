@@ -6,40 +6,51 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 13:34:30 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/03 14:07:19 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:16:43 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+bool	ft_is_nflag(char *string)
+{
+	int		i;
+
+	i = 0;
+	if (string[i] != '-' || !string[1])
+		return (0);
+	else
+		i++;
+	while (string[i] && string[i] == 'n')
+		i++;
+	if (string[i])
+		return (0);
+	else
+		return (1);
+}
+
 int	built_in_echo(char **split)
 {
-	int	i;
-	int	flg;
-	
+	bool	n_flag;
+	int		i;
+
 	i = 1;
-	flg = 0;
+	n_flag = false;
 	if (split[0] && !ft_strncmp(split[0], "echo\0", 4))
 	{
-		if (!split[1] || !split[1][0])
+		while (split[i] && ft_is_nflag(split[i]))
 		{
-			g_global.g_status = 0;
-			return (printf("\n"), 1);
-		}
-		if (!ft_strncmp(split[1], "-n\0", 3))
-		{
+			n_flag = true;
 			i++;
-			flg = 1;
 		}
-		while (split[i])
+		while (split && split[i])
 		{
+			printf("%s", split[i]);
 			if (split[i + 1])
-				printf("%s ", split[i]);
-			else
-				printf("%s", split[i]);
+				printf(" ");
 			i++;
 		}
-		if (!flg)
+		if (n_flag == false)
 			printf("\n");
 		g_global.g_status = 0;
 		return (1);

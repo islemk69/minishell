@@ -2,10 +2,6 @@
 	ctrl \
 	ctrl d
 
-- echo 
-	-nnnnnnnnnn  -n -n -nnnnn
-	-nnnnnn4nnnn
-
 - ctrl + \
   mettre Quit (core dumped)
 	exit 130
@@ -13,9 +9,6 @@
 - heredoc
   ctrl + d
   nom du fichier en /dev/urandom avec O_EXCLUDE
-
-- unset
-  not a valid indenifier alphanum
 
 - $_
   update affiche la derniere commande executer

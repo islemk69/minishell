@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 15:35:47 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:18:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void	check_redir(t_minishell *ms);
 void	remove_heredoc(char **tab);
 
 int		here_doc(t_minishell *ms, char *tab, char *tmp);
+
+int		check_key(char *str);
 
 void	access_file2(t_minishell *ms);
 
