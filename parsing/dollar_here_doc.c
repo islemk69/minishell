@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/08 15:35:09 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 22:03:54 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,13 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 && tab[i + 1] != 0 && s_quot == 0)
 		{
+			if (tab[i + 1] == '\"' && d_quot)
+			{
+				realloc[k++] = tab[i++];
+				continue ;
+			}
 			if (!s_check_dollar_heredoc(tab, realloc, &i, &k))
 				continue ;
 			i++;

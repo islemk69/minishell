@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/08 18:02:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 21:57:37 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,14 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$' && tab[i + 1] != 0 && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 && tab[i + 1] != 0 && s_quot == 0)
 		{
+			if (tab[i + 1] == '\"' && !d_quot)
+			{
+				count++;
+				i++;
+				continue ;
+			}
 			if (i != 0)
 			{
 				if (tab[i - 1] == '<')
@@ -132,9 +137,15 @@ char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			else
 				s_quot = 0;
 		}
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\'' 
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'  && tab[i + 1] != 0 && s_quot == 0)
+		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 && tab[i + 1] != 0 && s_quot == 0)
 		{
+			if (tab[i + 1] == '\"' && d_quot)
+			{
+				realloc[0][k] = tab[i];
+				k++;
+				i++;
+				continue ;
+			}
 			if (i != 0)
 			{
 				if (tab[i - 1] == '<')
