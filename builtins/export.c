@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 14:48:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 15:14:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int built_in_export(t_env **env, char **split)
 	char *add_quote;
 	int i = 1;
 	int flg = 0;
+	char **tmp;
 	t_env	*cell;
 	t_env	*print;
 	
@@ -59,12 +60,21 @@ int built_in_export(t_env **env, char **split)
 		{
 			if (split[i][0] == '=' || (split[i][0] >= '0' && split[i][0] <= '9'))
 			{
-				ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"WHITE"", split[i]);
+				ft_dprintf(""RED"bash: export: `%s': not a valid identifier1\n"WHITE"", split[i]);
 				g_global.g_status = 1;
 				i++;
 				continue ;
 			}
-			key_value = ft_split(split[i], '=');
+			if (split[i][ft_strlen(split[i]) - 1] == '=')
+			{
+				key_value = ft_gc_malloc(sizeof(char *) * 3);
+				tmp = ft_split(split[i], '=');
+				key_value[0] = ft_strdup(tmp[0]);
+				key_value[1] = ft_strdup("");
+				key_value[2] = 0;
+			}
+			else
+				key_value = ft_split(split[i], '=');
 			if (!check_key(key_value[0]))
 			{
 				ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"WHITE"", split[i]);
@@ -77,7 +87,8 @@ int built_in_export(t_env **env, char **split)
 			{
 				if (!ft_strncmp(key_value[0], print->key, ft_strlen(print->key)))
 				{
-					print->value = ft_strdup(key_value[1]);
+					if (key_value[1])
+						print->value = ft_strdup(key_value[1]);
 					flg = 1;
 					break ;
 				}
