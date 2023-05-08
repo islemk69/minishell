@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:27 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 11:28:25 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:42:54 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	built_in_pwd(char **split)
 {
-	char	*str;
-
+	char *str;
+	
 	if (split[0] && !ft_strncmp(split[0], "pwd\0", 4))
 	{
 		str = getcwd(0, 0);
@@ -30,3 +30,11 @@ int	built_in_pwd(char **split)
 	}
 	return (0);
 }
+
+
+
+/*
+	cat "mon fichier" $TEST ("salut sa va")
+	cat / "mon fichier" / "salut" "sa" "va"
+	realloc = split token
+*/

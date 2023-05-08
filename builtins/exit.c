@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:40:24 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/06 18:01:52 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/05 18:47:21 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	ft_exit_code(char **split, int in_pipe, t_minishell *ms)
 	g_global.g_status = ft_atoi2(split[1], ms);
 	if (ms->overflow == true)
 	{
-		print_error(split[1], ": numeric argument required\n");
+		print_error(split[1],  ": numeric argument required\n");
 		g_global.g_status = 2;
 	}
 	if (!in_pipe)
-		return (ft_gc_free_all(), exit(g_global.g_status));
+		return (exit(g_global.g_status));
 }
 
 void	ft_numarg_check(char **split)
@@ -39,7 +39,7 @@ void	ft_numarg_check(char **split)
 		|| split[1][i] > '9')
 		{
 			ft_dprintf("exit: %s: numeric argument required\n", split[1]);
-			return (ft_gc_free_all(), exit(2));
+			return (exit(2));
 		}
 	}
 }
@@ -49,7 +49,7 @@ void	ft_built_in_exit(char **split, int in_pipe, t_minishell *ms)
 	if (!in_pipe)
 		printf("exit\n");
 	if (!split[1] || !*split[1])
-		return (ft_gc_free_all(), exit(g_global.g_status));
+		return (exit(g_global.g_status));
 	ft_numarg_check(split);
 	if (split[2])
 	{

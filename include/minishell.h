@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/07 23:18:56 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:27:45 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "../Libft/libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
+#include <sys/stat.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
@@ -34,23 +34,27 @@
 # define PROMPT "42@guest> "
 # define ERR_PROMPT "❌ Minishell> "
 
-# define SQUOTE 39
-# define DQUOTE 34
-# define DOLLAR 36
-# define TILDE 126
-# define SYNT_ERR "bash: syntax error near unexpected token"
+#define SQUOTE 39
+#define DQUOTE 34
+#define DOLLAR 36
+#define TILDE 126
+#define SYNT_ERR "bash: syntax error near unexpected token"
+#define SHELLSCRIPT "\
+#/bin/bash \n\
+echo -e \""CYAN"       .__       .__       "YELLOW".__           "RED"\
+.__  .__   \n"CYAN"  _____ |__| ____ |__| "YELLOW"_____|  |__   ____ "\
+RED"|  | |  |  \n"CYAN" /     \\|  |/    \\|  |"YELLOW"/  ___/  |  \
+\\_/ __ \\"RED"|  | |  |  \n"CYAN"|  Y Y  \\  |   |  \\  |"YELLOW"\\___ \
+\\|   Y  \\  ___/"RED"|  |_|  |__\n"CYAN"|__|_|  /__|___|  /__/"YELLOW"\
+____  >___|  /\\___  "RED">____/____/\n"CYAN"      \\/        \\/      \
+  "YELLOW"\\/     \\/     \\/      "WHITE"     \n\" \n\
+"
+
+extern int	g_exit_status;
 
 typedef struct s_data	t_data;
 
-typedef struct s_global
-{
-	int			g_status;
-}				t_global;
-
-t_global				g_global;
-
-typedef struct s_env
-{
+typedef struct s_env {
 	char			*key;
 	char			*value;
 	struct s_env	*next;
@@ -59,7 +63,6 @@ typedef struct s_env
 typedef struct s_minishell
 {
 	t_env	*head_env;
-	char	**realloc;
 	char	**new_parsed;
 	char	**parsed;
 	char	**path_env;
@@ -77,28 +80,31 @@ typedef struct s_minishell
 	int		outfile;
 	char	*line_here;
 	int		outfile_exist;
-	int		flg;
 	int		status;
-	
 }				t_minishell;
 
+typedef struct s_global
+{
+	int			g_status;
+	//t_m_free	*m_free;
+}				t_global;
+
+extern t_global	g_global;
+
 int		init_env(t_minishell *ms, char **envp);
-
-int		fill_list(t_env **env, char *key, char *value);
-
-void	get_prompt(t_minishell *ms, char *envp);
 
 int		exec_cmd(t_minishell *ms, t_env **env);
 
 void	error(char *str);
 
-int		pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
-
-int		ft_atoi2(const char *str, t_minishell *ms);
+int		pipe_builtins(t_minishell *ms, char **split, t_env **env,
+		int pipe);
+		
+int	ft_atoi2(const char *str, t_minishell *ms);
 
 int		built_in_export(t_env **env, char **split);
 
-int		built_in_unset(t_env **env, char **cmd);
+int		built_in_unset(t_env** env, char **cmd);
 
 int		input_env(t_env **env, char **split);
 
@@ -146,7 +152,9 @@ char	**split_string(char *str);
 
 int		check_command(t_minishell *ms, char *input_cmd);
 
-int		count_token(char *str, char c);
+int is_token_char(char c);
+
+int		count_token(char *str, char c);\
 
 void	access_file(char **tab, t_minishell *ms);
 
@@ -188,50 +196,13 @@ void	set_heredoc_signals(void);
 
 int		built_in_echo(char **split);
 
-int		child_builtins(t_minishell *ms, char **split, t_env **env);
-
-int		parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
+int child_builtins(t_minishell *ms, char **split, t_env **env);
+int parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 char	**open_files(t_minishell *ms, char **tab);
 
-char	**check_redir_simple(t_minishell *ms);
+char	**check_redir2(t_minishell *ms);
 
-void	print_error(char *cmd, char *type);
-
-int		error_exit(char *cmd, char *type, int exit);
-
-char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot);
-
-int		open_here_doc(t_minishell *ms);
-
-char	**ft_realloc_from_i(char **tab, int size, int i);
-
-int		size_tmp(char *tab, int i);
-
-void	check_quote_dollar(char c, int *s_quot, int *d_quot);
-
-void	check_path_count(t_minishell *ms, char *tab, int *i, int *count);
-
-int		special_dollar_count(char *tab, int *i, int *count);
-
-int		countchar(t_minishell *ms, char *tab, int d_quot, int s_quot);
-
-char	*ft_tmp_dollar(char *tab, int *i);
-
-char	**realloc_parsed_null(char **ms_parsed);
-
-char	**do_realloc_null(char **ms_parsed, int count);
-
-char	**change_parsed_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot);
-
-void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot);
-
-int		check_path_dollar(t_minishell *ms, char **realloc, char *tmp, int *k);
-
-int		change_special_dollar(char *tab, char **realloc, int *i, int *k);
-
-char	**realloc_dollar(t_minishell *ms, char **realloc, int size);
-
-int		size_new_parsed(t_minishell *ms);
+void print_error(char *cmd, char *type);
 
 #endif

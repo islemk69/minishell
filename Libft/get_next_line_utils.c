@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 13:46:55 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/07 14:56:38 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/03/31 13:32:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	}
 	if (!s2 || !s1)
 		return (NULL);
-	ptr = ft_gc_malloc(sizeof(char) * \
-		(ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
+	ptr = ft_gc_malloc(sizeof(char) * (ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1));
 	if (!ptr)
 		return (NULL);
 	i = -1;
@@ -66,5 +65,6 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 			ptr[i] = s1[i];
 	while (s2[j])
 		ptr[i++] = s2[j++];
-	return (ptr[i] = '\0', ptr);
+	ptr[i] = '\0';
+	return (ptr);
 }

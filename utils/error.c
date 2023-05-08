@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 15:20:42 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/07 15:39:38 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/03 13:46:53 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	error(char *str)
 		return ;
 }
 
+
+
 int	is_empty(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i] == ' ' || str[i] == '\t')

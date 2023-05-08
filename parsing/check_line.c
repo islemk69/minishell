@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 04:34:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/07 16:16:18 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/07 00:18:26 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	check_quote(char *str)
 			quote not closed \"'\" or '\"'\n"WHITE""), 0);
 }
 
-static int	check_pipe(char *string)
+static int	check_pipe(char* string) 
 {
 	char	quote;
 	char	**pipe;
@@ -76,55 +76,51 @@ static int	check_pipe(char *string)
 	quote = '\0';
 	i = 0;
 	pipe = ft_split_token(string, ' ');
-	if (pipe[0][0] == '|')
-		return (custom_msg(pipe[0], 0, '|'));
-	else if (pipe[ft_strlen_dtab(pipe) - 1] \
-		[ft_strlen(pipe[ft_strlen_dtab(pipe) - 1]) - 1] == '|')
-		return (custom_msg(pipe[ft_strlen_dtab(pipe) - 1], \
-			ft_strlen(pipe[ft_strlen_dtab(pipe) - 1]) - 1, '|'));
+	if(pipe[0][0] == '|')
+		return(custom_msg(pipe[0], 0, '|'));
+	else if (pipe[ft_strlen_dtab(pipe) - 1][ft_strlen(pipe[ft_strlen_dtab(pipe) - 1]) - 1] == '|') 
+		return (custom_msg(pipe[ft_strlen_dtab(pipe) - 1], ft_strlen(pipe[ft_strlen_dtab(pipe) - 1]) - 1 , '|'));
 	while (pipe[i])
 	{
 		if (pipe[i][ft_strlen(pipe[i]) - 1] == '|' && pipe[i + 1][0] == '|')
 			return (custom_msg(pipe[i + 1], 0, '|'));
 		i++;
 	}
-	while (string[i] != '\0')
+	while (string[i] != '\0') 
 	{
-		if (string[i] == '"' || string[i] == '\'')
+		if (string[i] == '"' || string[i] == '\'') 
 		{
-			if (quote == '\0')
+			if (quote == '\0') 
 				quote = string[i];
-			else if (quote == string[i])
+			else if (quote == string[i]) 
 				quote = '\0';
-		}
-		else if (string[i] == '|' && string[i + 1] == '|' && quote == '\0')
+		} 
+		else if (string[i] == '|' && string[i+1] == '|' && quote == '\0')
 			return (custom_msg(string, i + 1, '|'));
 		i++;
 	}
 	return (1);
 }
 
-static int	check_wrong_redir(char *string)
+static int	check_wrong_redir(char* string) 
 {
 	char	quote;
 	int		i;
 
 	i = 0;
 	quote = '\0';
-	while (string[i] != '\0')
+	while (string[i] != '\0') 
 	{
-		if (string[i] == '"' || string[i] == '\'')
+		if (string[i] == '"' || string[i] == '\'') 
 		{
-			if (quote == '\0')
+			if (quote == '\0') 
 				quote = string[i];
-			else if (quote == string[i])
+			else if (quote == string[i]) 
 				quote = '\0';
-		}
-		else if (string[i] == '<' && string[i + 1] == '<'
-			&& string[i + 2] == '<' && quote == '\0')
+		} 
+		else if (string[i] == '<' && string[i+1] == '<'  && string[i+2] == '<' && quote == '\0')
 			return (custom_msg(string, i + 2, '<'));
-		else if (string[i] == '>' && string[i + 1] == '>'
-			&& string[i + 2] == '>' && quote == '\0')
+		else if (string[i] == '>' && string[i+1] == '>'  && string[i+2] == '>' && quote == '\0')
 			return (custom_msg(string, i + 2, '>'));
 		i++;
 	}

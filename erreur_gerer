@@ -2,10 +2,6 @@
 	ctrl \
 	ctrl d
 
-- cmd
-	/sfsifj
-	/file
-
 
 - echo 
 	-nnnnnnnnnn  -n -n -nnnnn
@@ -24,13 +20,13 @@
   nom du fichier en /dev/urandom avec O_EXCLUDE
 
 - export
-  trier par ordre aplhabetique
-	export a ne doit pas apparaitre dans l'env
+  trier par  ordre aplhabetique
+	export a = ne doit pas apparaitre dans l'env
 	mais export a= doit mettre a= dans env et declare -x a="" dans export
 	verifier que les export n'ont pa deja ete fait pour ne pas les dedoubler dans export
 
 - unset
-  not a valid indenifier
+  not a valid indenifier alphanum
 
 - $_
   update affiche la derniere commande executer
@@ -39,10 +35,5 @@ reecrire export
 
 - heredoc
 	jhfbfkjbf $USER$PATH  expand ne se fait pas dans heredoc
-
-/ls et ./ls
-	Ne fonctionne pas comme prevu mais doivent mettre un message d'erreur et exit 127 et non 0
-	./ls et /ls sont considerer comme un executable. 
-	quand on execute ces commandes on doit exit pour sortir d'abord de /ls puis encore exit pour sortir de minishell
 
   les heredoc qui se cree quand je fait ctrl d

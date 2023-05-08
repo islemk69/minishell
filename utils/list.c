@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:29:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/07 15:40:31 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/04/01 23:12:18 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/minishell.h"
 
@@ -54,10 +55,10 @@ void	ft_lstad_back(t_env **lst, t_env *new)
 
 int	lstsize(t_env *lst)
 {
-	int		i;
-	t_env	*cpy;
-
+	int	i;
+	t_env *cpy;
 	cpy = lst;
+
 	i = 0;
 	while (cpy)
 	{
@@ -66,6 +67,7 @@ int	lstsize(t_env *lst)
 	}
 	return (i);
 }
+
 
 void	lstclear(t_env **lst)
 {
