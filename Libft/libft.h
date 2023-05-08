@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/08 18:08:06 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 20:32:03 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ char	*ft_itoa(int n);
 void	*ft_memchr(const void *s, int c, size_t n);
 
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-
-char	**ft_split_space(char *input);
 
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 
@@ -153,11 +151,12 @@ char	**ft_split2(char const *s, char c, char e);
 
 char	**ft_split3(char const *s, char c, char e, char f);
 
-int	ft_dprintf(const char *str, ...);
+int		ft_dprintf(const char *str, ...);
 
 void	format_dprintf(const char c, va_list args, int *len);
 
-void	ft_putnbr_base_dprintf(long long unsigned int nb, long long unsigned int taille, char *base, int *len);
+void	ft_putnbr_base_dprintf(long long unsigned int nb, \
+		long long unsigned int taille, char *base, int *len);
 
 void	ft_putnbr_dprintf(int n, int *len);
 
@@ -165,8 +164,10 @@ void	ft_putchar_dprintf(char c, int *len);
 
 void	ft_putstr_dprintf(char *str, int *len);
 
-char **ft_split_token(char *input, char sep);
+char	**ft_split_token(char *input, char sep);
 
-char    *ft_strncpy(char *dest, const char *src, size_t n);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+
+char	**ft_split_space(char *input);
 
 #endif

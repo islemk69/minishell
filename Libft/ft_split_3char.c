@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_3char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 15:19:38 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/03/11 21:10:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 20:23:41 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**ft_split3(char const *s, char c, char e, char f)
 	{
 		while (s[k] == c || s[k] == e || s[k] == f)
 			k++;
-		tab[i] = (char *)ft_gc_malloc(sizeof (char) * ft_sizeword(s + k, c, e, f));
+		tab[i] = ft_gc_malloc(sizeof(char) * ft_sizeword(s + k, c, e, f));
 		if (!tab[i])
 			return (ft_free(tab, i));
 		j = 0;
