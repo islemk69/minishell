@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 18:38:38 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/09 00:16:15 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	char	**split;
 	int		cpt;
 	char	*tmp;
-	int j;
+	int		j;
 
 	save_stdin = dup(0);
 	get_path(ms);
@@ -82,7 +82,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				dup(1);
 			if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 				exit(g_global.g_status);
-			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == - 1)
+			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
 			{
 				nb_pipe--;
 				i++;
@@ -98,12 +98,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		else
 		{
 			if (dup2(save_stdin, 0) == -1)
-					error ("dup6");
+				error ("dup6");
 		}
-		// if (ms->infile)
-		// 	close(ms->infile);
-		// if (ms->outfile)
-		// 	close(ms->outfile);
 		close(ms->fd[0]);
 		close(ms->fd[1]);
 		i++;
@@ -122,5 +118,3 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	}
 	return (1);
 }
-
-//32 50 53 56 58 101 103 110 113 131 132 140 141

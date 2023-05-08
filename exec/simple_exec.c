@@ -6,20 +6,20 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 15:55:16 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 00:15:10 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void rm_quote_last(char **cmds)
+void	rm_quote_last(char **cmds)
 {
-	char *tmp;
-	
+	char	*tmp;
+
 	while (*cmds)
 	{
 		tmp = *cmds;
-		*cmds = quote(tmp);	
+		*cmds = quote(tmp);
 		cmds++;
 	}
 }
@@ -28,20 +28,10 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int		id;
 	char	*tmp;
+	int		i;
 
-	int i = 0;
+	i = 0;
 	get_path(ms);
-	// while (ms->parsed[i] && ms->parsed[i][0] == '<')
-	// {
-	// 	if (ms->parsed[i][1] == '<')
-	// 	{
-	// 		tmp = ms->parsed[i];
-	// 		ms->parsed[i] = quote(tmp);
-	// 		if (!here_doc(ms, ms->parsed[i] + 2, tmp + 2))
-	// 			return (0);
-	// 	}
-	// 	i++;
-	// }
 	if (parent_builtins(ms, ms->parsed, env, 0))
 		return (1);
 	id = fork();
