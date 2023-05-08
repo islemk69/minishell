@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/05 18:48:14 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:48:16 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int built_in_export(t_env **env, char **split)
 	char	**key_value;
 	char *add_quote;
 	int i = 1;
+	int flg = 0;
 	t_env	*cell;
 	t_env	*print;
 	
@@ -71,10 +72,24 @@ int built_in_export(t_env **env, char **split)
 				i++;
 				continue ;
 			}
-			cell = create_cell(key_value[0], key_value[1]);
-			if (!cell)
-				return (0);
-			ft_lstad_back(env, cell);
+			print = *env;
+			while (print)
+			{
+				if (!ft_strncmp(key_value[0], print->key, ft_strlen(print->key)))
+				{
+					print->value = ft_strdup(key_value[1]);
+					flg = 1;
+					break ;
+				}
+				print = print->next;
+			}
+			if (!flg)
+			{
+				cell = create_cell(key_value[0], key_value[1]);
+				if (!cell)
+					return (0);
+				ft_lstad_back(env, cell);
+			}
 			i++;
 		}
 		return (1);
