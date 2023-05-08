@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 04:34:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/04/07 00:18:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/08 16:59:38 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,11 @@ static int	check_wrong_redir(char* string)
 
 int	check_line(char *line)
 {
+	if (line[0] == '.' && !line[1])
+	{
+		ft_dprintf("bash: .: filename argument required\n.: usage: . filename [arguments]\n");
+		return (0);
+	}
 	if (!check_quote(line) || !check_wrong_redir(line) || !check_pipe(line))
 		return (0);
 	return (1);

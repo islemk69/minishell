@@ -6,13 +6,9 @@
 	-nnnnnnnnnn  -n -n -nnnnn
 	-nnnnnn4nnnn
 
-- cd
-	update $PWD $OLD_PWD
-
 - ctrl + \
   mettre Quit (core dumped)
 	exit 130
-
 
 - heredoc
   ctrl + d
@@ -23,7 +19,5 @@
 
 - $_
   update affiche la derniere commande executer
-- heredoc
-	jhfbfkjbf $USER$PATH  expand ne se fait pas dans heredoc
 
   les heredoc qui se cree quand je fait ctrl d
