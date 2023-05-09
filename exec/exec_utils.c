@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 00:22:59 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 01:07:13 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,21 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	return (0);
 }
 
+// static int	check_token_quote(char *str, bool in_quotes, char current_quote)
+// {
+// 	if (in_quotes && *str == current_quote)
+// 	{
+// 		in_quotes = false;
+// 		current_quote = '\0';
+// 	}
+// 	else if (!in_quotes)
+// 	{
+// 		in_quotes = true;
+// 		current_quote = *str;
+// 	}
+// 	return (in_quotes);
+// }
+
 int	count_token(char *str, char c)
 {
 	int		count;
@@ -135,7 +150,7 @@ void	access_file2(t_minishell *ms)
 			head[i] = quote(head[i]);
 			tab2 = ft_strjoin(".", head[i] + 2);
 			if (access(tab2, F_OK) != 0)
-			error_exit(head[i] + 1, ": No such file or directory\n", 1);
+				error_exit(head[i] + 1, ": No such file or directory\n", 1);
 		}
 		else
 		{
@@ -147,10 +162,23 @@ void	access_file2(t_minishell *ms)
 	}
 }
 
+int	access_here(t_minishell *ms, char **head, int *i)
+{
+	char	*tab2;
+
+	head[*i] = quote(head[*i]);
+	tab2 = ft_strjoin(".", head[*i] + 2);
+	if (access(tab2, F_OK) != 0)
+	{
+		ms->infile_stra = head[*i] + 2;
+		return (1);
+	}
+	return (0);
+}
+
 void	access_file(t_minishell *ms, char **tab)
 {
 	int		i;
-	char	*tab2;
 	char	**head;
 
 	i = 0;
@@ -159,13 +187,8 @@ void	access_file(t_minishell *ms, char **tab)
 	{
 		if (head[i][1] == '<')
 		{
-			head[i] = quote(head[i]);
-			tab2 = ft_strjoin(".", head[i] + 2);
-			if (access(tab2, F_OK) != 0)
-			{
-				ms->infile_stra = head[i] + 2;
+			if (access_here(ms, head, &i))
 				break ;
-			}
 		}
 		else
 		{

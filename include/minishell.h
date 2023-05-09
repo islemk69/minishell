@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 23:59:21 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:32:57 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_minishell
 	char	**realloc;
 	char	**tmp_dollar;
 	char	**change_dollar;
+	char	*tmp;
 	int		flg;
 }				t_minishell;
 
