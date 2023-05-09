@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:45:36 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/08 22:11:08 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:03:32 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	handle_ctrl_c_exec(int signum, siginfo_t *info, void *context)
 	(void)info;
 	(void)context;
 	(void)signum;
-	write(1, "\n", 1);rl_replace_line("", 0);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 	g_global.g_status = 130;

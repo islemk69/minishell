@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 11:20:00 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:37:14 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,5 +210,7 @@ int		iter_shlvl(char *str, t_env **env);
 void	print_error_export(char *split);
 
 int		custom_msg_check_line(char *line, int pos, char c);
+
+void	check_quote_dollar(char c, int *s_quot, int *d_quot);
 
 #endif

@@ -6,103 +6,11 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/09 11:57:10 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 12:32:14 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	size_tmp(char *tab, int i)
-{
-	int	count;
-
-	count = 0;
-	while (tab[i] && tab[i] != '"' && tab[i] != '\''
-		&& tab[i] != ' ' && tab[i] != '$'
-		&& (ft_isalnum(tab[i]) || tab[i] == '_'))
-	{
-		count++;
-		i++;
-	}
-	return (count);
-}
-
-int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
-{
-	int		i;
-	int		j;
-	int		count;
-	char	*tmp;
-	char	*env;
-
-	count = 0;
-	i = 0;
-	while (tab[i])
-	{
-		if (tab[i] == '"' && s_quot == 0)
-		{
-			if (d_quot == 0)
-				d_quot = 1;
-			else
-				d_quot = 0;
-		}
-		if (tab[i] == '\'' && d_quot == 0)
-		{
-			if (s_quot == 0)
-				s_quot = 1;
-			else
-				s_quot = 0;
-		}
-		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
-			&& tab[i + 1] != 0 && s_quot == 0)
-		{
-			if (tab[i + 1] == '\"' && !d_quot)
-			{
-				count++;
-				i++;
-				continue ;
-			}
-			if (i != 0)
-			{
-				if (tab[i - 1] == '<')
-				{
-					count++;
-					i++;
-					continue ;
-				}
-			}
-			if (tab[i + 1] == '?')
-			{
-				count += ft_strlen(ft_itoa(g_global.g_status));
-				i += 2;
-				continue ;
-			}
-			i++;
-			env = NULL;
-			tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, i) + 1));
-			j = 0;
-			while (tab[i] && tab[i] != '"' && tab[i] != '\''
-				&& tab[i] != ' ' && tab[i] != '$'
-				&& (ft_isalnum(tab[i]) || tab[i] == '_'))
-			{
-				tmp[j] = tab[i];
-				i++;
-				j++;
-			}
-			tmp[j] = 0;
-			if (tmp[0])
-				env = ft_find_path(&ms->head_env, tmp);
-			if (env)
-				count += ft_strlen(env);
-			continue ;
-		}
-		count++;
-		i++;
-	}
-	d_quot = 0;
-	s_quot = 0;
-	return (count);
-}
 
 char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot)
 {
