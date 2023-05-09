@@ -6,17 +6,37 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 18:07:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:45:27 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	is_token_char(char c)
+
+char	*strcpy_token(char *src, int *s_int)
 {
-	if (c == '<' || c == '>')
-		return (1);
-	return (0);
+	int		j;
+	int		size;
+	char	*sdup;
+	int		save;
+
+	save = *s_int;
+	size = 0;
+	j = 0;
+	while (src[save] && !is_token_char(src[save]))
+	{
+		size++;
+		save ++;
+	}
+	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
+	while (src[*s_int] && !is_token_char(src[*s_int]))
+	{
+		sdup[j] = src[*s_int];
+		j++;
+		*s_int += 1;
+	}
+	sdup[j] = 0;
+	return (sdup);
 }
 
 char	*ft_strdup_token(const char *s1, char c)
@@ -72,56 +92,6 @@ char	**realloc_redir(char **space)
 	return (realloc);
 }
 
-char	**redir_first(char **realloc)
-{
-	char	**new_tab;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	new_tab = (char **)ft_gc_malloc(sizeof(char *) * \
-		(ft_strlen_dtab(realloc) + 1));
-	while (realloc[i])
-	{
-		if (realloc[i][0] != '<' || (realloc[i][0] == '<' && !realloc[i][1]))
-		{
-			i++;
-			continue ;
-		}
-		new_tab[j] = ft_strdup(realloc[i]);
-		j++;
-		i++;
-	}
-	i = 0;
-	while (realloc[i])
-	{
-		if (realloc[i][0] != '>' || (realloc[i][0] == '>' && !realloc[i][1]))
-		{
-			i++;
-			continue ;
-		}
-		new_tab[j] = ft_strdup(realloc[i]);
-		j++;
-		i++;
-	}
-	i = 0;
-	while (realloc[i])
-	{
-		if ((realloc[i][0] == '<' && realloc[i][1]) || (realloc[i][0] == '>' \
-			&& realloc[i][1]))
-		{
-			i++;
-			continue ;
-		}
-		new_tab[j] = ft_strdup(realloc[i]);
-		j++;
-		i++;
-	}
-	new_tab[j] = 0;
-	return (new_tab);
-}
-
 int	check_double_token(char **str)
 {
 	int	i;
@@ -139,40 +109,30 @@ int	check_double_token(char **str)
 	return (1);
 }
 
-int	is_redir(char *str)
+int	is_redir(char *str, bool in_quotes, char current_quote)
 {
 	int		count;
-	bool	in_quotes;
-	char	current_quote;
-	int		i;
 
-	i = 0;
 	count = 0;
-	in_quotes = false;
-	current_quote = '\0';
-	while (str[i])
+	while (*str != '\0')
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if ((*str == '\'' || *str == '\"')
+			&& (!in_quotes || *str == current_quote))
 		{
-			if (in_quotes && str[i] == current_quote)
-			{
-				in_quotes = false;
+			in_quotes = !in_quotes;
+			if (in_quotes)
+				current_quote = *str;
+			else
 				current_quote = '\0';
-			}
-			else if (!in_quotes)
-			{
-				in_quotes = true;
-				current_quote = str[i];
-			}
 		}
-		else if ((str[i] == '<' || str[i] == '>') && !in_quotes)
+		else if ((*str == '<' || *str == '>') && !in_quotes)
 		{
-			if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' \
-				&& str[i + 1] == '>'))
-				i++;
+			if ((*str == '<' && *(str + 1) == '<')
+				|| (*str == '>' && *(str + 1) == '>'))
+				str++;
 			count++;
 		}
-		i++;
+		str++;
 	}
 	return (count);
 }
@@ -189,7 +149,7 @@ char	**realloc_stick(char **space)
 	token = 0;
 	while (space[i])
 	{
-		token = is_redir(space[i]);
+		token = is_redir(space[i], false, '\0');
 		if (!is_token_char(space[i][0]) && token)
 			size += token + 1;
 		else if (is_token_char(space[i][0]) && token > 1)
@@ -203,142 +163,6 @@ char	**realloc_stick(char **space)
 	return (realloc);
 }
 
-char	*strcpy_token(char *src, int *s_int)
-{
-	int		j;
-	int		size;
-	char	*sdup;
-	int		save;
-
-	save = *s_int;
-	size = 0;
-	j = 0;
-	while (src[save] && !is_token_char(src[save]))
-	{
-		size++;
-		save ++;
-	}
-	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
-	while (src[*s_int] && !is_token_char(src[*s_int]))
-	{
-		sdup[j] = src[*s_int];
-		j++;
-		*s_int += 1;
-	}
-	sdup[j] = 0;
-	return (sdup);
-}
-
-char	*strcpy_token_2(char *src, int *s_int, int mod)
-{
-	int		j;
-	int		size;
-	char	*sdup;
-	int		save;
-	int		d_quot;
-	int		s_quot;
-
-	(void)mod;
-	d_quot = 0;
-	s_quot = 0;
-	save = *s_int;
-	size = 0;
-	while (is_token_char(src[save]))
-	{
-		size++;
-		save++;
-	}
-	while (src[save])
-	{
-		if (src[save] == '"' && s_quot == 0)
-		{
-			if (d_quot == 0)
-				d_quot = 1;
-			else
-				d_quot = 0;
-		}
-		if (src[save] == '\'' && d_quot == 0)
-		{
-			if (s_quot == 0)
-				s_quot = 1;
-			else
-				s_quot = 0;
-		}
-		if (is_token_char(src[save]) && (!d_quot && !s_quot))
-			break ;
-		size++;
-		save++;
-	}
-	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
-	j = 0;
-	while (is_token_char(src[*s_int]))
-	{
-		sdup[j] = src[*s_int];
-		j++;
-		*s_int += 1;
-	}
-	s_quot = 0;
-	d_quot = 0;
-	while (src[*s_int])
-	{
-		if (src[*s_int] == '"' && s_quot == 0)
-		{
-			if (d_quot == 0)
-				d_quot = 1;
-			else
-				d_quot = 0;
-		}
-		if (src[*s_int] == '\'' && d_quot == 0)
-		{
-			if (s_quot == 0)
-				s_quot = 1;
-			else
-				s_quot = 0;
-		}
-		if (is_token_char(src[*s_int]) && (!d_quot && !s_quot))
-			break ;
-		sdup[j] = src[*s_int];
-		j++;
-		*s_int += 1;
-	}
-	sdup[j] = 0;
-	return (sdup);
-}
-
-char	*extract_dollard(char *str)
-{
-	int		i;
-	int		j;
-	int		size;
-	char	*realloc;
-
-	i = 0;
-	j = 0;
-	size = 0;
-	while (str[i] != '$')
-		i++;
-	if (str[0] == '\"' || str[0] == '\'')
-		return (str);
-	while (str[i] && str[i] != '\"' && str[i] != '\'' && str[i] != '$')
-		i++;
-	j = i;
-	while (str[i])
-	{
-		size++;
-		i++;
-	}
-	i = 0;
-	realloc = ft_gc_malloc(sizeof(char) * (size + 1));
-	while (str[j])
-	{
-		realloc[i] = str[j];
-		j++;
-		i++;
-	}
-	realloc[i] = 0;
-	return (realloc);
-}
-
 char	**fill_stick(char **str, char **realloc2)
 {
 	int i = 0;
@@ -349,7 +173,7 @@ char	**fill_stick(char **str, char **realloc2)
 	while (str[i])
 	{
 		s_int = 0;
-		token = is_redir(str[i]);
+		token = is_redir(str[i], false, '\0');
 		if (!is_token_char(str[i][0]) && token)
 		{
 			u = 1;
@@ -421,5 +245,6 @@ char	**redirection(char **space)
 	realloc2 = fill_stick(space, realloc2);
 	realloc = realloc_redir(realloc2);
 	realloc = fill_redir(realloc2, realloc);
+	realloc = redir_first(realloc);
 	return (realloc);
 }

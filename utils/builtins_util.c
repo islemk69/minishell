@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 22:54:37 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/08 23:59:48 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:37:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	is_token_char(char c)
+{
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
+}
 
 int	iter_shlvl(char *str, t_env **env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 14:51:59 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:41:07 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	lstclear(t_env **lst);
 int		parsing(char *line, t_minishell *ms);
 
 size_t	ft_strlen_dtab(char **s);
+
+char	**redir_first(char **realloc);
 
 int		lstsize(t_env *lst);
 

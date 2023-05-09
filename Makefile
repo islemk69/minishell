@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+         #
+#    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/05/09 14:54:18 by hel-ouar         ###   ########.fr        #
+#    Updated: 2023/05/09 19:08:01 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = main.c init_env/init_env.c init_env/init_env_util.c exec/exec.c utils/bui
 		signal/signal.c signal/signals_handlers.c builtins/cd.c builtins/env.c builtins/pwd.c builtins/export.c builtins/unset.c \
 		builtins/exit.c builtins/echo.c exec/here_doc.c exec/pipe.c exec/simple_exec.c exec/redir_exec.c\
 		parsing/check_line.c parsing/dollar.c exec/open_pipe.c exec/open_simple.c parsing/dollar_here_doc.c \
-		parsing/dollar_count.c parsing/dollar_change.c exec/exec_utils.c exec/exec_utils_2.c
+		parsing/dollar_count.c parsing/dollar_change.c exec/exec_utils.c exec/exec_utils_2.c parsing/redir_first.c
 		
 OBJS = $(SRCS:.c=.o)
 
