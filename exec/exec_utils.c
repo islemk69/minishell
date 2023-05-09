@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 00:22:11 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:28:19 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,21 @@ int	count_token(char *str, char c)
 	return (count);
 }
 
+char	**tab_copy(char **tab)
+{
+	int		i;
+	char	**head;
+
+	i = 0;
+	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(tab) + 1));
+	while (tab[i])
+	{
+		head[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	return (head);
+}
+
 void	access_file2(t_minishell *ms)
 {
 	int		i;
@@ -128,13 +143,7 @@ void	access_file2(t_minishell *ms)
 	char	**head;
 
 	i = 0;
-	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(ms->parsed) + 1));
-	while (ms->parsed[i])
-	{
-		head[i] = ft_strdup(ms->parsed[i]);
-		i++;
-	}
-	i = 0;
+	head = tab_copy(ms->parsed);
 	while (head[i] && head[i][0] == '<')
 	{
 		if (head[i][1] == '<')
@@ -142,19 +151,13 @@ void	access_file2(t_minishell *ms)
 			head[i] = quote(head[i]);
 			tab2 = ft_strjoin(".", head[i] + 2);
 			if (access(tab2, F_OK) != 0)
-			{
-				print_error(head[i] + 2, ": No such file or directory\n");
-				exit (1);
-			}
+			error_exit(head[i] + 1, ": No such file or directory\n", 1);
 		}
 		else
 		{
 			head[i] = quote(head[i]);
 			if (access(head[i] + 1, F_OK) != 0)
-			{
-				print_error(head[i] + 1, ": No such file or directory\n");
-				exit (1);
-			}
+				error_exit(head[i] + 1, ": No such file or directory\n", 1);
 		}
 		i++;
 	}
@@ -167,13 +170,7 @@ void	access_file(t_minishell *ms, char **tab)
 	char	**head;
 
 	i = 0;
-	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(tab) + 1));
-	while (tab[i])
-	{
-		head[i] = ft_strdup(tab[i]);
-		i++;
-	}
-	i = 0;
+	head = tab_copy(tab);
 	while (head[i] && head[i][0] == '<')
 	{
 		if (head[i][1] == '<')
