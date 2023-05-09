@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 13:27:23 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:46:21 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,5 +221,6 @@ char	*ft_tmp_dollar(char *tab, int *i);
 
 char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot);
+	
 
 #endif
