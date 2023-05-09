@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 20:35:23 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:23:26 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,5 +239,9 @@ char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 int		error_exit(char *cmd, char *type, int i);
 
 char	**ft_realloc_from_i(char **tab, int size, int i);
+
+void	check_path_count(t_minishell *ms, char *tab, int *i, int *count);
+
+int		special_dollar_count(char *tab, int *i, int *count);
 
 #endif

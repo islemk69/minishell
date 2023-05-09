@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 13:16:44 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:28:30 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,39 @@ static void	check_path_heredoc(t_minishell *ms, char *real, char *tmp, int *k)
 	}
 }
 
+int	countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot)
+{
+	int		i;
+	int		count;
+
+	count = 0;
+	i = 0;
+	while (tab[i])
+	{
+		check_quote_dollar(tab[i], &s_quot, &d_quot);
+		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
+			&& tab[i + 1] != 0 && s_quot == 0)
+		{
+			if (tab[i + 1] == '"')
+			{
+				count++;
+				i++;
+				continue ;
+			}
+			if (!special_dollar_count(tab, &i, &count))
+				continue ;
+			i++;
+			check_path_count(ms, tab, &i, &count);
+			continue ;
+		}
+		count++;
+		i++;
+	}
+	d_quot = 0;
+	s_quot = 0;
+	return (count);
+}
+
 char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 {
 	int		i;
@@ -92,14 +125,14 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	k = 0;
 	i = 0;
 	realloc = ft_gc_malloc(sizeof(char) * \
-		(countchar(ms, tab, d_quot, s_quot) + 1));
+		(countchar_here(ms, tab, d_quot, s_quot) + 1));
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
 		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
 			&& tab[i + 1] != 0 && s_quot == 0)
 		{
-			if (tab[i + 1] == '\"' && d_quot)
+			if (tab[i + 1] == '"')
 			{
 				realloc[k++] = tab[i++];
 				continue ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_change.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:49:28 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 18:10:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:28:17 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,10 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
+		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
 			&& tab[i + 1] != 0 && s_quot == 0)
 		{
-			if (tab[i + 1] == '\"' && d_quot)
+			if ((ft_strchr(tab, ' ') || d_quot) && tab[i + 1] == '\"')
 			{
 				ms->change_dollar[0][k++] = tab[i++];
 				continue ;

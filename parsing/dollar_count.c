@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:10:02 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 13:22:57 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 21:44:16 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,10 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (tab[i] == '$' && tab[i + 1] != '"' && tab[i + 1] != '\''
-			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
+		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
 			&& tab[i + 1] != 0 && s_quot == 0)
 		{
-			if (tab[i + 1] == '\"' && d_quot)
+			if ((ft_strchr(tab, ' ') || d_quot) && tab[i + 1] == '\"')
 			{
 				count++;
 				i++;
