@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 15:28:19 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:22:59 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,20 @@ int	check_command(t_minishell *ms, char *input_cmd)
 		|| (input_cmd[ft_strlen(input_cmd) - 1] == '/'))
 	{
 		if (stat(input_cmd, &info) == 0 && S_ISDIR(info.st_mode))
-		{
-			print_error(input_cmd, ": Is a directory\n");
-			exit(126);
-		}
+			error_exit(input_cmd, ": Is a directory\n", 126);
 		if (access(input_cmd, F_OK) == 0)
 		{
 			if (access(input_cmd, X_OK | R_OK) != 0)
-			{
-				print_error(input_cmd, ": Permission denied\n");
-				exit (126);
-			}
+				error_exit(input_cmd, ": Permission denied\n", 126);
 			ms->path_cmd = input_cmd;
 			return (1);
 		}
 		else
 		{
 			if (access(input_cmd, F_OK) != 0)
-			{
-				print_error(input_cmd, ": No such file or directory\n");
-				exit(127);
-			}
+				error_exit(input_cmd, ": No such file or directory\n", 127);
 			if (access(input_cmd, X_OK | R_OK) != 0)
-			{
-				print_error(input_cmd, ": Permission denied\n");
-				exit (126);
-			}
+				error_exit(input_cmd, ": Permission denied\n", 126);
 			ms->path_cmd = input_cmd;
 			return (1);
 		}
@@ -73,10 +61,7 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	if (is_built_in(input_cmd))
 		return (1);
 	if (!ms->path_env || !*input_cmd)
-	{
-		print_error(input_cmd, ": command not found\n");
-		exit(127);
-	}
+		error_exit(input_cmd, ": command not found\n", 127);
 	while (ms->path_env[i])
 	{
 		tmp = ft_strjoin_gnl(ms->path_env[i], "/");
@@ -85,8 +70,7 @@ int	check_command(t_minishell *ms, char *input_cmd)
 			return (1);
 		i++;
 	}
-	print_error(input_cmd, ": command not found\n");
-	exit(127);
+	error_exit(input_cmd, ": command not found\n", 127);
 	return (0);
 }
 

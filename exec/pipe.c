@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 00:16:15 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:26:17 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,16 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			else
 				dup(1);
 			if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
+			{
+				ft_gc_free_all();
 				exit(g_global.g_status);
+			}
 			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
 			{
 				nb_pipe--;
 				i++;
 			}
+			ft_gc_free_all();
 			exit(0);
 		}
 		close(ms->fd[1]);

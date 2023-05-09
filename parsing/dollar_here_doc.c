@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 21:28:30 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:15:58 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			}
 			if (!s_check_dollar_heredoc(tab, realloc, &i, &k))
 				continue ;
-			i++;
 			tmp = ft_tmp_dollar(tab, &i);
 			check_path_heredoc(ms, realloc, tmp, &k);
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:49:28 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 21:28:17 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:14:29 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	*ft_tmp_dollar(char *tab, int *i)
 	char	*tmp;
 
 	j = 0;
+	*i += 1;
 	tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, *i) + 1));
 	while (tab[*i] && tab[*i] != '"' && tab[*i] != '\''
 		&& tab[*i] != ' ' && tab[*i] != '$'
@@ -106,7 +107,6 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			}
 			if (!change_special_dollar(tab, ms->change_dollar, &i, &k))
 				continue ;
-			i++;
 			tmp = ft_tmp_dollar(tab, &i);
 			if (check_path_dollar(ms, ms->change_dollar, tmp, &k))
 				ms->flg = 1;

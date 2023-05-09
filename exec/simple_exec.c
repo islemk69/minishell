@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 14:34:30 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:25:09 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	if (id == 0)
 	{
 		if (!heredoc_simple(ms))
-			return (exit(1), 0);
+			return (ft_gc_free_all(), exit(1), 0);
 		child_simple_exec(ms, env);
 	}
 	waitpid(-1, &ms->status, 0);
