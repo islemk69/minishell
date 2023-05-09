@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:10:02 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 12:29:17 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:22:57 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,6 @@ int	size_tmp(char *tab, int i)
 	}
 	return (count);
 }
-
-// void	check_quote_dollar(char c, int *s_quot, int *d_quot)
-// {
-// 	if (c == '"' && *s_quot == 0)
-// 	{
-// 		if (*d_quot == 0)
-// 			*d_quot = 1;
-// 		else
-// 			*d_quot = 0;
-// 	}
-// 	if (c == '\'' && *d_quot == 0)
-// 	{
-// 		if (*s_quot == 0)
-// 			*s_quot = 1;
-// 		else
-// 			*s_quot = 0;
-// 	}
-// }
 
 void	check_path_count(t_minishell *ms, char *tab, int *i, int *count)
 {
@@ -103,6 +85,12 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			&& tab[i + 1] != ' ' && tab[i + 1] != '$'
 			&& tab[i + 1] != 0 && s_quot == 0)
 		{
+			if (tab[i + 1] == '\"' && d_quot)
+			{
+				count++;
+				i++;
+				continue ;
+			}
 			if (!special_dollar_count(tab, &i, &count))
 				continue ;
 			i++;

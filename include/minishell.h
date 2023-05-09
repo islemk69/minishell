@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 12:37:14 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:27:23 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ typedef struct s_minishell
 	char	*line_here;
 	int		outfile_exist;
 	int		status;
+	char	**realloc;
+	char	**tmp_dollar;
+	char	**change_dollar;
+	int		flg;
 }				t_minishell;
 
 int		init_env(t_minishell *ms, char **envp);
@@ -212,5 +216,10 @@ void	print_error_export(char *split);
 int		custom_msg_check_line(char *line, int pos, char c);
 
 void	check_quote_dollar(char c, int *s_quot, int *d_quot);
+
+char	*ft_tmp_dollar(char *tab, int *i);
+
+char	**change_parsed_dollar(t_minishell *ms, char *tab, \
+	int d_quot, int s_quot);
 
 #endif

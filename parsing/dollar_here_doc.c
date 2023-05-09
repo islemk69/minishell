@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 12:37:02 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:16:44 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,6 @@ void	check_quote_dollar(char c, int *s_quot, int *d_quot)
 		else
 			*s_quot = 0;
 	}
-}
-
-char	*ft_tmp_dollar(char *tab, int *i)
-{
-	int		j;
-	char	*tmp;
-
-	j = 0;
-	tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, *i) + 1));
-	while (tab[*i] && tab[*i] != '"' && tab[*i] != '\''
-		&& tab[*i] != ' ' && tab[*i] != '$'
-		&& (ft_isalnum(tab[*i]) || tab[*i] == '_'))
-	{
-		tmp[j] = tab[*i];
-		*i += 1;
-		j++;
-	}
-	tmp[j] = 0;
-	return (tmp);
 }
 
 static int	s_check_dollar_heredoc(char *tab, char *realloc, int *i, int *k)
