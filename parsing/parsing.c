@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 18:09:45 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:57:41 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 char	*quote_2(char *line, char *str)
 {
@@ -52,22 +51,20 @@ char	*quote(char *line)
 	return (str);
 }
 
-char **ft_pipe(char *line)
+char	**ft_pipe(char *line, int j)
 {
-    char	**pipe;
+	char	**pipe;
 	char	**space;
 	char	**join;
 	int		i;
-    int		j;
-	
-    pipe = ft_split_token(line, '|');
+
+	pipe = ft_split_token(line, '|');
 	if (!pipe)
-		return(0);
+		return (0);
 	join = (char **)ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(pipe) + 1));
-	j = -1;
-    while (pipe[++j])
-    {
-        space = ft_split_token(pipe[j], ' ');
+	while (pipe[++j])
+	{
+		space = ft_split_token(pipe[j], ' ');
 		space = redirection(space);
 		if (!space)
 			return (0);
@@ -78,23 +75,23 @@ char **ft_pipe(char *line)
 			join[j] = ft_strjoin_gnl(join[j], space[i]);
 			join[j] = ft_strdup(ft_strjoin_gnl(join[j], " "));
 		}
-    }
-	join[j] = 0;
-	return (join);
+	}
+	return (join[j] = 0, join);
 }
 
-int parsing(char *line, t_minishell *ms)
+int	parsing(char *line, t_minishell *ms)
 {
-	char **space;
-	if(!check_line(line))
-		return(0);
-    if (count_token(line, '|'))
+	char	**space;
+
+	if (!check_line(line))
+		return (0);
+	if (count_token(line, '|'))
 	{
-		ms->parsed = ft_pipe(line);
+		ms->parsed = ft_pipe(line, -1);
 		if (!ms->parsed)
-        	return (0);
+			return (0);
 	}
-    else
+	else
 	{
 		space = ft_split_space(line);
 		ms->parsed = redirection(space);
@@ -102,11 +99,5 @@ int parsing(char *line, t_minishell *ms)
 			return (0);
 	}
 	check_dollar(ms);
-	//int i = 0;
-	//while (ms->parsed[i])
-	//{
-	//	printf("%s\n", ms->parsed[i]);
-	//	i++;
-	//}
 	return (1);
 }
