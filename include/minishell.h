@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 13:46:21 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:51:59 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int		parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 char	**open_files(t_minishell *ms, char **tab);
 
-char	**check_redir2(t_minishell *ms);
+char	**check_redir_simple(t_minishell *ms);
 
 void	print_error(char *cmd, char *type);
 
@@ -221,6 +221,9 @@ char	*ft_tmp_dollar(char *tab, int *i);
 
 char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot);
-	
+
+int		error_exit(char *cmd, char *type, int i);
+
+char	**ft_realloc_from_i(char **tab, int size, int i);
 
 #endif
