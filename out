@@ -1,12 +1,9 @@
-a.out
 builtins
 erreur_gerer
 exec
 include
-<infile
 infile
 init_env
-leaks
 Libft
 main.c
 main.o

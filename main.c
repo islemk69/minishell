@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 20:51:17 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:11:33 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static int	start_minishell(t_minishell *ms)
 		ms->line = readline(ms->prompt);
 		if (!urandom(ms->line))
 			return (free(ms->line), 0);
+		add_history(ms->line);
 		if (is_empty(ms->line))
 			continue ;
-		add_history(ms->line);
 		if (!parsing(ms->line, ms))
 		{
 			printf("error token parsing\n");

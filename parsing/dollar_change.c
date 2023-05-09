@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_change.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:49:28 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 13:47:47 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 18:10:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	ms->change_dollar[1] = 0;
 	change_dollar(ms, tab, d_quot, s_quot);
 	if (ms->flg)
-		ms->change_dollar = ft_split_token(ms->change_dollar[0], ' ');
+		ms->change_dollar = ft_split_space(ms->change_dollar[0]);
 	return (ms->change_dollar);
 }
