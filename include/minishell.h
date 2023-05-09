@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 19:41:07 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:35:23 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,19 @@ int		init_env(t_minishell *ms, char **envp);
 
 int		exec_cmd(t_minishell *ms, t_env **env);
 
+int	is_redir(char *str, bool in_quotes, char current_quote);
+
 void	error(char *str);
+
+char	*ft_strdup_token(const char *s1, char c);
+
+char	*strcpy_token(char *src, int *s_int);
+
+int		check_double_token(char **str);
+
+char	**realloc_stick(char **space);
+
+char	**realloc_redir(char **space);
 
 int		pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
