@@ -30,7 +30,7 @@ void	check_quote_dollar(char c, int *s_quot, int *d_quot)
 	}
 }
 
-static int	s_check_dollar_heredoc(char *tab, char *realloc, int *i, int *k)
+static int	check_dollar_heredoc(char *tab, char *realloc, int *i, int *k)
 {
 	char	*tmp;
 
@@ -82,37 +82,18 @@ static void	check_path_heredoc(t_minishell *ms, char *real, char *tmp, int *k)
 	}
 }
 
-int	countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot)
+static int	check_tab(char *tab, char *realloc, int *i, int *k)
 {
-	int		i;
-	int		count;
-
-	count = 0;
-	i = 0;
-	while (tab[i])
+	if (tab[*i + 1] == '"')
 	{
-		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
-			&& tab[i + 1] != 0 && s_quot == 0)
-		{
-			if (tab[i + 1] == '"')
-			{
-				count++;
-				i++;
-				continue ;
-			}
-			if (!special_dollar_count(tab, &i, &count))
-				continue ;
-			i++;
-			check_path_count(ms, tab, &i, &count);
-			continue ;
-		}
-		count++;
-		i++;
+		realloc[*k] = tab[*i];
+		*k += 1;
+		*i += 1;
+		return (1);
 	}
-	d_quot = 0;
-	s_quot = 0;
-	return (count);
+	if (!check_dollar_heredoc(tab, realloc, &*i, &*k))
+		return (1);
+	return (0);
 }
 
 char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
@@ -132,12 +113,7 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
 			&& tab[i + 1] != 0 && s_quot == 0)
 		{
-			if (tab[i + 1] == '"')
-			{
-				realloc[k++] = tab[i++];
-				continue ;
-			}
-			if (!s_check_dollar_heredoc(tab, realloc, &i, &k))
+			if (check_tab(tab, realloc, &i, &k))
 				continue ;
 			tmp = ft_tmp_dollar(tab, &i);
 			check_path_heredoc(ms, realloc, tmp, &k);

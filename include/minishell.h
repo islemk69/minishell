@@ -125,6 +125,8 @@ void	lstclear(t_env **lst);
 
 int		parsing(char *line, t_minishell *ms);
 
+int	countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot);
+
 size_t	ft_strlen_dtab(char **s);
 
 char	**redir_first(char **realloc);
