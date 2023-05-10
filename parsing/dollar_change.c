@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:49:28 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/10 00:14:29 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:37:40 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	check_path_dollar(t_minishell *ms, char **realloc, char *tmp, int *k)
 			*k += 1;
 			j++;
 		}
+		ms->flg = 1;
 		return (1);
 	}
 	return (0);
@@ -92,8 +93,7 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	int		i;
 	int		k;
 
-	i = 0;
-	k = 0;
+	init_i_k(&i, &k);
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
@@ -108,8 +108,7 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			if (!change_special_dollar(tab, ms->change_dollar, &i, &k))
 				continue ;
 			tmp = ft_tmp_dollar(tab, &i);
-			if (check_path_dollar(ms, ms->change_dollar, tmp, &k))
-				ms->flg = 1;
+			check_path_dollar(ms, ms->change_dollar, tmp, &k);
 			continue ;
 		}
 		ms->change_dollar[0][k++] = tab[i++];

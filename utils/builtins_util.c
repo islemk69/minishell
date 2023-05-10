@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 22:54:37 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 19:37:08 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:47:49 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,19 @@ void	print_error_export(char *split)
 	ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"\
 				WHITE"", split);
 	g_global.g_status = 1;
+}
+
+int	check_key(char *str)
+{
+	while (*str)
+	{
+		if ((*str > 64 && *str < 91) || (*str > 96 && *str < 123)
+			|| (*str > 47 && *str < 58) || *str == '_')
+		{
+			str++;
+			continue ;
+		}
+		return (0);
+	}
+	return (1);
 }

@@ -6,26 +6,11 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 00:01:06 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:47:33 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	check_key(char *str)
-{
-	while (*str)
-	{
-		if ((*str > 64 && *str < 91) || (*str > 96 && *str < 123)
-			|| (*str > 47 && *str < 58) || *str == '_')
-		{
-			str++;
-			continue ;
-		}
-		return (0);
-	}
-	return (1);
-}
 
 static void	simple_export(t_env **env)
 {
@@ -76,37 +61,38 @@ int	create_export(t_env **env, char **key_value, int flg)
 	return (1);
 }
 
-static int	several_export(t_env **env, char **split, char **key_value, int i)
+char	**create_export_spe(char **key_value, char *str)
 {
 	char	**tmp;
 
-	while (split[i])
+	key_value = ft_gc_malloc(sizeof(char *) * 3);
+	tmp = ft_split(str, '=');
+	key_value[0] = ft_strdup(tmp[0]);
+	key_value[1] = ft_strdup("");
+	key_value[2] = 0;
+	return (key_value);
+}
+
+static int	several_export(t_env **env, char **split, char **key_value, int i)
+{
+	while (split[++i])
 	{
 		if (split[i][0] == '=' || (split[i][0] >= '0' && split[i][0] <= '9'))
 		{
 			print_error_export(split[i]);
-			i += 1;
 			continue ;
 		}
 		if (split[i][ft_strlen(split[i]) - 1] == '=')
-		{
-			key_value = ft_gc_malloc(sizeof(char *) * 3);
-			tmp = ft_split(split[i], '=');
-			key_value[0] = ft_strdup(tmp[0]);
-			key_value[1] = ft_strdup("");
-			key_value[2] = 0;
-		}
+			create_export_spe(key_value, split[i]);
 		else
 			key_value = ft_split(split[i], '=');
 		if (!check_key(key_value[0]))
 		{
 			print_error_export(split[i]);
-			i += 1;
 			continue ;
 		}
 		if (!create_export(env, key_value, 0))
 			return (0);
-		i++;
 	}
 	return (1);
 }
@@ -123,7 +109,7 @@ int	built_in_export(t_env **env, char **split)
 			simple_export(env);
 			return (1);
 		}
-		if (!several_export(env, split, key_value, 1))
+		if (!several_export(env, split, key_value, 0))
 			return (0);
 		return (1);
 	}

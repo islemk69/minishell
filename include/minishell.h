@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 23:59:21 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:48:17 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,10 @@ int		ft_atoi2(const char *str, t_minishell *ms);
 int		built_in_export(t_env **env, char **split);
 
 int		built_in_unset(t_env **env, char **cmd);
+
+void	init_i_k(int *i, int *k);
+
+int		check_key(char *str);
 
 int		input_env(t_env **env, char **split);
 
