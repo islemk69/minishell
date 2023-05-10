@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 16:17:24 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:41:32 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ static int	start_minishell(t_minishell *ms)
 			free(ms->line);
 			continue ;
 		}
+		//int i = 0;
+		//while (ms->parsed[i])
+		//{
+		//	printf("%s\n", ms->parsed[i]);
+		//	i++;
+		//}
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
 		free(ms->line);
@@ -71,8 +77,6 @@ int	main(int argc, char **argv, char **envp)
 	ms.new_env = NULL;
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))
-	{
 		return (ft_gc_free_all(), 0);
-	}
 	return (0);
 }
