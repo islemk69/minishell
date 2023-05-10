@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:05:46 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 20:37:39 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:30:37 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int	word_length(char *start, char *end)
 {
 	int		in_quote;
 	char	*c;
+	int		size;
 
 	in_quote = 0;
 	c = start;
@@ -73,7 +74,11 @@ static int	word_length(char *start, char *end)
 			in_quote = !in_quote;
 		c++;
 	}
-	return (end - start) - (in_quote ? 2 : 0) + 1;
+	if (in_quote)
+		size = (end - start) - 2 + 1;
+	else
+		size = (end - start) - 0 + 1;
+	return (size);
 }
 
 static char	**no_null(char **tab)

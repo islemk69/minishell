@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 18:47:33 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:06:16 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	several_export(t_env **env, char **split, char **key_value, int i)
 			continue ;
 		}
 		if (split[i][ft_strlen(split[i]) - 1] == '=')
-			create_export_spe(key_value, split[i]);
+			key_value = create_export_spe(key_value, split[i]);
 		else
 			key_value = ft_split(split[i], '=');
 		if (!check_key(key_value[0]))

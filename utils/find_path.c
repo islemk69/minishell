@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 20:09:42 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:12:58 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,21 @@ char	**refresh_env(t_env **env)
 	t_env	*head;
 	char	**new_env;
 	int		i;
-	int		j;
-	int		k;
 
 	i = 0;
-	j = 0;
-	k = 0;
 	head = *env;
 	new_env = (char **)ft_gc_malloc(sizeof(char *) * (lstsize(*env) + 1));
 	while (head)
 	{
-		if (!head->value)
-			new_env[i] = ft_gc_malloc(sizeof(char) * \
-				(ft_strlen(head->key) + 1));
-		else
-			new_env[i] = ft_gc_malloc(sizeof(char) * \
-				(ft_strlen(head->key) + ft_strlen(head->value) + 2));
-		j = 0;
-		k = 0;
-		while (head->key[k])
-			new_env[i][j++] = head->key[k++];
+		new_env[i] = ft_strjoin_gnl(new_env[i], head->key);
 		if (!head->value)
 		{
 			head = head->next;
+			i++;
 			continue ;
 		}
-		new_env[i][j] = '=';
-		j++;
-		k = 0;
-		while (head->value[k])
-			new_env[i][j++] = head->value[k++];
-		new_env[i][j] = 0;
+		new_env[i] = ft_strjoin_gnl(new_env[i], "=");
+		new_env[i] = ft_strjoin_gnl(new_env[i], head->value);
 		head = head->next;
 		i++;
 	}
