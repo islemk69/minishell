@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 00:26:17 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 15:13:54 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,10 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				ft_gc_free_all();
 				exit(g_global.g_status);
 			}
-			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
+			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)))
 			{
-				nb_pipe--;
-				i++;
+				ft_gc_free_all();
 			}
-			ft_gc_free_all();
-			exit(0);
 		}
 		close(ms->fd[1]);
 		if (nb_pipe != 0)

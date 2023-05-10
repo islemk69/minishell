@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/25 16:29:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 20:10:49 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:13:54 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*create_cell(char *var, char *content)
 {
 	t_env	*cell;
 
-	cell = malloc(sizeof(t_env));
+	cell = ft_gc_malloc(sizeof(t_env));
 	if (!cell)
 		return (cell);
 	cell->key = var;

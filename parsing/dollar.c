@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/09 13:26:27 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:05:42 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	size_new_parsed(t_minishell *ms)
 
 	i = 0;
 	j = 0;
+	size = 0;
 	while (ms->parsed[i])
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
@@ -109,8 +110,12 @@ void	realloc_dollar(t_minishell *ms, int size)
 
 void	check_dollar(t_minishell *ms)
 {
+	int	i;
+
+	i = 0;
+	ms->realloc = NULL;
 	ms->realloc = ft_gc_malloc(sizeof(char *) * (size_new_parsed(ms) + 1));
-	realloc_dollar(ms, 0);
+	realloc_dollar(ms, i);
 	if (ms->realloc[0] && ms->realloc[1])
 		ms->realloc = real_null(ms->realloc);
 	ms->parsed = ms->realloc;

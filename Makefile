@@ -6,7 +6,7 @@
 #    By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/05/09 20:33:39 by ikaismou         ###   ########.fr        #
+#    Updated: 2023/05/10 15:17:45 by ikaismou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,24 @@ fclean: clean
 	${MAKE} fclean -C Libft/
 	$(RM) $(OBJS)
 	$(RM) $(NAME)
+
+leaks:    all
+	echo "{" > valgrind_ignore_leaks.txt
+	echo "leak readline" >> valgrind_ignore_leaks.txt
+	echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
+	echo "    ..." >> valgrind_ignore_leaks.txt
+	echo "    fun:readline" >> valgrind_ignore_leaks.txt
+	echo "}" >> valgrind_ignore_leaks.txt
+	echo "{" >> valgrind_ignore_leaks.txt
+	echo "    leak add_history" >> valgrind_ignore_leaks.txt
+	echo "    Memcheck:Leak" >> valgrind_ignore_leaks.txt
+	echo "    ..." >> valgrind_ignore_leaks.txt
+	echo "    fun:add_history" >> valgrind_ignore_leaks.txt
+	echo "}" >> valgrind_ignore_leaks.txt
+	valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
+		--show-leak-kinds=all --track-fds=yes \
+		--show-mismatched-frees=yes --read-var-info=yes \
+		--log-file=valgrind.txt ./${NAME}
 	
 re: fclean
 	make all

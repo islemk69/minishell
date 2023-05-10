@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 00:47:15 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 16:17:24 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	main(int argc, char **argv, char **envp)
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))
 	{
-		lstclear(&ms.head_env);
 		return (ft_gc_free_all(), 0);
 	}
 	return (0);
