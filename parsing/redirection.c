@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 20:46:01 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/10 21:06:07 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**fill_stick(char **str, char **realloc2)
 			k++;
 			while (u <= token)
 			{
-				realloc2[k] = strcpy_token_2(str[i], &p_int, 0);
+				realloc2[k] = strcpy_token_2(str[i], &p_int);
 				k++;
 				u++;
 			}
@@ -74,7 +74,7 @@ char	**fill_stick(char **str, char **realloc2)
 			u = 0;
 			while (u < token)
 			{
-				realloc2[k] = strcpy_token_2(str[i], &p_int, 1);
+				realloc2[k] = strcpy_token_2(str[i], &p_int);
 				k++;
 				u++;
 			}
