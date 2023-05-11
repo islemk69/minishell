@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 19:13:53 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 23:35:55 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ char	**refresh_env(t_env **env);
 
 int		is_built_in(char *str);
 
-void	wait_pid(t_minishell *ms, int i);
+void	wait_pid(t_minishell *ms, int i, int id);
 
 char	**redirection(char **space);
 

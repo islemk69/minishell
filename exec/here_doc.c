@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 19:59:37 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/11 03:36:25 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,14 @@ int	here_doc(t_minishell *ms, char *tab, char *w_quote)
 	ms->infile = open(tab2, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	while (1)
 	{
-		ms->line_here = readline(">");
+		ms->line_here = readline("> ");
 		if (!ms->line_here)
-			return (free(ms->line_here), 0);
+		{
+			printf("warning: here-document delimited by end-of-file (wanted `%s')\
+				\n", tab);
+			ft_gc_free_all();
+			break ;
+		}
 		if (!ft_strncmp(tab, ms->line_here, ft_strlen(tab))
 			&& (ft_strlen(tab) == ft_strlen(ms->line_here)))
 			break ;
