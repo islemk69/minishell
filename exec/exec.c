@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/11 03:29:52 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 00:08:04 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,14 @@ int	exec_cmd(t_minishell *ms, t_env **env)
 	unplug_signals();
 	nb_pipe = count_token(ms->line, '|');
 	if (nb_pipe == 0)
-		exec_one_pipe(ms, env);
+	{
+		if (!exec_one_pipe(ms, env))
+			return (0);
+	}
 	else
-		exec_multi_pipe(ms, env, nb_pipe);
+	{
+		if (!exec_multi_pipe(ms, env, nb_pipe))
+			return (0);
+	}
 	return (1);
 }

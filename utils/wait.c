@@ -6,15 +6,14 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:14:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/11 02:31:48 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/08 20:10:27 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	wait_pid(t_minishell *ms, int i, int id)
+void	wait_pid(t_minishell *ms, int i)
 {
-	(void)id;
 	while (i >= 0)
 	{
 		waitpid(-1, &ms->status, 0);

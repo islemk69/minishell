@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/10 21:34:51 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:40:37 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_isascii(int c);
 
 int		ft_isdigit(int c);
 
-char	*strcpy_token_2(char *src, int *s_int);
+char	*strcpy_token_2(char *src, int *s_int, int mod);
 
 int		ft_isprint(int c);
 

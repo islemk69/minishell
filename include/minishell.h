@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 23:35:55 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:48:17 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		init_env(t_minishell *ms, char **envp);
 
 int		exec_cmd(t_minishell *ms, t_env **env);
 
-int		is_redir(char *str, bool in_quotes, char current_quote);
+int	is_redir(char *str, bool in_quotes, char current_quote);
 
 void	error(char *str);
 
@@ -129,7 +129,7 @@ void	lstclear(t_env **lst);
 
 int		parsing(char *line, t_minishell *ms);
 
-int		countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot);
+int	countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot);
 
 size_t	ft_strlen_dtab(char **s);
 
@@ -147,7 +147,7 @@ char	**refresh_env(t_env **env);
 
 int		is_built_in(char *str);
 
-void	wait_pid(t_minishell *ms, int i, int id);
+void	wait_pid(t_minishell *ms, int i);
 
 char	**redirection(char **space);
 
@@ -249,5 +249,6 @@ char	**ft_realloc_from_i(char **tab, int size, int i);
 void	check_path_count(t_minishell *ms, char *tab, int *i, int *count);
 
 int		special_dollar_count(char *tab, int *i, int *count);
+
 
 #endif

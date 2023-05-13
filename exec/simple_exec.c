@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/11 03:29:05 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 00:25:09 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	heredoc_simple(t_minishell *ms)
 		{
 			tmp = ms->parsed[i];
 			ms->parsed[i] = quote(tmp);
-			here_doc(ms, ms->parsed[i] + 2, tmp + 2);
+			if (!here_doc(ms, ms->parsed[i] + 2, tmp + 2))
+				return (0);
 		}
 		i++;
 	}
@@ -64,27 +65,18 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 
 int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
-	int	id;
-	int	id2;
-	int	status;
+	int		id;
 
-	unplug_signals();
 	get_path(ms);
 	if (parent_builtins(ms, ms->parsed, env, 0))
 		return (1);
-	id2 = fork();
-	if (id2 == 0)
-	{
-		heredoc_simple(ms);
-		exit(0);
-	}
-	waitpid(id2, &status, 0);
-	g_global.g_status = WEXITSTATUS(status);
-	if (g_global.g_status == 130)
-		return (1);
 	id = fork();
 	if (id == 0)
+	{
+		if (!heredoc_simple(ms))
+			return (ft_gc_free_all(), exit(1), 0);
 		child_simple_exec(ms, env);
+	}
 	waitpid(-1, &ms->status, 0);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	remove_heredoc(ms->parsed);

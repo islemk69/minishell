@@ -3,46 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:40:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 21:36:32 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/09 19:42:43 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		is_token_char(char c);
-void	check_quote_dollar(char c, int *s_quot, int *d_quot);
+int	is_token_char(char c);
 
-char	*do_sdup(char *sdup, char *src, int *int_s, int *j)
+char	*strcpy_token_2(char *src, int *s_int, int mod)
 {
-	int	d_quot;
-	int	s_quot;
+	int		j;
+	int		size;
+	char	*sdup;
+	int		save;
+	int		d_quot;
+	int		s_quot;
 
-	s_quot = 0;
-	d_quot = 0;
-	while (src[*int_s])
-	{
-		check_quote_dollar(src[*int_s], &s_quot, &d_quot);
-		if (is_token_char(src[*int_s]) && (!d_quot && !s_quot))
-			break ;
-		sdup[*j] = src[*int_s];
-		*j += 1;
-		*int_s += 1;
-	}
-	sdup[*j] = 0;
-	return (sdup);
-}
-
-int	count_size_token(char *src, int save)
-{
-	int	d_quot;
-	int	s_quot;
-	int	size;
-
+	(void)mod;
 	d_quot = 0;
 	s_quot = 0;
+	save = *s_int;
 	size = 0;
 	while (is_token_char(src[save]))
 	{
@@ -51,29 +35,57 @@ int	count_size_token(char *src, int save)
 	}
 	while (src[save])
 	{
-		check_quote_dollar(src[save], &s_quot, &d_quot);
+		if (src[save] == '"' && s_quot == 0)
+		{
+			if (d_quot == 0)
+				d_quot = 1;
+			else
+				d_quot = 0;
+		}
+		if (src[save] == '\'' && d_quot == 0)
+		{
+			if (s_quot == 0)
+				s_quot = 1;
+			else
+				s_quot = 0;
+		}
 		if (is_token_char(src[save]) && (!d_quot && !s_quot))
 			break ;
 		size++;
 		save++;
 	}
-	return (size);
-}
-
-char	*strcpy_token_2(char *src, int *int_s)
-{
-	int		size;
-	char	*sdup;
-	int		j;
-
-	size = count_size_token(src, *int_s);
 	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
 	j = 0;
-	while (is_token_char(src[*int_s]))
+	while (is_token_char(src[*s_int]))
 	{
-		sdup[j] = src[*int_s];
+		sdup[j] = src[*s_int];
 		j++;
-		*int_s += 1;
+		*s_int += 1;
 	}
-	return (do_sdup(sdup, src, &*int_s, &j));
+	s_quot = 0;
+	d_quot = 0;
+	while (src[*s_int])
+	{
+		if (src[*s_int] == '"' && s_quot == 0)
+		{
+			if (d_quot == 0)
+				d_quot = 1;
+			else
+				d_quot = 0;
+		}
+		if (src[*s_int] == '\'' && d_quot == 0)
+		{
+			if (s_quot == 0)
+				s_quot = 1;
+			else
+				s_quot = 0;
+		}
+		if (is_token_char(src[*s_int]) && (!d_quot && !s_quot))
+			break ;
+		sdup[j] = src[*s_int];
+		j++;
+		*s_int += 1;
+	}
+	sdup[j] = 0;
+	return (sdup);
 }

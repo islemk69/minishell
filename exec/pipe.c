@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/11 03:15:14 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/10 17:36:25 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,39 +21,28 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	int		cpt;
 	char	*tmp;
 	int		j;
-	int		id2;
-	int		status;
 
 	save_stdin = dup(0);
 	get_path(ms);
 	i = 0;
 	cpt = 0;
-	unplug_signals();
-	id2 =fork();
-	if (id2 == 0)
+	while (ms->parsed[i])
 	{
-		while (ms->parsed[i])
+		split = ft_split_space(ms->parsed[i]);
+		j = 0;
+		while (split[j] && split[j][0] == '<')
 		{
-			split = ft_split_space(ms->parsed[i]);
-			j = 0;
-			while (split[j] && split[j][0] == '<')
+			if (split[j][1] == '<')
 			{
-				if (split[j][1] == '<')
-				{
-					tmp = split[j];
-					split[j] = quote(tmp);
-					here_doc(ms, split[j] + 2, tmp);
-				}
-				j++;
+				tmp = split[j];
+				split[j] = quote(tmp);
+				if (!here_doc(ms, split[j] + 2, tmp))
+					return (0);
 			}
-			i++;
+			j++;
 		}
-		exit (0);
+		i++;
 	}
-	waitpid(id2, &status, 0);
-	g_global.g_status = WEXITSTATUS(status);
-	if (g_global.g_status == 130)
-		return (1);
 	i = 0;
 	while (ms->parsed[i])
 	{
@@ -73,7 +62,6 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		}
 		if (pipe(ms->fd) == -1)
 			error("pipe");
-		unplug_signals();
 		id = fork();
 		if (id == 0)
 		{
@@ -118,7 +106,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		nb_pipe--;
 	}
 	close(save_stdin);
-	wait_pid(ms, cpt, id);
+	wait_pid(ms, cpt);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	i = 0;
 	while (ms->parsed[i])
