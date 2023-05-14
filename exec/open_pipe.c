@@ -44,7 +44,7 @@ int	open_outfile_pipe_check(t_minishell *ms, char **tab, int i)
 	{
 		tab[i] = quote(tab[i]);
 		ms->outfile = open(tab[i] + 2, O_CREAT | O_RDWR | O_APPEND, 0644);
-		if (ms->outfile < 0)
+		if (access(tab[i] + 2, W_OK) == -1)
 		{
 			ms->outfile_str = tab[i] + 2;
 			return (1);
@@ -54,7 +54,7 @@ int	open_outfile_pipe_check(t_minishell *ms, char **tab, int i)
 	{
 		tab[i] = quote(tab[i]);
 		ms->outfile = open(tab[i] + 1, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (ms->outfile < 0)
+		if (access(tab[i] + 1, W_OK) == -1)
 		{
 			ms->outfile_str = tab[i] + 1;
 			return (1);

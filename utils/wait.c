@@ -12,12 +12,16 @@
 
 #include "../include/minishell.h"
 
-void	wait_pid(t_minishell *ms, int i)
+void	wait_pid(t_minishell *ms, int i, int *id)
 {
+	int	j;
+
+	j = 0;
 	while (i >= 0)
 	{
-		waitpid(-1, &ms->status, 0);
+		waitpid(id[j], &ms->status, WUNTRACED);
 		i--;
+		j++;
 	}
 }
 

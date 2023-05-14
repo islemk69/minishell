@@ -47,7 +47,7 @@ void	check_redir(t_minishell *ms)
 		if (dup2(ms->infile, 0) == -1)
 			error ("dup");
 	}
-	if (ms->outfile < 0)
+	if (ms->outfile_str)
 		error_exit(ms->outfile_str, ": Permission denied\n", 1);
 	if (ms->outfile > 0)
 	{

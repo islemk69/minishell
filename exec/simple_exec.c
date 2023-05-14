@@ -36,8 +36,7 @@ int	heredoc_simple(t_minishell *ms)
 		{
 			tmp = ms->parsed[i];
 			ms->parsed[i] = quote(tmp);
-			if (!here_doc(ms, ms->parsed[i] + 2, tmp + 2))
-				return (0);
+			here_doc(ms, ms->parsed[i] + 2, tmp + 2);
 		}
 		i++;
 	}
@@ -65,19 +64,28 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 
 int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
-	int		id;
+	int	id;
+	int	id2;
+	int	status;
 
+	unplug_signals();
 	get_path(ms);
 	if (parent_builtins(ms, ms->parsed, env, 0))
 		return (1);
+	id2 = fork();
+	if (id2 == 0)
+	{
+		heredoc_simple(ms);
+		exit(0);
+	}
+	waitpid(id2, &status, WUNTRACED);
+	g_global.g_status = WEXITSTATUS(status);
+	if (g_global.g_status == 130)
+		return (1);
 	id = fork();
 	if (id == 0)
-	{
-		if (!heredoc_simple(ms))
-			return (ft_gc_free_all(), exit(1), 0);
 		child_simple_exec(ms, env);
-	}
-	waitpid(-1, &ms->status, 0);
+	waitpid(-1, &ms->status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	remove_heredoc(ms->parsed);
 	return (1);
