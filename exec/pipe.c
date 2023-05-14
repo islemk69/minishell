@@ -14,7 +14,7 @@
 
 int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 {
-	int		id;
+	int		id[nb_pipe];
 	int		i;
 	int		save_stdin;
 	char	**split;
@@ -50,7 +50,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		}
 		exit (0);
 	}
-	waitpid(id2, &status, 0);
+	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);
 	if (g_global.g_status == 130)
 		return (1);
@@ -60,6 +60,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		ms->infile = 0;
 		ms->outfile = 0;
 		ms->infile_stra = NULL;
+		ms->outfile_str = NULL;
 		ms->outfile_exist = 0;
 		split = ft_split_space(ms->parsed[i]);
 		if (split[0][0] == '<' || split[0][0] == '>')
@@ -74,8 +75,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		if (pipe(ms->fd) == -1)
 			error("pipe");
 		unplug_signals();
-		id = fork();
-		if (id == 0)
+		id[i] = fork();
+		if (id[i] == 0)
 		{
 			set_exec_signals();
 			check_redir(ms);

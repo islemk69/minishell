@@ -147,7 +147,7 @@ char	**refresh_env(t_env **env);
 
 int		is_built_in(char *str);
 
-void	wait_pid(t_minishell *ms, int i, int id);
+void	wait_pid(t_minishell *ms, int i, int *id);
 
 char	**redirection(char **space);
 
