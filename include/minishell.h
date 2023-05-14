@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 18:48:17 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/14 08:38:57 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_minishell
 	char	**tmp_dollar;
 	char	**change_dollar;
 	int		flg;
+	char	**f_name;
 }				t_minishell;
 
 int		init_env(t_minishell *ms, char **envp);
@@ -171,9 +172,9 @@ void	access_file(t_minishell *ms, char **tab);
 
 void	check_redir(t_minishell *ms);
 
-void	remove_heredoc(char **tab);
+void	remove_heredoc(t_minishell *ms);
 
-int		here_doc(t_minishell *ms, char *tab, char *tmp);
+int		here_doc(t_minishell *ms, char *tab, char *w_quote, int count);
 
 int		check_key(char *str);
 
@@ -249,5 +250,13 @@ char	**ft_realloc_from_i(char **tab, int size, int i);
 void	check_path_count(t_minishell *ms, char *tab, int *i, int *count);
 
 int		special_dollar_count(char *tab, int *i, int *count);
+
+void	file_name_pipe(t_minishell *ms, int i, int pipe);
+
+void	file_name_simple(t_minishell *ms, int pipe);
+
+int		size_file_name_simple(t_minishell *ms);
+
+int		size_file_name_pipe(t_minishell *ms);
 
 #endif

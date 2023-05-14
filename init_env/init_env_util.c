@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 21:10:51 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/14 09:16:03 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_prompt(t_minishell *ms, char *envp)
 
 	i = 3;
 	prompt = envp + 5;
-	ms->prompt = ft_gc_malloc(sizeof(char) * (ft_strlen(prompt)) + 5);
+	ms->prompt = ft_gc_malloc(sizeof(char) * (ft_strlen(prompt)) + 6);
 	ms->prompt = strcpy_no_null(ms->prompt, "42@");
 	while (*prompt)
 	{
@@ -42,6 +42,8 @@ void	get_prompt(t_minishell *ms, char *envp)
 		prompt++;
 	}
 	ms->prompt[i] = '>';
+	i++;
+	ms->prompt[i] = ' ';
 	i++;
 	ms->prompt[i] = 0;
 }

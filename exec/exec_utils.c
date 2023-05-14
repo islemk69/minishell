@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 00:22:59 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/14 08:54:48 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ char	**tab_copy(char **tab)
 void	access_file2(t_minishell *ms)
 {
 	int		i;
-	char	*tab2;
 	char	**head;
 
 	i = 0;
@@ -132,10 +131,8 @@ void	access_file2(t_minishell *ms)
 	{
 		if (head[i][1] == '<')
 		{
-			head[i] = quote(head[i]);
-			tab2 = ft_strjoin(".", head[i] + 2);
-			if (access(tab2, F_OK) != 0)
-			error_exit(head[i] + 1, ": No such file or directory\n", 1);
+			i++;
+			continue ;
 		}
 		else
 		{
@@ -150,7 +147,6 @@ void	access_file2(t_minishell *ms)
 void	access_file(t_minishell *ms, char **tab)
 {
 	int		i;
-	char	*tab2;
 	char	**head;
 
 	i = 0;
@@ -159,13 +155,8 @@ void	access_file(t_minishell *ms, char **tab)
 	{
 		if (head[i][1] == '<')
 		{
-			head[i] = quote(head[i]);
-			tab2 = ft_strjoin(".", head[i] + 2);
-			if (access(tab2, F_OK) != 0)
-			{
-				ms->infile_stra = head[i] + 2;
-				break ;
-			}
+			i++;
+			continue ;
 		}
 		else
 		{

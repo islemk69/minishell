@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 17:36:25 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/14 08:34:40 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	get_path(ms);
 	i = 0;
 	cpt = 0;
+	file_name_pipe(ms, 0, 1);
 	unplug_signals();
 	id2 =fork();
 	if (id2 == 0)
@@ -42,7 +43,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 				{
 					tmp = split[j];
 					split[j] = quote(tmp);
-					here_doc(ms, split[j] + 2, tmp);
+					here_doc(ms, split[j] + 2, tmp, cpt);
+					cpt++;
 				}
 				j++;
 			}
@@ -55,6 +57,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	if (g_global.g_status == 130)
 		return (1);
 	i = 0;
+	cpt = 0;
 	while (ms->parsed[i])
 	{
 		ms->infile = 0;
@@ -125,7 +128,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	while (ms->parsed[i])
 	{
 		split = ft_split(ms->parsed[i], ' ');
-		remove_heredoc(split);
+		remove_heredoc(ms);
 		i++;
 	}
 	return (1);

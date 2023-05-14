@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:17:46 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/08 20:22:44 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/14 07:50:25 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static int	word_length(char *start, char *end)
 {
 	int		in_quote;
 	char	*c;
+	int		size;
 
 	in_quote = 0;
 	c = start;
@@ -71,7 +72,11 @@ static int	word_length(char *start, char *end)
 			in_quote = !in_quote;
 		c++;
 	}
-	return (end - start) - (in_quote ? 2 : 0) + 1;
+	if (in_quote)
+		size = (end - start) - 2 + 1;
+	else
+		size = (end - start) - 0 + 1;
+	return (size);
 }
 
 char	**no_null(char **tab)

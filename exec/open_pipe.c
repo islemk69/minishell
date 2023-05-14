@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:49 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 14:52:10 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/14 10:00:42 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 int	open_infile_pipe(t_minishell *ms, char **tab, int i)
 {
-	char	*tab2;
+	int		j;
 
+	j = 0;
 	while (tab[i] && tab[i][0] == '<')
+	{
+		if (tab[i][1] == '<')
+			j++;
 		i++;
+	}
 	i--;
 	if (tab[i][1] == '<')
 	{
 		tab[i] = quote(tab[i]);
-		tab2 = ft_strjoin(".", tab[i] + 2);
-		ms->infile = open(tab2, O_RDONLY);
+		ms->infile = open(ms->f_name[j - 1], O_RDONLY);
 		if (ms->infile < 0)
 			ms->infile_str = tab[i] + 2;
 	}
@@ -34,8 +38,7 @@ int	open_infile_pipe(t_minishell *ms, char **tab, int i)
 		if (ms->infile < 0)
 			ms->infile_str = tab[i] + 1;
 	}
-	i++;
-	return (i);
+	return (i + 1);
 }
 
 int	open_outfile_pipe_check(t_minishell *ms, char **tab, int i)
