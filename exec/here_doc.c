@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 10:00:05 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/14 17:58:23 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ void	write_line_heredoc(t_minishell *ms, char *w_quote)
 
 int	here_doc(t_minishell *ms, char *tab, char *w_quote, int count)
 {
+	unplug_signals();
 	set_heredoc_signals();
 	ms->infile = open(ms->f_name[count], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (ms->infile < 0)
 		perror("heredoc");
 	while (1)
 	{
-		ms->line_here = readline(">");
+		ms->line_here = readline("> ");
 		if (!ms->line_here)
 		{
 			ft_printf("warning: here-document delimited by end-of-file (wanted `%s')\

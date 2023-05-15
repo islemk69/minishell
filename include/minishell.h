@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 08:38:57 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/15 02:43:34 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int		child_builtins(t_minishell *ms, char **split, t_env **env);
 
 int		parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
-char	**open_files(t_minishell *ms, char **tab);
+char	**open_files(t_minishell *ms, char **tab, int *cpt);
 
 char	**check_redir_simple(t_minishell *ms);
 

@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_util.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 22:54:37 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/10 18:47:49 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/15 03:16:04 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	rm_quote_last(char **cmds)
+{
+	char	*tmp;
+
+	while (*cmds)
+	{
+		tmp = *cmds;
+		*cmds = quote(tmp);
+		cmds++;
+	}
+}
 
 int	is_token_char(char c)
 {

@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 08:34:40 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/15 03:02:01 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	cpt = 0;
 	file_name_pipe(ms, 0, 1);
 	unplug_signals();
-	id2 =fork();
+	id2 = fork();
 	if (id2 == 0)
 	{
 		while (ms->parsed[i])
@@ -68,7 +68,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		split = ft_split_space(ms->parsed[i]);
 		if (split[0][0] == '<' || split[0][0] == '>')
 		{
-			ms->new_parsed = open_files(ms, split);
+			ms->new_parsed = open_files(ms, split, &cpt);
 		}
 		else
 		{
@@ -118,11 +118,10 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 		close(ms->fd[0]);
 		close(ms->fd[1]);
 		i++;
-		cpt++;
 		nb_pipe--;
 	}
 	close(save_stdin);
-	wait_pid(ms, cpt, id);
+	wait_pid(ms, i, id);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	i = 0;
 	while (ms->parsed[i])
