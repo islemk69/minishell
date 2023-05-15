@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/15 03:02:01 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/16 01:11:37 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	int		j;
 	int		id2;
 	int		status;
+	int		id1;
+	int		tmp_status;
 
 	save_stdin = dup(0);
 	get_path(ms);
@@ -55,80 +57,84 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);
 	if (g_global.g_status == 130)
-		return (1);
-	i = 0;
-	cpt = 0;
-	while (ms->parsed[i])
+		return (remove_heredoc(ms), 1);
+	unplug_signals();
+	id1 = fork();
+	if (id1 == 0)
 	{
-		ms->infile = 0;
-		ms->outfile = 0;
-		ms->infile_stra = NULL;
-		ms->outfile_str = NULL;
-		ms->outfile_exist = 0;
-		split = ft_split_space(ms->parsed[i]);
-		if (split[0][0] == '<' || split[0][0] == '>')
+		i = 0;
+		cpt = 0;
+		while (ms->parsed[i])
 		{
-			ms->new_parsed = open_files(ms, split, &cpt);
-		}
-		else
-		{
-			rm_quote_last(split);
-			ms->new_parsed = split;
-		}
-		if (pipe(ms->fd) == -1)
-			error("pipe");
-		unplug_signals();
-		id[i] = fork();
-		if (id[i] == 0)
-		{
-			set_exec_signals();
-			check_redir(ms);
-			if (!check_command(ms, ms->new_parsed[0]))
-				exit (0);
-			close(ms->fd[0]);
-			if (nb_pipe != 0)
+			ms->infile = 0;
+			ms->outfile = 0;
+			ms->infile_stra = NULL;
+			ms->outfile_str = NULL;
+			ms->outfile_exist = 0;
+			split = ft_split_space(ms->parsed[i]);
+			if (split[0][0] == '<' || split[0][0] == '>')
 			{
-				if (ms->outfile_exist == 0)
-				{
-					if (dup2(ms->fd[1], 1) == -1)
-						error ("dup3");
-				}
+				ms->new_parsed = open_files(ms, split, &cpt);
 			}
 			else
-				dup(1);
-			if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 			{
-				ft_gc_free_all();
+				rm_quote_last(split);
+				ms->new_parsed = split;
+			}
+			if (pipe(ms->fd) == -1)
+				error("pipe");
+			set_exec_signals();
+			id[i] = fork();
+			if (id[i] == 0)
+			{
+				check_redir(ms);
+				if (!check_command(ms, ms->new_parsed[0]))
+					exit (0);
+				close(ms->fd[0]);
+				if (nb_pipe != 0)
+				{
+					if (ms->outfile_exist == 0)
+					{
+						if (dup2(ms->fd[1], 1) == -1)
+							error ("dup3");
+					}
+				}
+				else
+					dup(1);
+				if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
+				{
+					ft_gc_free_all();
+					exit(g_global.g_status);
+				}
+				if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)))
+				{
+					ft_gc_free_all();
+				}
 				exit(g_global.g_status);
 			}
-			if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)))
-				ft_gc_free_all();
+			close(ms->fd[1]);
+			if (nb_pipe != 0)
+			{
+				if (dup2(ms->fd[0], 0) == -1)
+					error ("dup3");
+			}
+			else
+			{
+				if (dup2(save_stdin, 0) == -1)
+					error ("dup6");
+			}
+			close(ms->fd[0]);
+			close(ms->fd[1]);
+			i++;
+			nb_pipe--;
 		}
-		close(ms->fd[1]);
-		if (nb_pipe != 0)
-		{
-			if (dup2(ms->fd[0], 0) == -1)
-				error ("dup3");
-		}
-		else
-		{
-			if (dup2(save_stdin, 0) == -1)
-				error ("dup6");
-		}
-		close(ms->fd[0]);
-		close(ms->fd[1]);
-		i++;
-		nb_pipe--;
+		close(save_stdin);
+		wait_pid(ms, i, id);
+		g_global.g_status = WEXITSTATUS(ms->status);
+		exit(g_global.g_status);
 	}
-	close(save_stdin);
-	wait_pid(ms, i, id);
-	g_global.g_status = WEXITSTATUS(ms->status);
-	i = 0;
-	while (ms->parsed[i])
-	{
-		split = ft_split(ms->parsed[i], ' ');
-		remove_heredoc(ms);
-		i++;
-	}
+	waitpid(id1, &tmp_status, WUNTRACED);
+	g_global.g_status = WEXITSTATUS(tmp_status);
+	remove_heredoc(ms);
 	return (1);
 }

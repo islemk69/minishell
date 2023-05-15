@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 17:14:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/15 03:16:40 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/16 01:07:34 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	wait_pid(t_minishell *ms, int i, int *id)
 	int	j;
 
 	j = 0;
-	while (i >= 0)
+	while (i > 0)
 	{
 		waitpid(id[j], &ms->status, WUNTRACED);
 		i--;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 17:30:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 00:24:53 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/15 16:56:05 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	check_redir(t_minishell *ms)
 	if (ms->infile_stra)
 		error_exit(ms->infile_stra, ": No such file or directory\n", 1);
 	if (ms->infile < 0)
-		error_exit(ms->infile_str, ": Permission denied\n", 1);
+		error_exit(ms->infile_str, ": okPermission denied\n", 1);
 	if (ms->infile > 0)
 	{
 		if (dup2(ms->infile, 0) == -1)

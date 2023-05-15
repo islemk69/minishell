@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:49 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/15 02:49:00 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/16 01:00:20 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,23 @@ int	open_infile_pipe(t_minishell *ms, char **tab, int i, int *cpt)
 			*cpt += 1;
 		i++;
 	}
-	i--;
-	if (tab[i][1] == '<')
+	*cpt -= 1;
+	if (tab[i - 1][1] == '<')
 	{
-		tab[i] = quote(tab[i]);
-		ms->infile = open(ms->f_name[(*cpt) - 1], O_RDONLY);
+		tab[i - 1] = quote(tab[i - 1]);
+		ms->infile = open(ms->f_name[(*cpt)], O_RDONLY);
+		*cpt += 1;
 		if (ms->infile < 0)
-			ms->infile_str = tab[i] + 2;
+			ms->infile_str = tab[i - 1] + 2;
 	}
-	if (tab[i][1] != '<')
+	if (tab[i - 1][1] != '<')
 	{
-		tab[i] = quote(tab[i]);
-		ms->infile = open(tab[i] + 1, O_RDONLY);
+		tab[i - 1] = quote(tab[i - 1]);
+		ms->infile = open(tab[i - 1] + 1, O_RDONLY);
 		if (ms->infile < 0)
-			ms->infile_str = tab[i] + 1;
+			ms->infile_str = tab[i - 1] + 1;
 	}
-	return (i + 1);
+	return (i);
 }
 
 int	open_outfile_pipe_check(t_minishell *ms, char **tab, int i)
