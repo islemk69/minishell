@@ -40,55 +40,33 @@ int	is_redir(char *str, bool in_quotes, char current_quote)
 	return (count);
 }
 
-char	**fill_stick(char **str, char **realloc2)
+char	**fill_stick(char **str, char **realloc2, int i, int k)
 {
-	int	i;
-	int	k;
 	int	u;
 	int	p_int;
 	int	token;
 
-	i = 0;
-	k = 0;
-	u = 0;
-	p_int = 0;
-	token = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		p_int = 0;
 		token = is_redir(str[i], false, '\0');
 		if (!is_token_char(str[i][0]) && token)
 		{
-			u = 1;
-			realloc2[k] = strcpy_token(str[i], &p_int);
-			k++;
-			while (u <= token)
-			{
-				realloc2[k] = strcpy_token_2(str[i], &p_int);
-				k++;
-				u++;
-			}
+			u = 0;
+			realloc2[k++] = strcpy_token(str[i], &p_int);
+			while (++u <= token)
+				realloc2[k++] = strcpy_token_2(str[i], &p_int);
 		}
 		else if (is_token_char(str[i][0]) && token > 1)
 		{
-			u = 0;
-			while (u < token)
-			{
-				realloc2[k] = strcpy_token_2(str[i], &p_int);
-				k++;
-				u++;
-			}
+			u = -1;
+			while (++u < token)
+				realloc2[k++] = strcpy_token_2(str[i], &p_int);
 		}
 		else
-		{
-			realloc2[k] = ft_strdup(str[i]);
-			k++;
-		}
-		token = 0;
-		i++;
+			realloc2[k++] = ft_strdup(str[i]);
 	}
-	realloc2[k] = 0;
-	return (realloc2);
+	return (realloc2[k] = 0, realloc2);
 }
 
 char	**fill_redir(char **str, char **realloc)
@@ -125,7 +103,7 @@ char	**redirection(char **space)
 	if (!check_double_token(space))
 		return (ft_dprintf(""RED"Error token\n"WHITE""), NULL);
 	realloc2 = realloc_stick(space);
-	realloc2 = fill_stick(space, realloc2);
+	realloc2 = fill_stick(space, realloc2, -1, 0);
 	realloc = realloc_redir(realloc2);
 	realloc = fill_redir(realloc2, realloc);
 	realloc = redir_first(realloc);
