@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/16 00:50:38 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/16 19:24:51 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ typedef struct s_minishell
 	char	**change_dollar;
 	int		flg;
 	char	**f_name;
+	int		*pid;
+	int		save_stdin;
 }				t_minishell;
 
 int		init_env(t_minishell *ms, char **envp);
@@ -148,7 +150,7 @@ char	**refresh_env(t_env **env);
 
 int		is_built_in(char *str);
 
-void	wait_pid(t_minishell *ms, int i, int *id);
+void	wait_pid(t_minishell *ms, int i);
 
 char	**redirection(char **space);
 
@@ -258,5 +260,7 @@ void	file_name_simple(t_minishell *ms, int pipe);
 int		size_file_name_simple(t_minishell *ms);
 
 int		size_file_name_pipe(t_minishell *ms);
+
+void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 
 #endif

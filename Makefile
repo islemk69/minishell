@@ -6,7 +6,7 @@
 #    By: hamza <hamza@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 19:42:32 by ikaismou          #+#    #+#              #
-#    Updated: 2023/05/14 08:13:30 by hamza            ###   ########.fr        #
+#    Updated: 2023/05/16 19:22:42 by hamza            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS = main.c init_env/init_env.c init_env/init_env_util.c exec/exec.c utils/bui
 		builtins/exit.c builtins/echo.c exec/here_doc.c exec/pipe.c exec/simple_exec.c exec/redir_exec.c\
 		parsing/check_line.c parsing/dollar.c exec/open_pipe.c exec/open_simple.c parsing/dollar_here_doc.c \
 		parsing/dollar_count.c parsing/dollar_change.c exec/exec_utils.c exec/exec_utils_2.c parsing/redir_first.c parsing/parsing_utils.c parsing/dollar_count_heredoc.c \
-		utils/util.c exec/here_doc_name.c
+		utils/util.c exec/here_doc_name.c exec/pipe_exec.c
 		
 OBJS = $(SRCS:.c=.o)
 
