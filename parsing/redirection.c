@@ -53,7 +53,8 @@ char	**fill_stick(char **str, char **realloc2, int i, int k)
 		if (!is_token_char(str[i][0]) && token)
 		{
 			u = 0;
-			realloc2[k++] = strcpy_token(str[i], &p_int);
+			realloc2[k++] = strcpy_token_2(str[i], &p_int);
+			printf("PREMIER MOT%s\n", realloc2[k - 1]);
 			while (++u <= token)
 				realloc2[k++] = strcpy_token_2(str[i], &p_int);
 		}
@@ -100,13 +101,24 @@ char	**redirection(char **space)
 {
 	char	**realloc;
 	char	**realloc2;
-
+	// int i = 0;
 	if (!check_double_token(space))
 		return (ft_dprintf(""RED"Error token\n"WHITE""), NULL);
 	realloc2 = realloc_stick(space);
 	realloc2 = fill_stick(space, realloc2, -1, 0);
+	// while (realloc2[i])
+	// {
+	// 	printf("%s\n", realloc2[i]);
+	// 	i++;
+	// }
 	realloc = realloc_redir(realloc2);
 	realloc = fill_redir(realloc2, realloc);
+	// i = 0;
+	// while (realloc[i])
+	// {
+	// 	printf("%s\n", realloc[i]);
+	// 	i++;
+	// }
 	realloc = redir_first(realloc);
 	return (realloc);
 }

@@ -54,6 +54,13 @@ static int	start_minishell(t_minishell *ms)
 			free(ms->line);
 			continue ;
 		}
+		// int i = 0;
+		// while (ms->parsed[i])
+		// {
+		// 	printf("%s\n", ms->parsed[i]);
+		// 	i++;
+		// }
+		//continue ;
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
 		free(ms->line);

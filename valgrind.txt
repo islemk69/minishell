@@ -1,370 +1,112 @@
-==176408== Memcheck, a memory error detector
-==176408== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==176408== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==176408== Command: ./minishell
-==176408== Parent PID: 176385
-==176408== 
-==176446== 
-==176446== FILE DESCRIPTORS: 4 open at exit.
-==176446== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
-==176446==    <inherited from parent>
-==176446== 
-==176446== Open file descriptor 2: /dev/pts/0
-==176446==    <inherited from parent>
-==176446== 
-==176446== Open file descriptor 1: /dev/pts/0
-==176446==    <inherited from parent>
-==176446== 
-==176446== Open file descriptor 0: /dev/pts/0
-==176446==    <inherited from parent>
-==176446== 
-==176446== 
-==176446== HEAP SUMMARY:
-==176446==     in use at exit: 212,155 bytes in 443 blocks
-==176446==   total heap usage: 651 allocs, 208 frees, 232,644 bytes allocated
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 6 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113CEB: ft_split_token (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10DABA: check_pipe (check_line.c:70)
-==176446==    by 0x10DEA8: check_line (check_line.c:125)
-==176446==    by 0x10AFE1: parsing (parsing.c:109)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 7 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113B33: no_null (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113D3C: ft_split_token (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10DABA: check_pipe (check_line.c:70)
-==176446==    by 0x10DEA8: check_line (check_line.c:125)
-==176446==    by 0x10AFE1: parsing (parsing.c:109)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 8 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x114203: ft_split_space (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10B047: parsing (parsing.c:119)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 9 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x114062: no_null (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x114254: ft_split_space (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10B047: parsing (parsing.c:119)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 10 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10B657: fill_stick (redirection.c:67)
-==176446==    by 0x10B94A: redirection (redirection.c:107)
-==176446==    by 0x10B06A: parsing (parsing.c:122)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 11 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10B873: fill_redir (redirection.c:91)
-==176446==    by 0x10B971: redirection (redirection.c:109)
-==176446==    by 0x10B06A: parsing (parsing.c:122)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 12 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x110B86: redir_first (redir_first.c:78)
-==176446==    by 0x10B981: redirection (redirection.c:110)
-==176446==    by 0x10B06A: parsing (parsing.c:122)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 12 bytes in 1 blocks are still reachable in loss record 13 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1128D5: ft_strdup (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10E2E0: realloc_dollar (dollar.c:105)
-==176446==    by 0x10E3C6: check_dollar (dollar.c:121)
-==176446==    by 0x10B092: parsing (parsing.c:126)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 16 bytes in 1 blocks are still reachable in loss record 20 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x11182F: init_fname (here_doc_name.c:51)
-==176446==    by 0x111A7A: file_name_simple (here_doc_name.c:104)
-==176446==    by 0x10D5B0: exec_one_pipe (simple_exec.c:106)
-==176446==    by 0x109D03: exec_cmd (exec.c:23)
-==176446==    by 0x10964F: start_minishell (main.c:57)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 22 bytes in 1 blocks are still reachable in loss record 23 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x109B17: get_prompt (init_env_util.c:36)
-==176446==    by 0x1099F1: init_env (init_env.c:98)
-==176446==    by 0x109720: main (main.c:76)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 25 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113BC2: ft_split_token (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10DABA: check_pipe (check_line.c:70)
-==176446==    by 0x10DEA8: check_line (check_line.c:125)
-==176446==    by 0x10AFE1: parsing (parsing.c:109)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 26 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113AC7: no_null (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113D3C: ft_split_token (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10DABA: check_pipe (check_line.c:70)
-==176446==    by 0x10DEA8: check_line (check_line.c:125)
-==176446==    by 0x10AFE1: parsing (parsing.c:109)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 27 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1140E6: ft_split_space (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10B047: parsing (parsing.c:119)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 28 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113FF6: no_null (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x114254: ft_split_space (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10B047: parsing (parsing.c:119)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 29 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x110E41: realloc_stick (parsing_utils.c:64)
-==176446==    by 0x10B92C: redirection (redirection.c:106)
-==176446==    by 0x10B06A: parsing (parsing.c:122)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 30 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x110D21: realloc_redir (parsing_utils.c:36)
-==176446==    by 0x10B95A: redirection (redirection.c:108)
-==176446==    by 0x10B06A: parsing (parsing.c:122)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 31 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x110A85: redir_first (redir_first.c:65)
-==176446==    by 0x10B981: redirection (redirection.c:110)
-==176446==    by 0x10B06A: parsing (parsing.c:122)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 24 bytes in 1 blocks are still reachable in loss record 32 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10E3AA: check_dollar (dollar.c:119)
-==176446==    by 0x10B092: parsing (parsing.c:126)
-==176446==    by 0x10961A: start_minishell (main.c:51)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 96 bytes in 1 blocks are still reachable in loss record 39 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x11268A: ft_split (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x110003: get_path (exec_utils.c:25)
-==176446==    by 0x10D5BC: exec_one_pipe (simple_exec.c:107)
-==176446==    by 0x109D03: exec_cmd (exec.c:23)
-==176446==    by 0x10964F: start_minishell (main.c:57)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 203 bytes in 10 blocks are still reachable in loss record 42 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1126F1: ft_split (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x110003: get_path (exec_utils.c:25)
-==176446==    by 0x10D5BC: exec_one_pipe (simple_exec.c:107)
-==176446==    by 0x109D03: exec_cmd (exec.c:23)
-==176446==    by 0x10964F: start_minishell (main.c:57)
-==176446==    by 0x10972F: main (main.c:77)
-==176446== 
-==176446== 1,343 bytes in 65 blocks are still reachable in loss record 54 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x109BFE: get_key (init_env_util.c:60)
-==176446==    by 0x109A10: init_env (init_env.c:99)
-==176446==    by 0x109720: main (main.c:76)
-==176446== 
-==176446== 2,080 bytes in 65 blocks are still reachable in loss record 58 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x10AA1D: create_cell (list.c:30)
-==176446==    by 0x109C83: fill_list (init_env_util.c:75)
-==176446==    by 0x109A4E: init_env (init_env.c:101)
-==176446==    by 0x109720: main (main.c:76)
-==176446== 
-==176446== 3,449 bytes in 65 blocks are still reachable in loss record 60 of 85
-==176446==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==176446==    by 0x114941: ft_gc_ctx_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x113721: ft_gc_malloc (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1122B2: ft_calloc_parent (in /nfs/homes/ikaismou/Documents/minishell/minishell)
-==176446==    by 0x1097FB: get_value (init_env.c:39)
-==176446==    by 0x109A33: init_env (init_env.c:100)
-==176446==    by 0x109720: main (main.c:76)
-==176446== 
-==176446== LEAK SUMMARY:
-==176446==    definitely lost: 0 bytes in 0 blocks
-==176446==    indirectly lost: 0 bytes in 0 blocks
-==176446==      possibly lost: 0 bytes in 0 blocks
-==176446==    still reachable: 7,497 bytes in 224 blocks
-==176446==         suppressed: 204,658 bytes in 219 blocks
-==176446== 
-==176446== For lists of detected and suppressed errors, rerun with: -s
-==176446== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==176449== 
-==176449== FILE DESCRIPTORS: 4 open at exit.
-==176449== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
-==176449==    <inherited from parent>
-==176449== 
-==176449== Open file descriptor 2: /dev/pts/0
-==176449==    <inherited from parent>
-==176449== 
-==176449== Open file descriptor 1: /dev/pts/0
-==176449==    <inherited from parent>
-==176449== 
-==176449== Open file descriptor 0: /dev/pts/0
-==176449==    <inherited from parent>
-==176449== 
-==176449== 
-==176449== HEAP SUMMARY:
-==176449==     in use at exit: 204,658 bytes in 219 blocks
-==176449==   total heap usage: 653 allocs, 434 frees, 236,780 bytes allocated
-==176449== 
-==176449== LEAK SUMMARY:
-==176449==    definitely lost: 0 bytes in 0 blocks
-==176449==    indirectly lost: 0 bytes in 0 blocks
-==176449==      possibly lost: 0 bytes in 0 blocks
-==176449==    still reachable: 0 bytes in 0 blocks
-==176449==         suppressed: 204,658 bytes in 219 blocks
-==176449== 
-==176449== For lists of detected and suppressed errors, rerun with: -s
-==176449== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==176448== 
-==176448== FILE DESCRIPTORS: 4 open at exit.
-==176448== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
-==176448==    <inherited from parent>
-==176448== 
-==176448== Open file descriptor 2: /dev/pts/0
-==176448==    <inherited from parent>
-==176448== 
-==176448== Open file descriptor 1: /dev/pts/0
-==176448==    <inherited from parent>
-==176448== 
-==176448== Open file descriptor 0: /dev/pts/0
-==176448==    <inherited from parent>
-==176448== 
-==176448== 
-==176448== HEAP SUMMARY:
-==176448==     in use at exit: 204,658 bytes in 219 blocks
-==176448==   total heap usage: 651 allocs, 432 frees, 232,644 bytes allocated
-==176448== 
-==176448== LEAK SUMMARY:
-==176448==    definitely lost: 0 bytes in 0 blocks
-==176448==    indirectly lost: 0 bytes in 0 blocks
-==176448==      possibly lost: 0 bytes in 0 blocks
-==176448==    still reachable: 0 bytes in 0 blocks
-==176448==         suppressed: 204,658 bytes in 219 blocks
-==176448== 
-==176448== For lists of detected and suppressed errors, rerun with: -s
-==176448== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==176408== 
-==176408== FILE DESCRIPTORS: 4 open at exit.
-==176408== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
-==176408==    <inherited from parent>
-==176408== 
-==176408== Open file descriptor 2: /dev/pts/0
-==176408==    <inherited from parent>
-==176408== 
-==176408== Open file descriptor 1: /dev/pts/0
-==176408==    <inherited from parent>
-==176408== 
-==176408== Open file descriptor 0: /dev/pts/0
-==176408==    <inherited from parent>
-==176408== 
-==176408== 
-==176408== HEAP SUMMARY:
-==176408==     in use at exit: 204,700 bytes in 222 blocks
-==176408==   total heap usage: 687 allocs, 465 frees, 233,369 bytes allocated
-==176408== 
-==176408== LEAK SUMMARY:
-==176408==    definitely lost: 0 bytes in 0 blocks
-==176408==    indirectly lost: 0 bytes in 0 blocks
-==176408==      possibly lost: 0 bytes in 0 blocks
-==176408==    still reachable: 0 bytes in 0 blocks
-==176408==         suppressed: 204,700 bytes in 222 blocks
-==176408== 
-==176408== For lists of detected and suppressed errors, rerun with: -s
-==176408== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==96851== Memcheck, a memory error detector
+==96851== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==96851== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==96851== Command: ./minishell
+==96851== Parent PID: 96833
+==96851== 
+==96859== 
+==96859== FILE DESCRIPTORS: 5 open at exit.
+==96859== Open file descriptor 4: /dev/pts/0
+==96859==    at 0x49C089B: dup (syscall-template.S:78)
+==96859==    by 0x10D0E2: init_exec_pipe (pipe.c:70)
+==96859==    by 0x10D179: exec_multi_pipe (pipe.c:85)
+==96859==    by 0x109D24: exec_cmd (exec.c:28)
+==96859==    by 0x10964F: start_minishell (main.c:57)
+==96859==    by 0x10972F: main (main.c:77)
+==96859== 
+==96859== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
+==96859==    <inherited from parent>
+==96859== 
+==96859== Open file descriptor 2: /dev/pts/0
+==96859==    <inherited from parent>
+==96859== 
+==96859== Open file descriptor 1: /dev/pts/0
+==96859==    <inherited from parent>
+==96859== 
+==96859== Open file descriptor 0: /dev/pts/0
+==96859==    <inherited from parent>
+==96859== 
+==96859== 
+==96859== HEAP SUMMARY:
+==96859==     in use at exit: 204,666 bytes in 219 blocks
+==96859==   total heap usage: 711 allocs, 492 frees, 233,628 bytes allocated
+==96859== 
+==96859== LEAK SUMMARY:
+==96859==    definitely lost: 0 bytes in 0 blocks
+==96859==    indirectly lost: 0 bytes in 0 blocks
+==96859==      possibly lost: 0 bytes in 0 blocks
+==96859==    still reachable: 0 bytes in 0 blocks
+==96859==         suppressed: 204,666 bytes in 219 blocks
+==96859== 
+==96859== For lists of detected and suppressed errors, rerun with: -s
+==96859== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==96860== 
+==96860== FILE DESCRIPTORS: 4 open at exit.
+==96860== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
+==96860==    <inherited from parent>
+==96860== 
+==96860== Open file descriptor 2: /dev/pts/0
+==96860==    <inherited from parent>
+==96860== 
+==96860== Open file descriptor 1: /dev/pts/0
+==96860==    <inherited from parent>
+==96860== 
+==96860== Open file descriptor 0: /dev/pts/0
+==96860==    at 0x49C08CB: dup2 (syscall-template.S:78)
+==96860==    by 0x111DEB: close_redir_pipe (pipe_exec.c:93)
+==96860==    by 0x111E8B: ft_exec_pipe (pipe_exec.c:111)
+==96860==    by 0x10D1A8: exec_multi_pipe (pipe.c:89)
+==96860==    by 0x109D24: exec_cmd (exec.c:28)
+==96860==    by 0x10964F: start_minishell (main.c:57)
+==96860==    by 0x10972F: main (main.c:77)
+==96860== 
+==96860== 
+==96860== HEAP SUMMARY:
+==96860==     in use at exit: 204,666 bytes in 219 blocks
+==96860==   total heap usage: 711 allocs, 492 frees, 233,628 bytes allocated
+==96860== 
+==96860== LEAK SUMMARY:
+==96860==    definitely lost: 0 bytes in 0 blocks
+==96860==    indirectly lost: 0 bytes in 0 blocks
+==96860==      possibly lost: 0 bytes in 0 blocks
+==96860==    still reachable: 0 bytes in 0 blocks
+==96860==         suppressed: 204,666 bytes in 219 blocks
+==96860== 
+==96860== For lists of detected and suppressed errors, rerun with: -s
+==96860== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==96851== 
+==96851== FILE DESCRIPTORS: 5 open at exit.
+==96851== Open file descriptor 4: /dev/pts/0
+==96851==    at 0x49C089B: dup (syscall-template.S:78)
+==96851==    by 0x10D0E2: init_exec_pipe (pipe.c:70)
+==96851==    by 0x10D179: exec_multi_pipe (pipe.c:85)
+==96851==    by 0x109D24: exec_cmd (exec.c:28)
+==96851==    by 0x10964F: start_minishell (main.c:57)
+==96851==    by 0x10972F: main (main.c:77)
+==96851== 
+==96851== Open file descriptor 3: /nfs/homes/ikaismou/Documents/minishell/valgrind.txt
+==96851==    <inherited from parent>
+==96851== 
+==96851== Open file descriptor 2: /dev/pts/0
+==96851==    <inherited from parent>
+==96851== 
+==96851== Open file descriptor 1: /dev/pts/0
+==96851==    <inherited from parent>
+==96851== 
+==96851== Open file descriptor 0: /dev/pts/0
+==96851==    <inherited from parent>
+==96851== 
+==96851== 
+==96851== HEAP SUMMARY:
+==96851==     in use at exit: 204,704 bytes in 222 blocks
+==96851==   total heap usage: 737 allocs, 515 frees, 234,177 bytes allocated
+==96851== 
+==96851== LEAK SUMMARY:
+==96851==    definitely lost: 0 bytes in 0 blocks
+==96851==    indirectly lost: 0 bytes in 0 blocks
+==96851==      possibly lost: 0 bytes in 0 blocks
+==96851==    still reachable: 0 bytes in 0 blocks
+==96851==         suppressed: 204,704 bytes in 222 blocks
+==96851== 
+==96851== For lists of detected and suppressed errors, rerun with: -s
+==96851== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

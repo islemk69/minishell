@@ -49,6 +49,7 @@ int	open_heredoc(t_minishell *ms)
 	if (id2 == 0)
 	{
 		child_here(ms, 0, 0);
+		ft_gc_free_all();
 		exit (0);
 	}
 	waitpid(id2, &status, WUNTRACED);

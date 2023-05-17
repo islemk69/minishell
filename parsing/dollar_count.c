@@ -100,12 +100,16 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			if (!special_dollar_count(tab, &i, &count))
 				continue ;
 			i++;
+			// printf("SIZE 3 count%d\n", count);
 			check_path_count(ms, tab, &i, &count);
+			// printf("SIZE 3 count%d\n", count);
 			continue ;
 		}
 		count++;
 		i++;
 	}
+	// printf("SIZE 555 count%d\n", count);
+	// if (count )
 	d_quot = 0;
 	s_quot = 0;
 	return (count);

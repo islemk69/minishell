@@ -200,7 +200,7 @@ int		check_line(char *line);
 
 void	lstclear(t_env **lst);
 
-void	check_dollar(t_minishell *ms);
+void	check_dollar(t_minishell *ms, int mod);
 
 char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
 

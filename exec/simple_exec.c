@@ -52,8 +52,7 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 	check_command(ms, ms->new_parsed[0], -1);
 	if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
 		g_global.g_status = 1;
-	else
-		ft_gc_free_all();
+	ft_gc_free_all();
 	exit(g_global.g_status);
 }
 
@@ -66,6 +65,7 @@ int	first_child(t_minishell *ms)
 	if (id2 == 0)
 	{
 		heredoc_simple(ms);
+		ft_gc_free_all();
 		exit(0);
 	}
 	waitpid(id2, &status, WUNTRACED);
