@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/16 19:21:27 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 06:24:06 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	child_here(t_minishell *ms, int i, int cpt)
 	while (ms->parsed[i])
 	{
 		split = ft_split_space(ms->parsed[i]);
+		if (!split)
+			exit_child(-1);
 		j = 0;
 		while (split[j] && split[j][0] == '<')
 		{
@@ -53,14 +55,20 @@ int	open_heredoc(t_minishell *ms)
 	g_global.g_status = WEXITSTATUS(status);
 	if (g_global.g_status == 130)
 		return (remove_heredoc(ms), 1);
+	if (g_global.g_status == -1)
+	{
+		remove_heredoc(ms);
+		exit_parent("heredoc");
+	}
 	return (0);
 }
 
 int	init_exec_pipe(t_minishell *ms, int nb_pipe)
 {
-	ms->pid = ft_gc_malloc(sizeof(int) * (nb_pipe + 1));
+	ms->pid = ft_calloc_parent(sizeof(int), (nb_pipe + 1), "tableau pid");
 	ms->save_stdin = dup(0);
-	get_path(ms);
+	if (get_path(ms) == -1)
+		exit_parent("get path");
 	file_name_pipe(ms, 0, 1);
 	if (open_heredoc(ms))
 		return (1);
@@ -81,5 +89,7 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	waitpid(id1, &tmp_status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(tmp_status);
 	remove_heredoc(ms);
+	if (g_global.g_status == -1)
+		exit_parent("exec");
 	return (1);
 }

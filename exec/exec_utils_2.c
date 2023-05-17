@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:53:08 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 14:53:35 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 05:48:02 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**ft_realloc_from_i(char **tab, int size, int i)
 	int		j;
 
 	j = 0;
-	realloc = ft_gc_malloc(sizeof(char *) * (size - i));
+	realloc = ft_calloc_child(sizeof(char *), (size - i));
 	i++;
 	while (tab[i])
 	{

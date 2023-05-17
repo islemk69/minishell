@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 08:54:48 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 06:22:54 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_path(t_minishell *ms)
 	}
 	ms->path_env = ft_split(path, ':');
 	if (!ms->path_env)
-		return (0);
+		return (-1);
 	return (1);
 }
 
@@ -65,7 +65,11 @@ int	check_command(t_minishell *ms, char *input_cmd)
 	while (ms->path_env[i])
 	{
 		tmp = ft_strjoin_gnl(ms->path_env[i], "/");
+		if (!tmp)
+			exit_child(-1);
 		ms->path_cmd = ft_strjoin_gnl(tmp, input_cmd);
+		if (!ms->path_cmd)
+			exit_child(-1);		
 		if (access(ms->path_cmd, X_OK) != -1)
 			return (1);
 		i++;

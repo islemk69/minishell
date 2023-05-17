@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 17:58:23 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:58:18 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	here_doc_dollar(t_minishell *ms)
 
 	tmp = ms->line_here;
 	ms->line_here = ft_strdup(dollar_here_doc(ms, ms->line_here, 0, 0));
+	if (!ms->line_here)
+		exit_parent("heredoc");
 	free(tmp);
 	return (1);
 }

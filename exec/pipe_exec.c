@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:22:00 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/16 19:22:13 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 06:08:02 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 	ms->outfile_str = NULL;
 	ms->outfile_exist = 0;
 	split = ft_split_space(ms->parsed[i]);
+	if (!split)
+		exit_child(-1);
 	if (split[0][0] == '<' || split[0][0] == '>')
 		ms->new_parsed = open_files(ms, split, &*cpt);
 	else
@@ -41,13 +43,13 @@ void	dup_exec_pipe(t_minishell *ms, int nb_pipe)
 		if (ms->outfile_exist == 0)
 		{
 			if (dup2(ms->fd[1], 1) == -1)
-				error ("dup3");
+				exit_child(-1);
 		}
 	}
 	else
 	{
 		if (dup(1) == -1)
-			perror("dup");
+			exit_child(-1);
 	}
 }
 
@@ -80,12 +82,12 @@ void	close_redir_pipe(t_minishell *ms, int nb_pipe)
 	if (nb_pipe != 0)
 	{
 		if (dup2(ms->fd[0], 0) == -1)
-			error ("dup3");
+			exit_child(-1);
 	}
 	else
 	{
 		if (dup2(ms->save_stdin, 0) == -1)
-			error ("dup6");
+			exit_child(-1);
 	}
 	close(ms->fd[0]);
 	close(ms->fd[1]);

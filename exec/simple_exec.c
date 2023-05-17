@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/15 03:00:09 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 06:23:18 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 		exit(g_global.g_status);
 	}
 	check_command(ms, ms->new_parsed[0]);
-	execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
+	if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
+		g_global.g_status = 1;
+	else
+		ft_gc_free_all();
 	exit(g_global.g_status);
 }
 
@@ -69,6 +72,11 @@ int	first_child(t_minishell *ms)
 	g_global.g_status = WEXITSTATUS(status);
 	if (g_global.g_status == 130)
 		return (1);
+	if (g_global.g_status == -1)
+	{
+		remove_heredoc(ms);
+		exit_parent("heredoc");
+	}
 	return (0);
 }
 
@@ -96,7 +104,9 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	int	id;
 
 	file_name_simple(ms, 0);
-	get_path(ms);
+	if (get_path(ms) == -1)
+		exit_parent("get path");
+	// get_path(ms);
 	if (parent_builtins(ms, ms->parsed, env, 0))
 		return (1);
 	if (first_child(ms))
@@ -107,5 +117,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	waitpid(-1, &ms->status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	remove_heredoc(ms);
+	if (g_global.g_status == -1)
+		exit_parent("exec");
 	return (1);
 }

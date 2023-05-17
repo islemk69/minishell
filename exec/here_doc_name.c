@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:29:57 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/15 02:29:55 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:56:42 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,20 @@ char	*assign_name(t_minishell *ms, int count)
 
 	nb = 2147483647;
 	tab = ft_itoa(nb);
+	if (!tab)
+		exit_parent("filename heredoc");
 	tab = ft_strjoin_gnl(".", tab);
+	if (!tab)
+		exit_parent("filename heredoc");
 	nb--;
 	while (access(tab, F_OK) != -1 || !name_exist(ms, tab, count))
 	{
 		tab = ft_itoa(nb);
+		if (!tab)
+			exit_parent("filename heredoc");
 		tab = ft_strjoin_gnl(".", tab);
+		if (!tab)
+			exit_parent("filename heredoc");
 		nb--;
 	}
 	return (tab);
@@ -54,7 +62,7 @@ void	init_fname(t_minishell *ms, int pipe)
 		size = size_file_name_simple(ms);
 	else
 		size = size_file_name_pipe(ms);
-	ms->f_name = ft_gc_malloc(sizeof(char *) * (size + 1));
+	ms->f_name = ft_calloc_parent(sizeof(char *), size + 1, "filename heredoc");
 	while (i < size)
 	{
 		ms->f_name[i] = 0;
@@ -75,6 +83,8 @@ void	file_name_pipe(t_minishell *ms, int i, int pipe)
 	while (ms->parsed[i])
 	{
 		split = ft_split_space(ms->parsed[i]);
+		if (!split)
+			perror("filename heredoc");
 		j = 0;
 		while (split[j] && split[j][0] == '<')
 		{
@@ -82,6 +92,8 @@ void	file_name_pipe(t_minishell *ms, int i, int pipe)
 			{
 				tab = assign_name(ms, k);
 				ms->f_name[k] = ft_strdup(tab);
+				if (!ms->f_name[k])
+					perror("filename heredoc");
 				k++;
 			}
 			j++;
