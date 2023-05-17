@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_change.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:49:28 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/10 18:37:40 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 06:29:50 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_tmp_dollar(char *tab, int *i)
 
 	j = 0;
 	*i += 1;
-	tmp = ft_gc_malloc(sizeof(char) * (size_tmp(tab, *i) + 1));
+	tmp = ft_calloc_parent(sizeof(char), (size_tmp(tab, *i) + 1), "parsing");
 	while (tab[*i] && tab[*i] != '"' && tab[*i] != '\''
 		&& tab[*i] != ' ' && tab[*i] != '$'
 		&& (ft_isalnum(tab[*i]) || tab[*i] == '_'))
@@ -120,12 +120,16 @@ char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot)
 {
 	ms->flg = 0;
-	ms->change_dollar = ft_gc_malloc(sizeof(char) * (1 + 1));
-	ms->change_dollar[0] = ft_gc_malloc(sizeof(char) * \
-		(countchar(ms, tab, d_quot, s_quot) + 1));
+	ms->change_dollar = ft_calloc_parent(sizeof(char), (1 + 1), "parsing");
+	ms->change_dollar[0] = ft_calloc_parent(sizeof(char), \
+		(countchar(ms, tab, d_quot, s_quot) + 1), "parsing");
 	ms->change_dollar[1] = 0;
 	change_dollar(ms, tab, d_quot, s_quot);
 	if (ms->flg)
+	{
 		ms->change_dollar = ft_split_space(ms->change_dollar[0]);
+		if (!ms->change_dollar)
+			exit_parent("parsing");
+	}
 	return (ms->change_dollar);
 }

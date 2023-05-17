@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 04:34:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 11:20:22 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 06:28:32 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static int	check_pipe(char *string)
 	quote = '\0';
 	i = 0;
 	pipe = ft_split_token(string, ' ');
+	if (!pipe)
+		exit_parent("parsing");
 	if (pipe[0][0] == '|')
 		return (custom_msg_check_line(pipe[0], 0, '|'));
 	else if (pipe[ft_strlen_dtab(pipe) - 1][ft_strlen(pipe[ft_strlen_dtab(pipe) \

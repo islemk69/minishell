@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 08:15:10 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 06:49:52 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ char	**fill_stick(char **str, char **realloc2, int i, int k)
 				realloc2[k++] = strcpy_token_2(str[i], &p_int);
 		}
 		else
+		{
 			realloc2[k++] = ft_strdup(str[i]);
+			if (!realloc2[k - 1])
+				exit_parent("parsing");
+		}
 	}
 	return (realloc2[k] = 0, realloc2);
 }
@@ -83,11 +87,15 @@ char	**fill_redir(char **str, char **realloc)
 				&& !str[i][2]))
 		{
 			realloc[k] = ft_strjoin_gnl(str[i], str[i + 1]);
+			if (!realloc[k])
+				exit_parent("parsing");
 			i += 2;
 			k++;
 			continue ;
 		}
 		realloc[k] = ft_strdup(str[i]);
+		if (!realloc[k])
+			exit_parent("parsing");
 		k++;
 		i++;
 	}

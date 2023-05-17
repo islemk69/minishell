@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/10 17:40:13 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 06:40:46 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**do_real_null(char **ms_parsed, int count)
 	int		j;
 	int		i;
 
-	new_ms = ft_gc_malloc(sizeof(char *) * (count + 1));
+	new_ms = ft_calloc_parent(sizeof(char *), (count + 1), "parsing");
 	i = 0;
 	j = 0;
 	while (ms_parsed[i])
@@ -26,6 +26,8 @@ char	**do_real_null(char **ms_parsed, int count)
 		if (ms_parsed[i][0])
 		{
 			new_ms[j] = ft_strdup(ms_parsed[i]);
+			if (!new_ms[j])
+				exit_parent("parsing");
 			j++;
 		}
 		i++;
@@ -95,6 +97,8 @@ void	realloc_dollar(t_minishell *ms, int size)
 			while (ms->tmp_dollar[j])
 			{
 				ms->realloc[size] = ft_strdup(ms->tmp_dollar[j]);
+				if (!ms->realloc[size])
+					exit_parent("parsing");
 				j++;
 				size++;
 			}
@@ -102,6 +106,8 @@ void	realloc_dollar(t_minishell *ms, int size)
 			continue ;
 		}
 		ms->realloc[size] = ft_strdup(ms->parsed[i]);
+		if (!ms->realloc[size])
+			exit_parent("parsing");
 		size++;
 		i++;
 	}
@@ -114,7 +120,8 @@ void	check_dollar(t_minishell *ms)
 
 	i = 0;
 	ms->realloc = NULL;
-	ms->realloc = ft_gc_malloc(sizeof(char *) * (size_new_parsed(ms) + 1));
+	ms->realloc = ft_calloc_parent(sizeof(char *), \
+		(size_new_parsed(ms) + 1), "parsing");
 	realloc_dollar(ms, i);
 	if (ms->realloc[0] && ms->realloc[1])
 		ms->realloc = real_null(ms->realloc);

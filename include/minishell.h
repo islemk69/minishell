@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 05:34:06 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 06:36:24 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,8 @@ char	*quote(char *line);
 
 void	rm_quote_last(char **cmds);
 
+void	rm_quote_last_parent(char **cmds);
+
 int		get_path(t_minishell *ms);
 
 int		check_line(char *line);
@@ -241,6 +243,8 @@ int		custom_msg_check_line(char *line, int pos, char c);
 void	check_quote_dollar(char c, int *s_quot, int *d_quot);
 
 char	*ft_tmp_dollar(char *tab, int *i);
+
+char	*ft_tmp_dollar_heredoc(char *tab, int *i);
 
 char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot);

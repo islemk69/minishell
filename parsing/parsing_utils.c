@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:18:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 20:44:53 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/17 06:42:42 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**realloc_redir(char **space)
 			size++;
 		i++;
 	}
-	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
+	realloc = ft_calloc_parent(sizeof(char *), (size + 1), "parsing");
 	if (!realloc)
 		return (NULL);
 	return (realloc);
@@ -97,7 +97,7 @@ char	*strcpy_token(char *src, int *s_int)
 		size++;
 		save ++;
 	}
-	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
+	sdup = ft_calloc_parent(sizeof(char), (size + 1), "parsing");
 	while (src[*s_int] && !is_token_char(src[*s_int]))
 	{
 		sdup[j] = src[*s_int];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_first.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:07:20 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/09 20:44:42 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/17 06:48:09 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	**infile_first(char **realloc, char **new_tab, int *j)
 			continue ;
 		}
 		new_tab[*j] = ft_strdup(realloc[i]);
+		if (!new_tab[*j])
+			exit_parent("parsing");
 		*j += 1;
 		i++;
 	}
@@ -44,6 +46,8 @@ char	**outfile_second(char **realloc, char **new_tab, int *j)
 			continue ;
 		}
 		new_tab[*j] = ft_strdup(realloc[i]);
+		if (!new_tab[*j])
+			exit_parent("parsing");
 		*j += 1;
 		i++;
 	}
@@ -58,8 +62,8 @@ char	**redir_first(char **realloc)
 
 	j = 0;
 	i = 0;
-	new_tab = (char **)ft_gc_malloc(sizeof(char *) * \
-		(ft_strlen_dtab(realloc) + 1));
+	new_tab = ft_calloc_parent(sizeof(char *), \
+		(ft_strlen_dtab(realloc) + 1), "parsing");
 	new_tab = infile_first(realloc, new_tab, &j);
 	new_tab = outfile_second(realloc, new_tab, &j);
 	i = 0;

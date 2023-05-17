@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_here_doc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/10 00:15:58 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 06:34:52 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	check_dollar_heredoc(char *tab, char *realloc, int *i, int *k)
 	if (tab[*i + 1] == '?')
 	{
 		tmp = ft_itoa(g_global.g_status);
+		if (!tmp)
+			exit_child(-1);
 		while (*tmp)
 		{
 			realloc[*k] = *tmp;
@@ -105,7 +107,7 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 
 	k = 0;
 	i = 0;
-	realloc = ft_gc_malloc(sizeof(char) * \
+	realloc = ft_calloc_child(sizeof(char),
 		(countchar_here(ms, tab, d_quot, s_quot) + 1));
 	while (tab[i])
 	{
@@ -115,7 +117,7 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 		{
 			if (check_tab(tab, realloc, &i, &k))
 				continue ;
-			tmp = ft_tmp_dollar(tab, &i);
+			tmp = ft_tmp_dollar_heredoc(tab, &i);
 			check_path_heredoc(ms, realloc, tmp, &k);
 			continue ;
 		}
