@@ -44,7 +44,10 @@ static int	start_minishell(t_minishell *ms)
 			return (free(ms->line), 0);
 		add_history(ms->line);
 		if (is_empty(ms->line))
+		{
+			free(ms->line);
 			continue ;
+		}
 		if (!parsing(ms->line, ms))
 		{
 			printf("error token parsing\n");

@@ -60,7 +60,7 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 	if (ms->pid[i] == 0)
 	{
 		check_redir(ms);
-		if (!check_command(ms, ms->new_parsed[0]))
+		if (!check_command(ms, ms->new_parsed[0], -1))
 			exit (0);
 		dup_exec_pipe(ms, nb_pipe);
 		if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)

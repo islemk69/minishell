@@ -164,11 +164,11 @@ void	signal_handler_heredoc(int signum);
 
 char	**split_string(char *str);
 
-int		check_command(t_minishell *ms, char *input_cmd);
+int		check_command(t_minishell *ms, char *input_cmd, int i);
 
 int		is_token_char(char c);
 
-int		count_token(char *str, char c);
+int		count_token(char *str, char c, bool in_quotes, char current_quote);
 
 void	access_file(t_minishell *ms, char **tab);
 

@@ -17,7 +17,7 @@ int	exec_cmd(t_minishell *ms, t_env **env)
 	int		nb_pipe;
 
 	unplug_signals();
-	nb_pipe = count_token(ms->line, '|');
+	nb_pipe = count_token(ms->line, '|', false, '\0');
 	if (nb_pipe == 0)
 	{
 		if (!exec_one_pipe(ms, env))

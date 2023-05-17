@@ -20,9 +20,7 @@ char	*ft_strdup(const char *s1)
 	i = 0;
 	while (s1[i])
 		i++;
-	ptr = (void *)ft_gc_malloc(sizeof(const char) * (i + 1));
-	if (!ptr)
-		return (NULL);
+	ptr = ft_calloc_parent(sizeof(char), (i + 1), "parsing");
 	i = 0;
 	while (s1[i])
 	{

@@ -49,7 +49,7 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 		ft_gc_free_all();
 		exit(g_global.g_status);
 	}
-	check_command(ms, ms->new_parsed[0]);
+	check_command(ms, ms->new_parsed[0], -1);
 	if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
 		g_global.g_status = 1;
 	else

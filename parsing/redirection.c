@@ -64,11 +64,7 @@ char	**fill_stick(char **str, char **realloc2, int i, int k)
 				realloc2[k++] = strcpy_token_2(str[i], &p_int);
 		}
 		else
-		{
 			realloc2[k++] = ft_strdup(str[i]);
-			if (!realloc2[k - 1])
-				exit_parent("parsing");
-		}
 	}
 	return (realloc2[k] = 0, realloc2);
 }

@@ -28,65 +28,65 @@ int	get_path(t_minishell *ms)
 	return (1);
 }
 
-int	check_command(t_minishell *ms, char *input_cmd)
+int	complete_command(char *input_cmd, t_minishell *ms)
 {
-	char		*tmp;
-	int			i;
 	struct stat	info;
 
-	i = 0;
+	if (stat(input_cmd, &info) == 0 && S_ISDIR(info.st_mode))
+		error_exit(input_cmd, ": Is a directory\n", 126);
+	if (access(input_cmd, F_OK) == 0)
+	{
+		if (access(input_cmd, X_OK | R_OK) != 0)
+			error_exit(input_cmd, ": Permission denied\n", 126);
+		ms->path_cmd = input_cmd;
+		return (1);
+	}
+	else
+	{
+		if (access(input_cmd, F_OK) != 0)
+			error_exit(input_cmd, ": No such file or directory\n", 127);
+		if (access(input_cmd, X_OK | R_OK) != 0)
+			error_exit(input_cmd, ": Permission denied\n", 126);
+		ms->path_cmd = input_cmd;
+		return (1);
+	}
+	return (0);
+}
+
+int	check_command(t_minishell *ms, char *input_cmd, int i)
+{
+	char		*tmp;
+
 	if ((input_cmd[0] == '/' || (input_cmd[0] == '.' && input_cmd[1] == '/')) \
 		|| (input_cmd[ft_strlen(input_cmd) - 1] == '/'))
 	{
-		if (stat(input_cmd, &info) == 0 && S_ISDIR(info.st_mode))
-			error_exit(input_cmd, ": Is a directory\n", 126);
-		if (access(input_cmd, F_OK) == 0)
-		{
-			if (access(input_cmd, X_OK | R_OK) != 0)
-				error_exit(input_cmd, ": Permission denied\n", 126);
-			ms->path_cmd = input_cmd;
+		if (complete_command(input_cmd, ms))
 			return (1);
-		}
-		else
-		{
-			if (access(input_cmd, F_OK) != 0)
-				error_exit(input_cmd, ": No such file or directory\n", 127);
-			if (access(input_cmd, X_OK | R_OK) != 0)
-				error_exit(input_cmd, ": Permission denied\n", 126);
-			ms->path_cmd = input_cmd;
-			return (1);
-		}
-		return (0);
 	}
 	if (is_built_in(input_cmd))
 		return (1);
 	if (!ms->path_env || !*input_cmd)
 		error_exit(input_cmd, ": command not found\n", 127);
-	while (ms->path_env[i])
+	while (ms->path_env[++i])
 	{
 		tmp = ft_strjoin_gnl(ms->path_env[i], "/");
 		if (!tmp)
 			exit_child(-1);
 		ms->path_cmd = ft_strjoin_gnl(tmp, input_cmd);
 		if (!ms->path_cmd)
-			exit_child(-1);		
+			exit_child(-1);
 		if (access(ms->path_cmd, X_OK) != -1)
 			return (1);
-		i++;
 	}
 	error_exit(input_cmd, ": command not found\n", 127);
 	return (0);
 }
 
-int	count_token(char *str, char c)
+int	count_token(char *str, char c, bool in_quotes, char current_quote)
 {
 	int		count;
-	bool	in_quotes;
-	char	current_quote;
 
 	count = 0;
-	in_quotes = false;
-	current_quote = '\0';
 	while (*str)
 	{
 		if (*str == '\'' || *str == '\"')

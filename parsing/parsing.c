@@ -108,7 +108,7 @@ int	parsing(char *line, t_minishell *ms)
 
 	if (!check_line(line))
 		return (0);
-	if (count_token(line, '|'))
+	if (count_token(line, '|', false, '\0'))
 	{
 		ms->parsed = ft_pipe(line, -1);
 		if (!ms->parsed)
