@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/14 08:14:51 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:40:01 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 
 void	*ft_calloc(size_t count, size_t size);
+
+void	*ft_calloc_child(size_t count, size_t size);
+
+void	*ft_calloc_parent(size_t count, size_t size, char *str);
 
 int		ft_isalnum(int c);
 

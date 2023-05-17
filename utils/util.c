@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:37:56 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/14 08:22:23 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:33:31 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,16 @@ int	size_file_name_pipe(t_minishell *ms)
 		i++;
 	}
 	return (count);
+}
+
+void	exit_child(int i)
+{
+	ft_gc_free_all();
+	exit(i);
+}
+
+void	exit_parent(char *str)
+{
+	ft_gc_free_all();
+	perror(str);
 }

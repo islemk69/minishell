@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 01:05:59 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:36:12 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	ms.infile = 0;
 	ms.outfile = 0;
 	ms.infile_stra = NULL;
+	ms.f_name = NULL;
 	ms.outfile_exist = 0;
 	if (argc > 1)
 		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);

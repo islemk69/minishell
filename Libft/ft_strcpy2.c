@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 19:40:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 07:53:47 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:39:03 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*strcpy_token_2(char *src, int *int_s)
 	int		j;
 
 	size = count_size_token(src, *int_s);
-	sdup = (char *)ft_gc_malloc(sizeof(char) * (size + 1));
+	sdup = ft_calloc_parent(sizeof(char), (size + 1), "parsing");
 	j = 0;
 	while (is_token_char(src[*int_s]))
 	{

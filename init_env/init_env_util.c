@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:54:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 09:16:03 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 05:42:53 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_prompt(t_minishell *ms, char *envp)
 
 	i = 3;
 	prompt = envp + 5;
-	ms->prompt = ft_gc_malloc(sizeof(char) * (ft_strlen(prompt)) + 6);
+	ms->prompt = ft_calloc_parent(sizeof(char), (ft_strlen(prompt)) + 6, "prompt");
 	ms->prompt = strcpy_no_null(ms->prompt, "42@");
 	while (*prompt)
 	{
@@ -56,7 +56,7 @@ char	*get_key(char *line)
 	size = 0;
 	while (line[size] != '=')
 		size++;
-	new_line = ft_gc_malloc(sizeof(char) * (size + 1));
+	new_line = ft_calloc_parent(sizeof(char), (size + 1), "get key");
 	size = 0;
 	while (line[size] != '=')
 	{

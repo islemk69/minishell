@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intit_env.c                                        :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 20:59:22 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/08 21:01:56 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 05:43:07 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char	*get_value(char *line)
 	int		i;
 	char	*new_line;
 
-	new_line = ft_gc_malloc(sizeof(char) * (size_get_value(line) + 1));
+	new_line = ft_calloc_parent(sizeof(char), \
+		(size_get_value(line) + 1), "get value");
 	i = 0;
 	size = 0;
 	while (line[i] != '=')
@@ -71,7 +72,8 @@ int	init_env_null(t_minishell *ms, char **envp, int i)
 				key = "SHLVL";
 				value = "1";
 			}
-			fill_list(&ms->head_env, key, value);
+			if (!fill_list(&ms->head_env, key, value))
+				exit_parent("create cell");
 			i++;
 		}
 		ms->prompt = "42@guest>";
@@ -96,7 +98,8 @@ int	init_env(t_minishell *ms, char **envp)
 			get_prompt(ms, envp[i]);
 		key = get_key(envp[i]);
 		value = get_value(envp[i]);
-		fill_list(&ms->head_env, key, value);
+		if (!fill_list(&ms->head_env, key, value))
+			exit_parent("init env");
 		i++;
 	}
 	return (1);
