@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/17 06:40:46 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 07:53:29 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,30 +86,26 @@ void	realloc_dollar(t_minishell *ms, int size)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
-	while (ms->parsed[i])
+	i = -1;
+	while (ms->parsed[++i])
 	{
 		if (ft_strnstr(ms->parsed[i], "$", ft_strlen(ms->parsed[i])) != 0)
 		{
-			j = 0;
+			j = -1;
 			ms->tmp_dollar = change_parsed_dollar(ms, ms->parsed[i], 0, 0);
-			while (ms->tmp_dollar[j])
+			while (ms->tmp_dollar[++j])
 			{
 				ms->realloc[size] = ft_strdup(ms->tmp_dollar[j]);
 				if (!ms->realloc[size])
 					exit_parent("parsing");
-				j++;
 				size++;
 			}
-			i++;
 			continue ;
 		}
 		ms->realloc[size] = ft_strdup(ms->parsed[i]);
 		if (!ms->realloc[size])
 			exit_parent("parsing");
 		size++;
-		i++;
 	}
 	ms->realloc[size] = 0;
 }

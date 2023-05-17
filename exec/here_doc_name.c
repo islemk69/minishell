@@ -6,25 +6,11 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 07:29:57 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/17 05:56:42 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 08:19:53 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	name_exist(t_minishell *ms, char *tab, int count)
-{
-	int	i;
-
-	i = 0;
-	while (ms->f_name[i] && i < count)
-	{
-		if (!ft_strncmp(tab, ms->f_name[i], ft_strlen(tab)))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 char	*assign_name(t_minishell *ms, int count)
 {
@@ -70,35 +56,40 @@ void	init_fname(t_minishell *ms, int pipe)
 	}
 }
 
+void	do_assign_pipe(t_minishell *ms, char **split, int *k)
+{
+	int		j;
+	char	*tab;
+
+	j = 0;
+	while (split[j] && split[j][0] == '<')
+	{
+		if (split[j][1] == '<')
+		{
+			tab = assign_name(ms, *k);
+			ms->f_name[*k] = ft_strdup(tab);
+			if (!ms->f_name[*k])
+				perror("filename heredoc");
+			*k += 1;
+		}
+		j++;
+	}
+}
+
 void	file_name_pipe(t_minishell *ms, int i, int pipe)
 {
-	char	*tab;
-	int		j;
 	int		k;
 	char	**split;
 
-	j = 0;
+	i = -1;
 	k = 0;
 	init_fname(ms, pipe);
-	while (ms->parsed[i])
+	while (ms->parsed[++i])
 	{
 		split = ft_split_space(ms->parsed[i]);
 		if (!split)
 			perror("filename heredoc");
-		j = 0;
-		while (split[j] && split[j][0] == '<')
-		{
-			if (split[j][1] == '<')
-			{
-				tab = assign_name(ms, k);
-				ms->f_name[k] = ft_strdup(tab);
-				if (!ms->f_name[k])
-					perror("filename heredoc");
-				k++;
-			}
-			j++;
-		}
-		i++;
+		do_assign_pipe(ms, split, &k);
 	}
 }
 

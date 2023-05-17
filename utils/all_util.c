@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_util.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:19:41 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/09 11:20:36 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/17 08:16:50 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	custom_msg_check_line(char *line, int pos, char c)
 		size++;
 		save++;
 	}
-	npipe = ft_gc_malloc(sizeof(char) * (size + 1));
+	npipe = ft_calloc_parent(sizeof(char), (size + 1), "parsing");
 	size = 0;
 	while (line[pos] && line[pos] == c)
 	{
@@ -36,4 +36,25 @@ int	custom_msg_check_line(char *line, int pos, char c)
 	npipe[size] = 0;
 	ft_dprintf(""RED""SYNT_ERR" `%s'\n"WHITE"", npipe);
 	return (0);
+}
+
+void	print_error_export(char *split)
+{
+	ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"\
+				WHITE"", split);
+	g_global.g_status = 1;
+}
+
+int	name_exist(t_minishell *ms, char *tab, int count)
+{
+	int	i;
+
+	i = 0;
+	while (ms->f_name[i] && i < count)
+	{
+		if (!ft_strncmp(tab, ms->f_name[i], ft_strlen(tab)))
+			return (0);
+		i++;
+	}
+	return (1);
 }

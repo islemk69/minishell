@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 06:23:18 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 07:25:46 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 	file_name_simple(ms, 0);
 	if (get_path(ms) == -1)
 		exit_parent("get path");
-	// get_path(ms);
 	if (parent_builtins(ms, ms->parsed, env, 0))
 		return (1);
 	if (first_child(ms))

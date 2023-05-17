@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 16:22:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 06:46:44 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 08:10:20 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,31 @@ char	*quote(char *line)
 	{
 		str = quote_2(line, str);
 		if (!str)
-			return(NULL);
+			return (NULL);
 	}
 	else
 		return (line);
 	return (str);
+}
+
+void	do_ft_pipe(char **space, char **join, int j)
+{
+	int		i;
+	char	*tmp;
+
+	i = -1;
+	while (space[++i])
+	{
+		join[j] = ft_strjoin_gnl(join[j], space[i]);
+		if (!join[j])
+			exit_parent("parsing");
+		tmp = ft_strjoin_gnl(join[j], " ");
+		if (!tmp)
+			exit_parent("parsing");
+		join[j] = ft_strdup(tmp);
+		if (!join[j])
+			exit_parent("parsing");
+	}
 }
 
 char	**ft_pipe(char *line, int j)
@@ -62,8 +82,6 @@ char	**ft_pipe(char *line, int j)
 	char	**pipe;
 	char	**space;
 	char	**join;
-	int		i;
-	char	*tmp;
 
 	pipe = ft_split_token(line, '|');
 	if (!pipe)
@@ -79,19 +97,7 @@ char	**ft_pipe(char *line, int j)
 		if (!space)
 			return (0);
 		join[j] = 0;
-		i = -1;
-		while (space[++i])
-		{
-			join[j] = ft_strjoin_gnl(join[j], space[i]);
-			if (!join[j])
-				exit_parent("parsing");
-			tmp = ft_strjoin_gnl(join[j], " ");
-			if (!tmp)
-				exit_parent("parsing");
-			join[j] = ft_strdup(tmp);
-			if (!join[j])
-				exit_parent("parsing");
-		}
+		do_ft_pipe(space, join, j);
 	}
 	return (join[j] = 0, join);
 }

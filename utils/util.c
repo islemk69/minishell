@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:37:56 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/17 05:33:31 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 07:15:28 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	size_file_name_pipe(t_minishell *ms)
 	while (ms->parsed[i])
 	{
 		split = ft_split_space(ms->parsed[i]);
+		if (!split)
+			exit_parent("filename heredoc");
 		j = 0;
 		while (split[j] && split[j][0] == '<')
 		{

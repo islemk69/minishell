@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:52:48 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 05:15:59 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 07:12:42 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**refresh_env(t_env **env)
 
 	i = 0;
 	head = *env;
-	new_env = (char **)ft_gc_malloc(sizeof(char *) * (lstsize(*env) + 1));
+	new_env = ft_calloc_child(sizeof(char *), (lstsize(*env) + 1));
 	while (head)
 	{
 		if (!head->value)

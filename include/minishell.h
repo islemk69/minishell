@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 06:36:24 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 08:18:47 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,5 +270,7 @@ void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 void	exit_child(int i);
 
 void	exit_parent(char *str);
+
+int		name_exist(t_minishell *ms, char *tab, int count);
 
 #endif

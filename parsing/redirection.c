@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 20:11:23 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 06:49:52 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 08:23:45 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,26 +78,23 @@ char	**fill_redir(char **str, char **realloc)
 	int	i;
 	int	k;
 
-	i = 0;
+	i = -1;
 	k = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		if ((is_token_char(str[i][0]) && !str[i][1]) \
 			|| (is_token_char(str[i][0]) && is_token_char(str[i][1]) \
 				&& !str[i][2]))
 		{
-			realloc[k] = ft_strjoin_gnl(str[i], str[i + 1]);
-			if (!realloc[k])
+			realloc[k++] = ft_strjoin_gnl(str[i], str[i + 1]);
+			if (!realloc[k - 1])
 				exit_parent("parsing");
-			i += 2;
-			k++;
+			i += 1;
 			continue ;
 		}
-		realloc[k] = ft_strdup(str[i]);
-		if (!realloc[k])
+		realloc[k++] = ft_strdup(str[i]);
+		if (!realloc[k - 1])
 			exit_parent("parsing");
-		k++;
-		i++;
 	}
 	realloc[k] = 0;
 	return (realloc);

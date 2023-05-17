@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 22:54:37 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/15 03:16:04 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/17 08:05:58 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ void	rm_quote_last(char **cmds)
 	{
 		tmp = *cmds;
 		*cmds = quote(tmp);
+		if (!*cmds)
+			exit_child(-1);
+		cmds++;
+	}
+}
+
+void	rm_quote_last_parent(char **cmds)
+{
+	char	*tmp;
+
+	while (*cmds)
+	{
+		tmp = *cmds;
+		*cmds = quote(tmp);
+		if (!*cmds)
+			exit_parent("builtins");
 		cmds++;
 	}
 }
@@ -35,6 +51,7 @@ int	iter_shlvl(char *str, t_env **env)
 {
 	t_env	*head;
 	int		shlvl;
+	char	*tmp;
 
 	head = *env;
 	if (!ft_strncmp(str, "./minishell\0", ft_strlen(str) + 1))
@@ -45,20 +62,18 @@ int	iter_shlvl(char *str, t_env **env)
 			{
 				shlvl = ft_atoi(head->value);
 				shlvl++;
-				head->value = ft_strdup(ft_itoa(shlvl));
+				tmp = ft_itoa(shlvl);
+				if (!tmp)
+					exit_parent("builtins");
+				head->value = ft_strdup(tmp);
+				if (!head->value)
+					exit_parent("builtins");
 			}
 			head = head->next;
 		}
 		return (1);
 	}
 	return (0);
-}
-
-void	print_error_export(char *split)
-{
-	ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"\
-				WHITE"", split);
-	g_global.g_status = 1;
 }
 
 int	check_key(char *str)
