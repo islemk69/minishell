@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 19:23:20 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:33:02 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,8 +277,6 @@ int		name_exist(t_minishell *ms, char *tab, int count);
 
 int		check_tab_heredoc(char *tab, char *realloc, int *i, int *k);
 
-int		is_expandable(char *tab, int i, int d_quot, int s_quot);
-
 char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot);
 
 int		is_heredoc_name(char *tab, int d_quot, int s_quot, int j);
@@ -286,5 +284,7 @@ int		is_heredoc_name(char *tab, int d_quot, int s_quot, int j);
 int		countchar_pipe(t_minishell *ms, char *tab, int d_quot, int s_quot);
 
 int		is_expandable(char *tab, int i, int d_quot, int s_quot);
+
+int		is_full_null(t_minishell *ms);
 
 #endif

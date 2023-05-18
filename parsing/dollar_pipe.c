@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 07:59:26 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/18 18:40:10 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/19 01:01:19 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot)
 	char	*tmp;
 	char	**new;
 
-	i = 0;
-	new = ft_calloc_parent(sizeof(char *), ft_strlen_dtab(ms->parsed) + 1, "parsing");
-	while (ms->parsed[i])
+	i = -1;
+	new = ft_calloc_parent(sizeof(char *), \
+		ft_strlen_dtab(ms->parsed) + 1, "parsing");
+	while (ms->parsed[++i])
 	{
-		new[i] = ft_calloc_parent(sizeof(char),
-				(countchar_pipe(ms, ms->parsed[i], d_quot, s_quot) + 1), "parsing");
+		new[i] = ft_calloc_parent(sizeof(char), (countchar_pipe(ms, \
+				ms->parsed[i], d_quot, s_quot) + 1), "parsing");
 		j = 0;
 		k = 0;
 		while (ms->parsed[i][j])
@@ -84,7 +85,7 @@ char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot)
 			check_quote_dollar(ms->parsed[i][j], &s_quot, &d_quot);
 			if (is_heredoc_name(ms->parsed[i], d_quot, s_quot, j))
 			{
-				while (ms->parsed[i][j] && ((ms->parsed[i][j] != 32 && !d_quot) 
+				while (ms->parsed[i][j] && ((ms->parsed[i][j] != 32 && !d_quot)
 					|| (ms->parsed[i][j] != 32 && !s_quot)))
 				{
 					new[i][k++] = ms->parsed[i][j++];
@@ -94,7 +95,7 @@ char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot)
 			}
 			if (!is_expandable(ms->parsed[i], i, d_quot, s_quot))
 			{
-				new[i][k++] = ms->parsed[i][j++];
+				new[i][k++] = ms->parsed[i][j];
 				continue ;
 			}
 			else if (ms->parsed[i][j] == '$')
@@ -107,9 +108,7 @@ char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot)
 			}
 			new[i][k++] = ms->parsed[i][j++];
 		}
-		new[i][k] = 0,
-		i++;
+		new[i][k] = 0;
 	}
 	return (new[i] = 0, new);
 }
-

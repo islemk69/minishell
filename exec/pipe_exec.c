@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:22:00 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/18 20:15:08 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:23:09 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,10 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 		dup_exec_pipe(ms, nb_pipe);
 		if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 		{
-
 			ft_gc_free_all();
 			exit(g_global.g_status);
 		}
-		if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)))
-		{
-			ft_gc_free_all();
-		}
+		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
 		ft_gc_free_all();
 		exit(g_global.g_status);
 	}

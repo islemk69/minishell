@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_count.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:10:02 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/18 18:43:10 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/19 01:10:55 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if ((tab[i] == '$' && s_quot) || (tab[i] == '$' && tab[i + 1] == ' ')
-			|| (tab[i] == '$' && tab[i + 1] == 0) || ((tab[i] == '$' && d_quot)
-				&& (tab[i + 1] == 32 || tab[i + 1] == '"' || tab[i + 1] == '\'')))
+		if (!is_expandable(tab, i, d_quot, s_quot))
 		{
 			count++;
 			i++;

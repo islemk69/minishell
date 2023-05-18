@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_util.c                                     :+:      :+:    :+:   */
+/*   all_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 11:19:41 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/17 08:16:50 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/19 00:48:21 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@ int	name_exist(t_minishell *ms, char *tab, int count)
 	while (ms->f_name[i] && i < count)
 	{
 		if (!ft_strncmp(tab, ms->f_name[i], ft_strlen(tab)))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	is_full_null(t_minishell *ms)
+{
+	int	i;
+
+	i = 0;
+	while (ms->realloc[i])
+	{
+		if (ms->realloc[i][0])
 			return (0);
 		i++;
 	}

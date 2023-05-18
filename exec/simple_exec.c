@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 23:45:47 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:25:57 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,8 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 		rm_quote_last(ms->parsed);
 		ms->new_parsed = ms->parsed;
 	}
-	if (child_builtins(ms, ms->new_parsed, env))
-	{
-		ft_gc_free_all();
-		exit(g_global.g_status);
-	}
-	if (!check_command(ms, ms->new_parsed[0], -1))
+	if (child_builtins(ms, ms->new_parsed, env)
+		|| !check_command(ms, ms->new_parsed[0], -1))
 	{
 		ft_gc_free_all();
 		exit(g_global.g_status);

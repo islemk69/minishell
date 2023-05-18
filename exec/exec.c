@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:56:55 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 20:00:28 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:21:40 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ int	exec_cmd(t_minishell *ms, t_env **env)
 	else
 	{
 		ms->parsed = dollar_pipe(ms, 0, 0);
-		// int i = 0;
-		// while (ms->parsed[i])
-		// {
-		// 	printf("new[%d] = %s\n", i, ms->parsed[i]);
-		// 	printf("new[%d][0] = %c\n", i, ms->parsed[i][0]);
-		// 	i++;
-		// }
 		if (!exec_multi_pipe(ms, env, nb_pipe))
 			return (0);
 	}

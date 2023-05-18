@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/18 20:00:18 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/19 00:28:13 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,20 +110,6 @@ void	realloc_dollar(t_minishell *ms, int size)
 	ms->realloc[size] = 0;
 }
 
-int is_full_null(t_minishell *ms)
-{
-	int	i;
-
-	i = 0;
-	while (ms->realloc[i])
-	{
-		if (ms->realloc[i][0])
-			return(0);
-		i++;
-	}
-	return (1);
-}
-
 void	check_dollar(t_minishell *ms)
 {
 	int	i;
@@ -136,11 +122,4 @@ void	check_dollar(t_minishell *ms)
 	if (!is_full_null(ms))
 		ms->realloc = real_null(ms->realloc);
 	ms->parsed = ms->realloc;
-	// i = 0;
-	// while (ms->parsed[i])
-	// {
-	// 	printf("new[%d] = %s\n", i, ms->parsed[i]);
-	// 	printf("new[%d][0] = %c\n", i, ms->parsed[i][0]);
-	// 	i++;
-	// }
 }
