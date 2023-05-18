@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:22:00 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/18 19:44:24 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:15:08 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,21 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 	ms->pid[i] = fork();
 	if (ms->pid[i] == 0)
 	{
-		if (!ms->parsed[i][0])
+		if (!ms->new_parsed)
 		{
-			printf("ici\n");
 			ft_gc_free_all();
 			exit(0);
 		}
 		check_redir(ms);
 		if (!check_command(ms, ms->new_parsed[0], -1))
 		{
-			printf("ok6\n\n\n");
 			ft_gc_free_all();
 			exit (0);
 		}
 		dup_exec_pipe(ms, nb_pipe);
 		if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 		{
+
 			ft_gc_free_all();
 			exit(g_global.g_status);
 		}
