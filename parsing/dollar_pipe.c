@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 07:59:26 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/18 08:34:47 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 18:40:10 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot)
 	new = ft_calloc_parent(sizeof(char *), ft_strlen_dtab(ms->parsed) + 1, "parsing");
 	while (ms->parsed[i])
 	{
-		new[i] = ft_calloc_child(sizeof(char),
-				(countchar_pipe(ms, ms->parsed[i], d_quot, s_quot) + 1));
+		new[i] = ft_calloc_parent(sizeof(char),
+				(countchar_pipe(ms, ms->parsed[i], d_quot, s_quot) + 1), "parsing");
 		j = 0;
 		k = 0;
 		while (ms->parsed[i][j])

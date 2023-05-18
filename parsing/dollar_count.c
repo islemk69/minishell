@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:10:02 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/18 08:22:23 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 18:43:10 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_path_count(t_minishell *ms, char *tab, int *i, int *count)
 	int		j;
 
 	env = NULL;
-	tmp = ft_calloc_child(sizeof(char), (size_tmp(tab, *i) + 1));
+	tmp = ft_calloc_parent(sizeof(char), (size_tmp(tab, *i) + 1), "parsing");
 	j = 0;
 	while (tab[*i] && tab[*i] != '"' && tab[*i] != '\'' && tab[*i] != ' ' \
 		&& tab[*i] != '$' && (ft_isalnum(tab[*i]) || tab[*i] == '_'))
