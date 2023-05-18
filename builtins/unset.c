@@ -43,8 +43,8 @@ void	do_unset(t_env **env, char **cmd)
 	{
 		if (!check_key(cmd[i]) || (cmd[i][0] >= '0' && cmd[i][0] <= '9'))
 		{
-			ft_dprintf("bash: export: `%s': not a valid identifier\n"\
-				WHITE"", cmd[i]);
+			ft_dprintf("bash: export: `%s': not a valid identifier\n", \
+				cmd[i]);
 			g_global.g_status = 1;
 			i++;
 			continue ;

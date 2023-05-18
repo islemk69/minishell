@@ -30,3 +30,45 @@ char	**ft_realloc_from_i(char **tab, int size, int i)
 	realloc[j] = 0;
 	return (realloc);
 }
+
+int	count_token(char *str, char c, bool in_quotes, char current_quote)
+{
+	int		count;
+
+	count = 0;
+	while (*str)
+	{
+		if (*str == '\'' || *str == '\"')
+		{
+			if (in_quotes && *str == current_quote)
+			{
+				in_quotes = false;
+				current_quote = '\0';
+			}
+			else if (!in_quotes)
+			{
+				in_quotes = true;
+				current_quote = *str;
+			}
+		}
+		else if (*str == c && !in_quotes)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+char	**tab_copy(char **tab)
+{
+	int		i;
+	char	**head;
+
+	i = 0;
+	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(tab) + 1));
+	while (tab[i])
+	{
+		head[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	return (head);
+}

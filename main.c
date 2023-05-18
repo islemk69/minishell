@@ -42,8 +42,7 @@ static int	start_minishell(t_minishell *ms)
 		ms->line = readline(ms->prompt);
 		if (!urandom(ms->line))
 			return (free(ms->line), 0);
-		add_history(ms->line);
-		if (is_empty(ms->line))
+		if (is_empty(ms->line, ms))
 		{
 			free(ms->line);
 			continue ;

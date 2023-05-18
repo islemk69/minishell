@@ -40,8 +40,7 @@ int	custom_msg_check_line(char *line, int pos, char c)
 
 void	print_error_export(char *split)
 {
-	ft_dprintf("bash: export: `%s': not a valid identifier\n\
-				", split);
+	ft_dprintf("bash: export: `%s': not a valid identifier\n", split);
 	g_global.g_status = 1;
 }
 

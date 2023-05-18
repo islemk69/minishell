@@ -82,48 +82,6 @@ int	check_command(t_minishell *ms, char *input_cmd, int i)
 	return (0);
 }
 
-int	count_token(char *str, char c, bool in_quotes, char current_quote)
-{
-	int		count;
-
-	count = 0;
-	while (*str)
-	{
-		if (*str == '\'' || *str == '\"')
-		{
-			if (in_quotes && *str == current_quote)
-			{
-				in_quotes = false;
-				current_quote = '\0';
-			}
-			else if (!in_quotes)
-			{
-				in_quotes = true;
-				current_quote = *str;
-			}
-		}
-		else if (*str == c && !in_quotes)
-			count++;
-		str++;
-	}
-	return (count);
-}
-
-char	**tab_copy(char **tab)
-{
-	int		i;
-	char	**head;
-
-	i = 0;
-	head = ft_gc_malloc(sizeof(char *) * (ft_strlen_dtab(tab) + 1));
-	while (tab[i])
-	{
-		head[i] = ft_strdup(tab[i]);
-		i++;
-	}
-	return (head);
-}
-
 void	access_file2(t_minishell *ms)
 {
 	int		i;

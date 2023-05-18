@@ -144,7 +144,7 @@ int		input_last_cmd(char **split, t_minishell *ms, t_env **env);
 
 int		inputx_index(char **split, t_minishell *ms);
 
-int		is_empty(char *str);
+int		is_empty(char *str, t_minishell *ms);
 
 char	**refresh_env(t_env **env);
 
@@ -199,6 +199,8 @@ int		get_path(t_minishell *ms);
 int		check_line(char *line);
 
 void	lstclear(t_env **lst);
+
+char	**tab_copy(char **tab);
 
 void	check_dollar(t_minishell *ms, int mod);
 

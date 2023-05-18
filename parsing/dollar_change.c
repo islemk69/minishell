@@ -128,7 +128,7 @@ char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot)
 {
 	ms->flg = 0;
-	ms->change_dollar = ft_calloc_parent(sizeof(char), (1 + 1), "parsing");
+	ms->change_dollar = ft_calloc_parent(sizeof(char *), (1 + 1), "parsing");
 	ms->change_dollar[0] = ft_calloc_parent(sizeof(char), \
 		(countchar(ms, tab, d_quot, s_quot) + 1), "parsing");
 	ms->change_dollar[1] = 0;

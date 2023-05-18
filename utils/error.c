@@ -18,11 +18,13 @@ void	error(char *str)
 		return ;
 }
 
-int	is_empty(char *str)
+int	is_empty(char *str, t_minishell *ms)
 {
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str))
+		add_history(ms->line);
 	while (str[i] == ' ' || str[i] == '\t')
 	{
 		i++;

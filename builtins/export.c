@@ -64,6 +64,7 @@ int	create_export(t_env **env, char **key_value, int flg)
 char	**create_export_spe(char **key_value, char *str)
 {
 	char	**tmp;
+
 	key_value = ft_gc_malloc(sizeof(char *) * 3);
 	tmp = ft_split(str, '=');
 	key_value[0] = ft_strdup(tmp[0]);

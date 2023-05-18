@@ -76,7 +76,7 @@ char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot)
 	while (ms->parsed[i])
 	{
 		new[i] = ft_calloc_child(sizeof(char),
-			(countchar_pipe(ms, ms->parsed[i], d_quot, s_quot) + 1));
+				(countchar_pipe(ms, ms->parsed[i], d_quot, s_quot) + 1));
 		j = 0;
 		k = 0;
 		while (ms->parsed[i][j])

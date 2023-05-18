@@ -99,4 +99,3 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	}
 	return (realloc[k] = 0, realloc);
 }
-

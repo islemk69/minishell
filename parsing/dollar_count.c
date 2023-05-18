@@ -96,12 +96,12 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
 		if ((tab[i] == '$' && s_quot) || (tab[i] == '$' && tab[i + 1] == ' ')
-			|| (tab[i] == '$' && tab[i + 1] == 0) || ((tab[i] == '$' && d_quot) 
-			&& (tab[i + 1] == 32 || tab[i + 1] == '"' || tab[i + 1] == '\'')))
+			|| (tab[i] == '$' && tab[i + 1] == 0) || ((tab[i] == '$' && d_quot)
+				&& (tab[i + 1] == 32 || tab[i + 1] == '"' || tab[i + 1] == '\'')))
 		{
 			count++;
 			i++;
-			continue;
+			continue ;
 		}
 		else if (tab[i] == '$')
 		{
@@ -116,7 +116,5 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 		count++;
 		i++;
 	}
-	d_quot = 0;
-	s_quot = 0;
 	return (count);
 }

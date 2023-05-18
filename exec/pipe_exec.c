@@ -27,9 +27,7 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 		if (!split)
 			exit_child(-1);
 		if (split[0][0] == '<' || split[0][0] == '>')
-		{
-				ms->new_parsed = open_files(ms, split, &*cpt);
-		}
+			ms->new_parsed = open_files(ms, split, &*cpt);
 		else
 		{
 			rm_quote_last(split);
@@ -109,13 +107,13 @@ void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 {
 	int	i;
 	int	cpt;
+	int	tmp;
 
 	i = 0;
 	cpt = 0;
-	int tmp = nb_pipe;
+	tmp = nb_pipe;
 	while (i <= tmp)
 	{
-
 		init_pipe(ms, i, &cpt);
 		if (!ms->parsed[i][0])
 			ms->parsed[i][0] = 't';
