@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:15 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 19:17:58 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:46:26 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ int	check_command(t_minishell *ms, char *input_cmd, int i)
 {
 	char		*tmp;
 
-	if (!input_cmd[0])
-		return (g_global.g_status = 0, 0);
 	if ((input_cmd[0] == '/' || (input_cmd[0] == '.' && input_cmd[1] == '/')) \
 		|| (input_cmd[ft_strlen(input_cmd) - 1] == '/'))
 	{

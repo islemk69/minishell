@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 20:01:29 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:45:56 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!start_minishell(&ms))
 	{
 		ft_printf("exit\n");
-		return (ft_gc_free_all(), 0);
+		return (ft_gc_free_all(), exit(g_global.g_status), 0);
 	}
 	return (0);
 }

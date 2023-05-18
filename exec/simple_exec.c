@@ -6,7 +6,7 @@
 /*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 19:38:26 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/18 23:45:47 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	first_child(t_minishell *ms)
 	{
 		heredoc_simple(ms);
 		ft_gc_free_all();
-		exit(g_global.g_status);
+		exit(0);
 	}
 	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);
