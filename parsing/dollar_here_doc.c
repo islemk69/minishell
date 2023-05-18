@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/17 08:02:57 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 08:07:19 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,6 @@ static void	check_path_heredoc(t_minishell *ms, char *real, char *tmp, int *k)
 	}
 }
 
-static int	check_tab(char *tab, char *realloc, int *i, int *k)
-{
-	if (tab[*i + 1] == '"')
-	{
-		realloc[*k] = tab[*i];
-		*k += 1;
-		*i += 1;
-		return (1);
-	}
-	if (!check_dollar_heredoc(tab, realloc, &*i, &*k))
-		return (1);
-	return (0);
-}
-
 char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 {
 	int		i;
@@ -101,12 +87,11 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
-			&& tab[i + 1] != 0 && s_quot == 0)
+		if (tab[i] == '$' && (ft_isalnum(tab[i + 1]) || tab[i + 1] == '?'))
 		{
-			if (check_tab(tab, realloc, &i, &k))
+			if (!check_dollar_heredoc(tab, realloc, &i, &k))
 				continue ;
-			tmp = ft_tmp_dollar_heredoc(tab, &i);
+			tmp = ft_tmp_dollar(tab, &i);
 			check_path_heredoc(ms, realloc, tmp, &k);
 			continue ;
 		}
@@ -114,3 +99,4 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	}
 	return (realloc[k] = 0, realloc);
 }
+

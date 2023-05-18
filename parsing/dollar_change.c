@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 22:49:28 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/17 06:29:50 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 05:56:34 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	*ft_tmp_dollar(char *tab, int *i)
 		tmp[j] = tab[*i];
 		*i += 1;
 		j++;
+		if (j == 1 && ft_isdigit(tab[(*i) - 1]))
+			break ;
 	}
 	tmp[j] = 0;
 	return (tmp);
@@ -97,8 +99,14 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	while (tab[i])
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (tab[i] == '$' && tab[i + 1] != '$' && tab[i + 1] != 32 \
-			&& tab[i + 1] != 0 && s_quot == 0)
+		if ((tab[i] == '$' && s_quot) || (tab[i] == '$' && tab[i + 1] == ' ')
+			|| (tab[i] == '$' && tab[i + 1] == 0) || ((tab[i] == '$' && d_quot) 
+			&& (tab[i + 1] == 32 || tab[i + 1] == '"' || tab[i + 1] == '\'')))
+		{
+			ms->change_dollar[0][k++] = tab[i++];
+			continue;
+		}
+		else if (tab[i] == '$')
 		{
 			if ((ft_strchr(tab, ' ') || d_quot) && tab[i + 1] == '\"')
 			{

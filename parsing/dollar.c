@@ -6,7 +6,7 @@
 /*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/17 07:53:29 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 08:39:56 by hamza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	check_dollar(t_minishell *ms, int mod)
 	// 	// 	j++;
 	// 	// }
 	// 	// printf("SIZE %d\n", j);
-	// 	printf("%i %s\n", i, ms->parsed[i]);
+	// 	printf("ms->parse[%i] = %s\n", i, ms->parsed[i]);
 	// 	i++;
 	// }
 	// printf("sizfin %d\n", i);
