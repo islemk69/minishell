@@ -108,26 +108,12 @@ void	realloc_dollar(t_minishell *ms, int size)
 		size++;
 	}
 	ms->realloc[size] = 0;
-	// printf("REALL %d\n", size);
 }
-
-// int	is_null(char **realloc)
-// {
-
-// 	while (realloc)
-// }
 
 void	check_dollar(t_minishell *ms, int mod)
 {
 	int	i;
 
-	// i = 0;
-	// while (ms->parsed[i])
-	// {
-	// 	printf("ms parsed[%i] %s\n", i, ms->parsed[i]);
-	// 	i++;
-	// }
-	// printf("sizdebut %d\n", i);
 	i = 0;
 	ms->realloc = NULL;
 	ms->realloc = ft_calloc_parent(sizeof(char *), \
@@ -139,19 +125,4 @@ void	check_dollar(t_minishell *ms, int mod)
 			ms->realloc = real_null(ms->realloc);
 	}
 	ms->parsed = ms->realloc;
-	// i = 0;
-	// while (ms->parsed[i])
-	// {
-	// 	// int j = 0;
-	// 	// if (!ms->parsed[i][0])
-	// 	// 	printf("je suis vide a %d\n", i);
-	// 	// while (ms->parsed[i][j])
-	// 	// {
-	// 	// 	j++;
-	// 	// }
-	// 	// printf("SIZE %d\n", j);
-	// 	printf("ms->parse[%i] = %s\n", i, ms->parsed[i]);
-	// 	i++;
-	// }
-	// printf("sizfin %d\n", i);
 }

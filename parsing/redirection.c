@@ -103,22 +103,11 @@ char	**redirection(char **space)
 	char	**realloc2;
 	// int i = 0;
 	if (!check_double_token(space))
-		return (ft_dprintf(""RED"Error token\n"WHITE""), NULL);
+		return (ft_dprintf("Error token\n"), NULL);
 	realloc2 = realloc_stick(space);
 	realloc2 = fill_stick(space, realloc2, -1, 0);
-	// while (realloc2[i])
-	// {
-	// 	printf("%s\n", realloc2[i]);
-	// 	i++;
-	// }
 	realloc = realloc_redir(realloc2);
 	realloc = fill_redir(realloc2, realloc);
-	// i = 0;
-	// while (realloc[i])
-	// {
-	// 	printf("%s\n", realloc[i]);
-	// 	i++;
-	// }
 	realloc = redir_first(realloc);
 	return (realloc);
 }

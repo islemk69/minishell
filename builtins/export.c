@@ -64,12 +64,7 @@ int	create_export(t_env **env, char **key_value, int flg)
 char	**create_export_spe(char **key_value, char *str)
 {
 	char	**tmp;
-	// int		i = 0;
 	key_value = ft_gc_malloc(sizeof(char *) * 3);
-	// while (str[i])
-	// {
-	// 	tmp[i] = str[i]
-	// }
 	tmp = ft_split(str, '=');
 	key_value[0] = ft_strdup(tmp[0]);
 	key_value[1] = ft_strdup("");
@@ -87,7 +82,7 @@ static int	several_export(t_env **env, char **split, char **key_value, int i)
 			continue ;
 		}
 		if (split[i][ft_strlen(split[i]) - 1] == '=')
-			create_export_spe(key_value, split[i]);
+			key_value = create_export_spe(key_value, split[i]);
 		else
 			key_value = ft_split(split[i], '=');
 		if (!check_key(key_value[0]))

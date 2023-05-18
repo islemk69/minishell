@@ -112,12 +112,6 @@ int	parsing(char *line, t_minishell *ms)
 	if (count_token(line, '|', false, '\0'))
 	{
 		ms->parsed = ft_pipe(line, -1);
-		// int i = 0;
-		// while (ms->parsed[i])
-		// {
-		// 	printf("new %d\n", ft_strlen(ms->parsed[i]));
-		// 	i++;
-		// }
 		if (!ms->parsed)
 			return (0);
 	}
@@ -130,6 +124,5 @@ int	parsing(char *line, t_minishell *ms)
 		if (!ms->parsed)
 			return (0);
 	}
-	// check_dollar(ms);
 	return (1);
 }

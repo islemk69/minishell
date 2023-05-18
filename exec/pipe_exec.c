@@ -21,7 +21,6 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 	ms->infile_stra = NULL;
 	ms->outfile_str = NULL;
 	ms->outfile_exist = 0;
-	// printf("passe ic\n\n");
 	if (ms->parsed[i][0])
 	{
 		split = ft_split_space(ms->parsed[i]);
@@ -33,8 +32,6 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 		}
 		else
 		{
-			// if (ms->parsed[i][0])
-			// {}
 			rm_quote_last(split);
 			ms->new_parsed = split;
 		}
@@ -69,12 +66,6 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 	ms->pid[i] = fork();
 	if (ms->pid[i] == 0)
 	{
-		// if (!ms->parsed[i])
-		// 	exit(0);
-		// printf("ici ici");
-		// if (!ms->parsed[i][0])
-		// 	ms->parsed[i][0] = 't';
-
 		check_redir(ms);
 		if (!check_command(ms, ms->new_parsed[0], -1))
 		{
@@ -82,14 +73,7 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 			ft_gc_free_all();
 			exit (0);
 		}
-		// printf("ok5\n\n\n");
-		// if (!ms->parsed[i])
-		// 	dup_exec_pipe(ms, nb_pipe, 0);
-		// else
-		// if (!ms->parsed[i][0])
-		// 	ms->parsed[i][0] = 't';
 		dup_exec_pipe(ms, nb_pipe);
-		// printf("test\n\n");
 		if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 		{
 			ft_gc_free_all();
@@ -129,23 +113,13 @@ void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	i = 0;
 	cpt = 0;
 	int tmp = nb_pipe;
-	// printf("tmp %d\n", tmp);
 	while (i <= tmp)
 	{
 
-		// printf("ms->parsed[%d] = %s\n\n", i, ms->parsed[i]);
 		init_pipe(ms, i, &cpt);
-		//printf("okoko\n\n");
 		if (!ms->parsed[i][0])
 			ms->parsed[i][0] = 't';
 		child_exec_pipe(ms, env, nb_pipe, i);
-		// }
-		// else
-		// {
-		// 	printf("hehehe%d\n\n", i);
-		// 	dup_exec_pipe(ms, nb_pipe, 0);
-		// 	printf("hohoho%d\n\n", i);
-		// }
 		close_redir_pipe(ms, nb_pipe);
 		i++;
 		nb_pipe--;

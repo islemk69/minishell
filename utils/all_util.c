@@ -34,14 +34,14 @@ int	custom_msg_check_line(char *line, int pos, char c)
 		size++;
 	}
 	npipe[size] = 0;
-	ft_dprintf(""RED""SYNT_ERR" `%s'\n"WHITE"", npipe);
+	ft_dprintf(""SYNT_ERR" `%s'\n", npipe);
 	return (0);
 }
 
 void	print_error_export(char *split)
 {
-	ft_dprintf(""RED"bash: export: `%s': not a valid identifier\n"\
-				WHITE"", split);
+	ft_dprintf("bash: export: `%s': not a valid identifier\n\
+				", split);
 	g_global.g_status = 1;
 }
 

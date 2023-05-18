@@ -41,20 +41,20 @@ static int	check_quote(char *str)
 			quote not closed \"'\" or '\"'\n"WHITE""), 0);
 }
 
-static int	iter_check_pipe(char *string, char quote, int *i)
+static int	iter_check_pipe(char *string, char quote, int i)
 {
-	while (string[*i] != '\0')
+	while (string[i] != '\0')
 	{
-		if (string[*i] == '"' || string[*i] == '\'')
+		if (string[i] == '"' || string[i] == '\'')
 		{
 			if (quote == '\0')
-				quote = string[*i];
-			else if (quote == string[*i])
+				quote = string[i];
+			else if (quote == string[i])
 				quote = '\0';
 		}
-		else if (string[*i] == '|' && string[*i + 1] == '|' && quote == '\0')
-			return (0);
-		*i += 1;
+		else if (string[i] == '|' && string[i + 1] == '|' && quote == '\0')
+			return (printf("jesuispasse\n"), 0);
+		i ++;
 	}
 	return (1);
 }
@@ -82,7 +82,7 @@ static int	check_pipe(char *string)
 			return (custom_msg_check_line(pipe[i + 1], 0, '|'));
 		i++;
 	}
-	if (!iter_check_pipe(string, quote, &i))
+	if (!iter_check_pipe(string, quote, 0))
 		return (custom_msg_check_line(string, i + 1, '|'));
 	return (1);
 }

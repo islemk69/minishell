@@ -19,14 +19,14 @@ int	check_cd(char **split, t_env **env)
 		if (chdir(ft_find_path(env, "HOME")) == -1)
 		{
 			g_global.g_status = 1;
-			ft_dprintf(""RED"bash: cd: HOME not set\n"WHITE"");
+			ft_dprintf("bash: cd: HOME not set\n");
 			return (1);
 		}
 	}
 	else if (split[2])
 	{
 		g_global.g_status = 1;
-		ft_dprintf(""RED"bash: cd: too many arguments\n"WHITE"");
+		ft_dprintf("bash: cd: too many arguments\n");
 		return (1);
 	}
 	else if (chdir(split[1]) == -1 && split[1])

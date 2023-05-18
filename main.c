@@ -23,10 +23,10 @@ int	urandom(char *str)
 	while (*str)
 	{
 		if (*str < 0)
-			return (ft_dprintf(""RED"Your are a Nazi\n"WHITE""), 0);
+			return (ft_dprintf("Your are a Nazi\n"), 0);
 		c = (unsigned char)*str;
 		if (c > 127)
-			return (ft_dprintf(""RED"Your are a Nazi\n"WHITE""), 0);
+			return (ft_dprintf("Your are a Nazi\n"), 0);
 		str++;
 	}	
 	return (1);
@@ -50,17 +50,9 @@ static int	start_minishell(t_minishell *ms)
 		}
 		if (!parsing(ms->line, ms))
 		{
-			printf("error token parsing\n");
 			free(ms->line);
 			continue ;
 		}
-		// int i = 0;
-		// while (ms->parsed[i])
-		// {
-		// 	printf("%s\n", ms->parsed[i]);
-		// 	i++;
-		// }
-		//continue ;
 		if (!exec_cmd(ms, &ms->head_env))
 			return (free(ms->line), 0);
 		free(ms->line);
@@ -78,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	ms.f_name = NULL;
 	ms.outfile_exist = 0;
 	if (argc > 1)
-		return (ft_dprintf(""RED"Error : Number of Arguments\n"WHITE""), 0);
+		return (ft_dprintf("Error : Number of Arguments\n"), 0);
 	ms.new_env = NULL;
 	init_env(&ms, envp);
 	if (!start_minishell(&ms))
