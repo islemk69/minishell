@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_count_heredoc.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:22:33 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/18 08:07:07 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 18:51:56 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,3 @@ int	countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	}
 	return (d_quot = 0, s_quot = 0, count);
 }
-
-// char	*ft_tmp_dollar_heredoc(char *tab, int *i)
-// {
-// 	int		j;
-// 	char	*tmp;
-
-// 	j = 0;
-// 	*i += 1;
-// 	tmp = ft_calloc_child(sizeof(char), (size_tmp(tab, *i) + 1));
-// 	while (tab[*i] && tab[*i] != '"' && tab[*i] != '\''
-// 		&& tab[*i] != ' ' && tab[*i] != '$'
-// 		&& (ft_isalnum(tab[*i]) || tab[*i] == '_'))
-// 	{
-// 		tmp[j] = tab[*i];
-// 		*i += 1;
-// 		j++;
-// 		if (j == 1 && ft_isdigit(tab[(*i) - 1]))
-// 			break ;
-// 	}
-// 	tmp[j] = 0;
-// 	return (tmp);
-// }

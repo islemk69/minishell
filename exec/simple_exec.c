@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 07:25:46 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 19:38:26 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ int	heredoc_simple(t_minishell *ms)
 
 void	child_simple_exec(t_minishell *ms, t_env **env)
 {
+	if (!ms->parsed[0][0])
+	{
+		ft_gc_free_all();
+		exit(0);
+	}
 	if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
 		ms->new_parsed = check_redir_simple(ms);
 	else
@@ -49,7 +54,11 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 		ft_gc_free_all();
 		exit(g_global.g_status);
 	}
-	check_command(ms, ms->new_parsed[0], -1);
+	if (!check_command(ms, ms->new_parsed[0], -1))
+	{
+		ft_gc_free_all();
+		exit(g_global.g_status);
+	}
 	if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
 		g_global.g_status = 1;
 	ft_gc_free_all();
@@ -66,7 +75,7 @@ int	first_child(t_minishell *ms)
 	{
 		heredoc_simple(ms);
 		ft_gc_free_all();
-		exit(0);
+		exit(g_global.g_status);
 	}
 	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);

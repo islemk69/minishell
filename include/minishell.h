@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 08:35:05 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 19:23:20 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void	lstclear(t_env **lst);
 
 char	**tab_copy(char **tab);
 
-void	check_dollar(t_minishell *ms, int mod);
+void	check_dollar(t_minishell *ms);
 
 char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
 

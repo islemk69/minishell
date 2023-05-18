@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:22:00 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/17 06:08:02 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 19:44:24 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 	ms->pid[i] = fork();
 	if (ms->pid[i] == 0)
 	{
+		if (!ms->parsed[i][0])
+		{
+			printf("ici\n");
+			ft_gc_free_all();
+			exit(0);
+		}
 		check_redir(ms);
 		if (!check_command(ms, ms->new_parsed[0], -1))
 		{

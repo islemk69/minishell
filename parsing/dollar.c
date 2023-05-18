@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:33:33 by hamzaelouar       #+#    #+#             */
-/*   Updated: 2023/05/18 08:39:56 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/18 20:00:18 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,21 @@ void	realloc_dollar(t_minishell *ms, int size)
 	ms->realloc[size] = 0;
 }
 
-void	check_dollar(t_minishell *ms, int mod)
+int is_full_null(t_minishell *ms)
+{
+	int	i;
+
+	i = 0;
+	while (ms->realloc[i])
+	{
+		if (ms->realloc[i][0])
+			return(0);
+		i++;
+	}
+	return (1);
+}
+
+void	check_dollar(t_minishell *ms)
 {
 	int	i;
 
@@ -119,10 +133,14 @@ void	check_dollar(t_minishell *ms, int mod)
 	ms->realloc = ft_calloc_parent(sizeof(char *), \
 		(size_new_parsed(ms) + 1), "parsing");
 	realloc_dollar(ms, i);
-	if (!mod)
-	{
-		if (ms->realloc[0] && ms->realloc[1])
-			ms->realloc = real_null(ms->realloc);
-	}
+	if (!is_full_null(ms))
+		ms->realloc = real_null(ms->realloc);
 	ms->parsed = ms->realloc;
+	// i = 0;
+	// while (ms->parsed[i])
+	// {
+	// 	printf("new[%d] = %s\n", i, ms->parsed[i]);
+	// 	printf("new[%d][0] = %c\n", i, ms->parsed[i][0]);
+	// 	i++;
+	// }
 }
