@@ -37,8 +37,8 @@ static int	check_quote(char *str)
 	}
 	if (single_quote == 0 && double_quote == 0)
 		return (1);
-	return (ft_dprintf(""RED"bash: syntax error \
-			quote not closed \"'\" or '\"'\n"WHITE""), 0);
+	return (ft_dprintf("bash: syntax error \
+			quote not closed \"'\" or '\"'\n"), 0);
 }
 
 static int	iter_check_pipe(char *string, char quote, int i)
@@ -109,6 +109,12 @@ static int	check_wrong_redir(char *string)
 		else if (string[i] == '>' && string[i + 1] == '>' \
 			&& string[i + 2] == '>' && quote == '\0')
 			return (custom_msg_check_line(string, i + 2, '>'));
+		else if (string[i] == '>' && string[i + 1] == '<' \
+			&& quote == '\0')
+			return (custom_msg_check_line(string, i + 1, '<'));
+		else if (string[i] == '<' && string[i + 1] == '>' \
+			&& quote == '\0')
+			return (custom_msg_check_line(string, i + 1, '>'));
 		i++;
 	}
 	return (1);

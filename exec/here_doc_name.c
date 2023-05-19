@@ -69,7 +69,7 @@ void	do_assign_pipe(t_minishell *ms, char **split, int *k)
 			tab = assign_name(ms, *k);
 			ms->f_name[*k] = ft_strdup(tab);
 			if (!ms->f_name[*k])
-				perror("filename heredoc");
+				exit_parent("filename heredoc");
 			*k += 1;
 		}
 		j++;
@@ -88,7 +88,9 @@ void	file_name_pipe(t_minishell *ms, int i, int pipe)
 	{
 		split = ft_split_space(ms->parsed[i]);
 		if (!split)
-			perror("filename heredoc");
+		{
+			exit_parent("File name");
+		}
 		do_assign_pipe(ms, split, &k);
 	}
 }

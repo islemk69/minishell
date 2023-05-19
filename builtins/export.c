@@ -73,11 +73,27 @@ char	**create_export_spe(char **key_value, char *str)
 	return (key_value);
 }
 
+int	no_key(char *str)
+{
+	if (!*str)
+		return (1);
+	while (*str)
+	{
+		if (*str == ' ' || *str == '\t')
+			str++;
+		if (*str != ' ' && *str != '\t')
+			break ;
+	}
+	if(*str == 0)
+		return (1);
+	return (0);
+}
+
 static int	several_export(t_env **env, char **split, char **key_value, int i)
 {
 	while (split[++i])
 	{
-		if (split[i][0] == '=' || (split[i][0] >= '0' && split[i][0] <= '9'))
+		if ((split[i][0] == '=' || (split[i][0] >= '0' && split[i][0] <= '9')) || no_key(split[i]))
 		{
 			print_error_export(split[i]);
 			continue ;

@@ -56,7 +56,7 @@ int	here_doc(t_minishell *ms, char *tab, char *w_quote, int count)
 	set_heredoc_signals();
 	ms->infile = open(ms->f_name[count], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (ms->infile < 0)
-		perror("heredoc");
+		exit_child(-1);
 	while (1)
 	{
 		ms->line_here = readline("> ");

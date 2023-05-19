@@ -22,6 +22,7 @@ int	built_in_pwd(char **split)
 		if (!str)
 		{
 			g_global.g_status = 1;
+			ft_gc_free_all();
 			perror("getcwd()");
 		}
 		printf("%s\n", str);
