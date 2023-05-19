@@ -37,7 +37,6 @@ int	countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot)
 		{
 			if (!special_count_heredoc(tab, &i, &count))
 				continue ;
-			i++;
 			check_path_count(ms, tab, &i, &count);
 			continue ;
 		}

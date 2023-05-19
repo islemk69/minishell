@@ -100,10 +100,7 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	{
 		check_quote_dollar(tab[i], &s_quot, &d_quot);
 		if (!is_expandable(tab, i, d_quot, s_quot))
-		{
 			ms->change_dollar[0][k++] = tab[i++];
-			continue ;
-		}
 		else if (tab[i] == '$')
 		{
 			if ((ft_strchr(tab, ' ') || d_quot) && tab[i + 1] == '\"')
@@ -115,12 +112,44 @@ void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 				continue ;
 			tmp = ft_tmp_dollar(tab, &i);
 			check_path_dollar(ms, ms->change_dollar, tmp, &k);
-			continue ;
 		}
-		ms->change_dollar[0][k++] = tab[i++];
+		else
+			ms->change_dollar[0][k++] = tab[i++];
 	}
-	ms->change_dollar[0][k] = 0;
 }
+
+// void	change_dollar(t_minishell *ms, char *tab, int d_quot, int s_quot)
+// {
+// 	char	*tmp;
+// 	int		i;
+// 	int		k;
+
+// 	init_i_k(&i, &k);
+// 	while (tab[i])
+// 	{
+// 		check_quote_dollar(tab[i], &s_quot, &d_quot);
+// 		if (!is_expandable(tab, i, d_quot, s_quot))
+// 		{
+// 			ms->change_dollar[0][k++] = tab[i++];
+// 			continue ;
+// 		}
+// 		else if (tab[i] == '$')
+// 		{
+// 			if ((ft_strchr(tab, ' ') || d_quot) && tab[i + 1] == '\"')
+// 			{
+// 				ms->change_dollar[0][k++] = tab[i++];
+// 				continue ;
+// 			}
+// 			if (!change_special_dollar(tab, ms->change_dollar, &i, &k))
+// 				continue ;
+// 			tmp = ft_tmp_dollar(tab, &i);
+// 			check_path_dollar(ms, ms->change_dollar, tmp, &k);
+// 			continue ;
+// 		}
+// 		ms->change_dollar[0][k++] = tab[i++];
+// 	}
+// 	ms->change_dollar[0][k] = 0;
+// }
 
 char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot)
@@ -131,6 +160,7 @@ char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 		(countchar(ms, tab, d_quot, s_quot) + 1), "parsing");
 	ms->change_dollar[1] = 0;
 	change_dollar(ms, tab, d_quot, s_quot);
+	ms->change_dollar[0][ft_strlen(ms->change_dollar[0])] = 0;
 	if (ms->flg)
 	{
 		ms->change_dollar = ft_split_space(ms->change_dollar[0]);

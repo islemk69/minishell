@@ -38,33 +38,64 @@ int	countchar_pipe(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	int		count;
 
 	count = 0;
-	i = -1;
-	while (tab[++i])
+	i = 0;
+	while (check_quote_dollar(tab[i], &s_quot, &d_quot))
 	{
-		check_quote_dollar(tab[i], &s_quot, &d_quot);
 		if (is_heredoc_name(tab, d_quot, s_quot, i))
 		{
-			while (tab[i] && ((tab[i] != 32 && !d_quot)
+			while (tab[i++] && ((tab[i] != 32 && !d_quot)
 					|| (tab[i] != 32 && !s_quot)))
-			{
-				count++;
-				check_quote_dollar(tab[i], &s_quot, &d_quot);
-			}
+				count += check_quote_dollar(tab[i], &s_quot, &d_quot);
 			continue ;
 		}
-		if (!is_expandable(tab, i, d_quot, s_quot))
-		{
-			count++;
+		else if (!is_expandable(tab, i, d_quot, s_quot))
+			i = i;
+		else if (tab[i] == '$' && (!special_count_pipe(tab, &i, &count)
+				|| check_path_count(ms, tab, &i, &count)))
 			continue ;
-		}
-		else if (tab[i] == '$')
-		{
-			if (!special_count_pipe(tab, &i, &count))
-				continue ;
-			check_path_count(ms, tab, &i, &count);
-			continue ;
-		}
 		count++;
+		i++;
 	}
-	return (d_quot = 0, s_quot = 0, count);
+	return (count);
 }
+
+// int	countchar_pipe(t_minishell *ms, char *tab, int d_quot, int s_quot)
+// {
+// 	int		i;
+// 	int		count;
+
+// 	count = 0;
+// 	i = 0;
+// 	while (tab[i])
+// 	{
+// 		check_quote_dollar(tab[i], &s_quot, &d_quot);
+// 		if (is_heredoc_name(tab, d_quot, s_quot, i))
+// 		{
+// 			while (tab[i] && ((tab[i] != 32 && !d_quot)
+// 					|| (tab[i] != 32 && !s_quot)))
+// 			{
+// 				count++;
+// 				i++;
+// 				check_quote_dollar(tab[i], &s_quot, &d_quot);
+// 			}
+// 			continue ;
+// 		}
+// 		if (!is_expandable(tab, i, d_quot, s_quot))
+// 		{
+// 			count++;
+// 			i++;
+// 			continue ;
+// 		}
+// 		else if (tab[i] == '$')
+// 		{
+// 			if (!special_count_pipe(tab, &i, &count))
+// 				continue ;
+// 			i++;
+// 			check_path_count(ms, tab, &i, &count);
+// 			continue ;
+// 		}
+// 		i++;
+// 		count++;
+// 	}
+// 	return (count);
+// }

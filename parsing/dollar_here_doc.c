@@ -12,8 +12,10 @@
 
 #include "../include/minishell.h"
 
-void	check_quote_dollar(char c, int *s_quot, int *d_quot)
+int	check_quote_dollar(char c, int *s_quot, int *d_quot)
 {
+	if (c == 0)
+		return (0);
 	if (c == '"' && *s_quot == 0)
 	{
 		if (*d_quot == 0)
@@ -28,6 +30,7 @@ void	check_quote_dollar(char c, int *s_quot, int *d_quot)
 		else
 			*s_quot = 0;
 	}
+	return (1);
 }
 
 static int	check_dollar_heredoc(char *tab, char *realloc, int *i, int *k)

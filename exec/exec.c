@@ -26,7 +26,8 @@ int	exec_cmd(t_minishell *ms, t_env **env)
 	}
 	else
 	{
-		ms->parsed = dollar_pipe(ms, 0, 0);
+		ms->parsed = dollar_pipe(ms, 0, 0, ft_calloc_parent(sizeof(char *), \
+		ft_strlen_dtab(ms->parsed) + 1, "parsing"));
 		if (!exec_multi_pipe(ms, env, nb_pipe))
 			return (0);
 	}

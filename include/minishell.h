@@ -242,7 +242,7 @@ void	print_error_export(char *split);
 
 int		custom_msg_check_line(char *line, int pos, char c);
 
-void	check_quote_dollar(char c, int *s_quot, int *d_quot);
+int		check_quote_dollar(char c, int *s_quot, int *d_quot);
 
 char	*ft_tmp_dollar(char *tab, int *i);
 
@@ -255,7 +255,7 @@ int		error_exit(char *cmd, char *type, int i);
 
 char	**ft_realloc_from_i(char **tab, int size, int i);
 
-void	check_path_count(t_minishell *ms, char *tab, int *i, int *count);
+int		check_path_count(t_minishell *ms, char *tab, int *i, int *count);
 
 int		special_dollar_count(char *tab, int *i, int *count);
 
@@ -277,7 +277,7 @@ int		name_exist(t_minishell *ms, char *tab, int count);
 
 int		check_tab_heredoc(char *tab, char *realloc, int *i, int *k);
 
-char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot);
+char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot, char **new);
 
 int		is_heredoc_name(char *tab, int d_quot, int s_quot, int j);
 
@@ -286,5 +286,7 @@ int		countchar_pipe(t_minishell *ms, char *tab, int d_quot, int s_quot);
 int		is_expandable(char *tab, int i, int d_quot, int s_quot);
 
 int		is_full_null(t_minishell *ms);
+
+char	*init_m_dollar(t_minishell *ms, char *str);
 
 #endif

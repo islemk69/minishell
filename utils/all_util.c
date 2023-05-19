@@ -71,3 +71,12 @@ int	is_full_null(t_minishell *ms)
 	}
 	return (1);
 }
+
+char	*init_m_dollar(t_minishell *ms, char *str)
+{
+	char	*new;
+
+	new = ft_calloc_parent(sizeof(char), \
+			(countchar_pipe(ms, str, 0, 0) + 1), "parsing");
+	return (new);
+}

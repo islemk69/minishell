@@ -29,13 +29,14 @@ int	size_tmp(char *tab, int i)
 	return (count);
 }
 
-void	check_path_count(t_minishell *ms, char *tab, int *i, int *count)
+int	check_path_count(t_minishell *ms, char *tab, int *i, int *count)
 {
 	char	*tmp;
 	char	*env;
 	int		j;
 
 	env = NULL;
+	*i += 1;
 	tmp = ft_calloc_parent(sizeof(char), (size_tmp(tab, *i) + 1), "parsing");
 	j = 0;
 	while (tab[*i] && tab[*i] != '"' && tab[*i] != '\'' && tab[*i] != ' ' \
@@ -52,6 +53,7 @@ void	check_path_count(t_minishell *ms, char *tab, int *i, int *count)
 		env = ft_find_path(&ms->head_env, tmp);
 	if (env)
 		*count += ft_strlen(env);
+	return (1);
 }
 
 int	special_dollar_count(char *tab, int *i, int *count)
@@ -101,18 +103,38 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 			i++;
 			continue ;
 		}
-		else if (tab[i] == '$')
-		{
-			if (dollar_d_quot(tab, d_quot, &count, &i))
-				continue ;
-			if (!special_dollar_count(tab, &i, &count))
-				continue ;
-			i++;
-			check_path_count(ms, tab, &i, &count);
+		else if (tab[i] == '$' && (dollar_d_quot(tab, d_quot, &count, &i)
+				|| !special_dollar_count(tab, &i, &count)))
 			continue ;
-		}
+		else if (tab[i] == '$' && check_path_count(ms, tab, &i, &count))
+			continue ;
 		count++;
 		i++;
 	}
 	return (count);
 }
+
+// int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
+// {
+// 	int		i;
+// 	int		count;
+
+// 	count = 0;
+// 	i = 0;
+// 	while (tab[i])
+// 	{
+// 		check_quote_dollar(tab[i], &s_quot, &d_quot);
+// 		if (!is_expandable(tab, i, d_quot, s_quot))
+// 		{
+// 			count++;
+// 			i++;
+// 			continue ;
+// 		}
+// 		else if (tab[i] == '$' && (dollar_d_quot(tab, d_quot, &count, &i)
+// 				|| !special_dollar_count(tab, &i, &count)))
+// 			continue ;
+// 		count++;
+// 		check_path_count(ms, tab, &i, &count);
+// 	}
+// 	return (count);
+// }
