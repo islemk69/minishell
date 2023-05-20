@@ -61,7 +61,7 @@ char	**realloc_stick(char **space)
 		token = 0;
 		i++;
 	}
-	realloc = ft_gc_malloc(sizeof(char *) * (size + 1));
+	realloc = ft_calloc_parent(sizeof(char *), (size + 1), "parsing");
 	return (realloc);
 }
 

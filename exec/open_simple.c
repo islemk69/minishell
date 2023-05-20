@@ -14,6 +14,7 @@
 
 int	open_infile_simple(t_minishell *ms, int i, int j)
 {
+	ms->infile_ok = 1;
 	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
 		if (ms->parsed[i][1] == '<')
@@ -26,20 +27,29 @@ int	open_infile_simple(t_minishell *ms, int i, int j)
 		ms->parsed[i] = quote(ms->parsed[i]);
 		ms->infile = open(ms->f_name[j - 1], O_RDONLY);
 		if (ms->infile < 0)
-			error_exit(ms->parsed[i] + 2, ": Permission denied\n", 1);
+			error_exit(ms, ms->parsed[i] + 2, ": Permission denied\n", 1);
 	}
 	if (ms->parsed[i][1] != '<')
 	{
 		ms->parsed[i] = quote(ms->parsed[i]);
 		ms->infile = open(ms->parsed[i] + 1, O_RDONLY);
 		if (ms->infile < 0)
-			error_exit(ms->parsed[i] + 1, ": Permission denied\n", 1);
+			error_exit(ms, ms->parsed[i] + 1, ": Permission denied\n", 1);
 	}
 	return (i + 1);
 }
 
+void	check_close_outfile(t_minishell *ms, int i, int mod)
+{
+	if (ms->outfile < 0)
+		error_exit(ms, ms->parsed[i] + mod, ": Permission denied\n", 1);
+	if (ms->parsed[i + 1] && ms->parsed[i + 1][0] == '>')
+		close(ms->outfile);
+}
+
 int	open_outfile_simple(t_minishell *ms, int i)
 {
+	ms->outfile_ok = 1;
 	while (ms->parsed[i] && ms->parsed[i][0] == '>')
 	{
 		if (ms->parsed[i][0] == '>')
@@ -50,16 +60,14 @@ int	open_outfile_simple(t_minishell *ms, int i)
 				ms->parsed[i] = quote(ms->parsed[i]);
 				ms->outfile = open(ms->parsed[i] + 2, \
 					O_CREAT | O_RDWR | O_APPEND, 0644);
-				if (ms->outfile < 0)
-					error_exit(ms->parsed[i] + 2, ": Permission denied\n", 1);
+				check_close_outfile(ms, i, 2);
 			}
 			else
 			{
 				ms->parsed[i] = quote(ms->parsed[i]);
 				ms->outfile = open(ms->parsed[i] + 1, \
 					O_CREAT | O_RDWR | O_TRUNC, 0644);
-				if (ms->outfile < 0)
-					error_exit(ms->parsed[i] + 1, ": Permission denied\n", 1);
+				check_close_outfile(ms, i, 1);
 			}
 		}
 		i++;
@@ -81,14 +89,16 @@ char	**check_redir_simple(t_minishell *ms)
 	{
 		i = open_infile_simple(ms, 0, 0);
 		if (dup2(ms->infile, 0) == -1)
-			error ("dup");
+			exit_child(ms, -2);
 	}
-	if (ms->parsed[i][0] == '>')
+	if (ms->parsed[i] && ms->parsed[i][0] == '>')
 	{
 		i = open_outfile_simple(ms, i);
 		if (dup2(ms->outfile, 1) == -1)
-			error ("dup6");
+			exit_child(ms, -2);
 	}
+	if (!ms->parsed[i])
+		return (NULL);
 	rm_quote_last(ms->parsed);
 	i--;
 	return (ft_realloc_from_i(ms->parsed, size, i));

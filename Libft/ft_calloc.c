@@ -34,7 +34,7 @@ void	*ft_calloc_child(size_t count, size_t size)
 		return (0);
 	ptr = (void *)ft_gc_malloc(count * size);
 	if (!ptr)
-		exit_child(-1);
+		exit_child_simple(-1);
 	ft_bzero(ptr, count * size);
 	return (ptr);
 }

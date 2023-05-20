@@ -52,7 +52,7 @@ int	pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 	if (is_built_in(split[0]))
 	{
 		if (input_env(env, split)
-			|| input_cd(split, env) || built_in_pwd(split)
+			|| input_cd(split, env) || built_in_pwd(ms, split)
 			|| built_in_export(env, split) || built_in_unset(env, split)
 			|| !check_write_exit(ms, split, pipe)
 			|| built_in_echo(split))
@@ -69,7 +69,7 @@ int	child_builtins(t_minishell *ms, char **split, t_env **env)
 	if (is_built_in(split[0]))
 	{
 		if (input_env(env, split)
-			|| built_in_pwd(split)
+			|| built_in_pwd(ms, split)
 			|| built_in_echo(split))
 		{
 			return (1);
@@ -83,7 +83,7 @@ int	parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 	(void)ms;
 	if (is_built_in2(split[0], env))
 	{
-		rm_quote_last(split);
+		rm_quote_last_parent(split);
 		if (input_cd(split, env)
 			|| built_in_export(env, split)
 			|| built_in_unset(env, split)

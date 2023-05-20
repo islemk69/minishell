@@ -83,15 +83,23 @@ char	**open_files(t_minishell *ms, char **tab, int *cpt)
 	i = 0;
 	access_file(ms, tab);
 	if (tab[i] && tab[i][0] == '<')
+	{
+		ms->infile_ok = 1;
 		i = open_infile_pipe(ms, tab, i, &*cpt);
+	}
 	if (tab[i] && tab[i][0] == '>')
+	{
+		ms->outfile_ok = 1;
 		i = open_outfile_pipe(ms, tab, i);
+	}
 	if (tab[i] && (tab[i][0] == '>' || tab[i][0] == '<'))
 	{
 		i = 0;
 		while (tab[i] && (tab[i][0] == '>' || tab[i][0] == '<'))
 			i++;
 	}
+	if (!tab[i])
+		return (NULL);
 	rm_quote_last(tab);
 	i--;
 	return (ft_realloc_from_i(tab, ft_strlen_dtab(tab), i));

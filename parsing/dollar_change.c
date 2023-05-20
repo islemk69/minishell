@@ -163,7 +163,7 @@ char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	ms->change_dollar[0][ft_strlen(ms->change_dollar[0])] = 0;
 	if (ms->flg)
 	{
-		ms->change_dollar = ft_split_space(ms->change_dollar[0]);
+		ms->change_dollar = ft_split_space(ms->change_dollar[0], 0);
 		if (!ms->change_dollar)
 			exit_parent("parsing");
 	}

@@ -22,10 +22,10 @@ void	ft_exit_code(char **split, int in_pipe, t_minishell *ms)
 		g_global.g_status = 2;
 	}
 	if (!in_pipe)
-		return (ft_gc_free_all(), exit(g_global.g_status));
+		return (ft_close(ms, 0, 0), exit(g_global.g_status));
 }
 
-void	ft_numarg_check(char **split)
+void	ft_numarg_check(char **split, t_minishell *ms)
 {
 	int		i;
 
@@ -39,7 +39,7 @@ void	ft_numarg_check(char **split)
 		|| split[1][i] > '9')
 		{
 			ft_dprintf("exit: %s: numeric argument required\n", split[1]);
-			return (ft_gc_free_all(), exit(2));
+			return (ft_close(ms, 0, 0), exit(2));
 		}
 	}
 }
@@ -49,8 +49,8 @@ void	ft_built_in_exit(char **split, int in_pipe, t_minishell *ms)
 	if (!in_pipe)
 		printf("exit\n");
 	if (!split[1] || !*split[1])
-		return (ft_gc_free_all(), exit(g_global.g_status));
-	ft_numarg_check(split);
+		return (ft_close(ms, 0, 0), exit(g_global.g_status));
+	ft_numarg_check(split, ms);
 	if (split[2])
 	{
 		ft_putstr_fd("exit: ", 2);

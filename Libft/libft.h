@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 12:28:32 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/17 05:40:01 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/20 06:54:31 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ char	**ft_split_token(char *input, char sep);
 
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 
-char	**ft_split_space(char *input);
+char	**ft_split_space(char *input, int mod);
+
+int		word_length(char *start, char *end);
 
 #endif

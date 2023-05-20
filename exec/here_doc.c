@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 05:58:18 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/20 07:20:35 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	here_doc(t_minishell *ms, char *tab, char *w_quote, int count)
 	set_heredoc_signals();
 	ms->infile = open(ms->f_name[count], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (ms->infile < 0)
-		exit_child(-1);
+		exit_child(ms, -1);
 	while (1)
 	{
 		ms->line_here = readline("> ");

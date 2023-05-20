@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:22:00 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/19 00:23:09 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/20 07:20:05 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 	ms->outfile_exist = 0;
 	if (ms->parsed[i][0])
 	{
-		split = ft_split_space(ms->parsed[i]);
+		split = ft_split_space(ms->parsed[i], 1);
 		if (!split)
-			exit_child(-1);
+			exit_child(ms, -1);
 		if (split[0][0] == '<' || split[0][0] == '>')
 			ms->new_parsed = open_files(ms, split, &*cpt);
 		else
@@ -37,7 +37,7 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 	else
 		ms->new_parsed = 0;
 	if (pipe(ms->fd) == -1)
-		exit_child(-1);
+		exit_child(ms, -1);
 }
 
 void	dup_exec_pipe(t_minishell *ms, int nb_pipe)
@@ -48,13 +48,13 @@ void	dup_exec_pipe(t_minishell *ms, int nb_pipe)
 		if (ms->outfile_exist == 0)
 		{
 			if (dup2(ms->fd[1], 1) == -1)
-				exit_child(-1);
+				exit_child(ms, -1);
 		}
 	}
 	else
 	{
 		if (dup(1) == -1)
-			exit_child(-1);
+			exit_child(ms, -1);
 	}
 }
 
@@ -64,26 +64,18 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 	ms->pid[i] = fork();
 	if (ms->pid[i] == 0)
 	{
-		if (!ms->new_parsed)
-		{
-			ft_gc_free_all();
-			exit(0);
-		}
 		check_redir(ms);
+		if (!ms->new_parsed)
+			ft_close(ms, 1, 0);
 		if (!check_command(ms, ms->new_parsed[0], -1))
-		{
-			ft_gc_free_all();
-			exit (0);
-		}
+			ft_close(ms, 1, 0);
 		dup_exec_pipe(ms, nb_pipe);
 		if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
-		{
-			ft_gc_free_all();
-			exit(g_global.g_status);
-		}
+			ft_close(ms, 1, g_global.g_status);
 		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
-		ft_gc_free_all();
-		exit(g_global.g_status);
+		close(ms->fd[0]);
+		close(ms->fd[1]);
+		ft_close(ms, 1, g_global.g_status);
 	}
 }
 
@@ -93,12 +85,12 @@ void	close_redir_pipe(t_minishell *ms, int nb_pipe)
 	if (nb_pipe != 0)
 	{
 		if (dup2(ms->fd[0], 0) == -1)
-			exit_child(-1);
+			exit_child(ms, -1);
 	}
 	else
 	{
 		if (dup2(ms->save_stdin, 0) == -1)
-			exit_child(-1);
+			exit_child(ms, -1);
 	}
 	close(ms->fd[0]);
 	close(ms->fd[1]);
@@ -126,6 +118,5 @@ void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	close(ms->save_stdin);
 	wait_pid(ms, i);
 	g_global.g_status = WEXITSTATUS(ms->status);
-	ft_gc_free_all();
-	exit(g_global.g_status);
+	ft_close(ms, 1, g_global.g_status);
 }

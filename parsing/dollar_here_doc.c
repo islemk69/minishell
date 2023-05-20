@@ -41,7 +41,7 @@ static int	check_dollar_heredoc(char *tab, char *realloc, int *i, int *k)
 	{
 		tmp = ft_itoa(g_global.g_status);
 		if (!tmp)
-			exit_child(-1);
+			exit_child_simple(-1);
 		while (*tmp)
 		{
 			realloc[(*k)++] = (*tmp);

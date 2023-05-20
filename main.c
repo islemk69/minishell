@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/18 23:45:56 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/20 06:41:11 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int	main(int argc, char **argv, char **envp)
 	ms.infile_stra = NULL;
 	ms.f_name = NULL;
 	ms.outfile_exist = 0;
+	ms.new_parsed = NULL;
+	ms.infile_ok = 0;
+	ms.outfile_ok = 0;
 	if (argc > 1)
 		return (ft_dprintf("Error : Number of Arguments\n"), 0);
 	ms.new_env = NULL;
@@ -75,7 +78,8 @@ int	main(int argc, char **argv, char **envp)
 	if (!start_minishell(&ms))
 	{
 		ft_printf("exit\n");
-		return (ft_gc_free_all(), exit(g_global.g_status), 0);
+		return (ft_close(&ms, 0, 0), exit(g_global.g_status), 0);
 	}
+	ft_close(&ms, 0, 0);
 	return (0);
 }

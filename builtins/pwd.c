@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-int	built_in_pwd(char **split)
+int	built_in_pwd(t_minishell *ms, char **split)
 {
 	char	*str;
 
@@ -22,7 +22,7 @@ int	built_in_pwd(char **split)
 		if (!str)
 		{
 			g_global.g_status = 1;
-			ft_gc_free_all();
+			ft_close(ms, 0, 0);
 			perror("getcwd()");
 		}
 		printf("%s\n", str);

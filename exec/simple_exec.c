@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/19 00:25:57 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/20 07:20:09 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	heredoc_simple(t_minishell *ms)
 
 void	child_simple_exec(t_minishell *ms, t_env **env)
 {
-	if (!ms->parsed[0][0])
+	if (!ms->parsed[0][0] || !ms->parsed)
 	{
-		ft_gc_free_all();
+		ft_close(ms, 0, 0);
 		exit(0);
 	}
 	if (ms->parsed[0][0] == '<' || ms->parsed[0][0] == '>')
@@ -49,16 +49,17 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 		rm_quote_last(ms->parsed);
 		ms->new_parsed = ms->parsed;
 	}
+	if (!ms->new_parsed)
+		ft_close(ms, 1, 0);
 	if (child_builtins(ms, ms->new_parsed, env)
 		|| !check_command(ms, ms->new_parsed[0], -1))
-	{
-		ft_gc_free_all();
-		exit(g_global.g_status);
-	}
+		ft_close(ms, 1, g_global.g_status);
 	if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
+	{
 		g_global.g_status = 1;
-	ft_gc_free_all();
-	exit(g_global.g_status);
+		ft_close(ms, 0, 0);
+	}
+	ft_close(ms, 1, g_global.g_status);
 }
 
 int	first_child(t_minishell *ms)
@@ -70,8 +71,7 @@ int	first_child(t_minishell *ms)
 	if (id2 == 0)
 	{
 		heredoc_simple(ms);
-		ft_gc_free_all();
-		exit(0);
+		ft_close(ms, 1, 0);
 	}
 	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);
@@ -95,12 +95,12 @@ void	exec_child(t_minishell *ms, t_env **env)
 	if (id2 == 0)
 	{
 		child_simple_exec(ms, env);
-		ft_gc_free_all();
+		ft_close(ms, 0, 0);
 		exit(g_global.g_status);
 	}
 	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);
-	ft_gc_free_all();
+	ft_close(ms, 0, 0);
 	exit(g_global.g_status);
 }
 

@@ -117,7 +117,7 @@ int	parsing(char *line, t_minishell *ms)
 	}
 	else
 	{
-		space = ft_split_space(line);
+		space = ft_split_space(line, 0);
 		if (!space)
 			exit_parent("parsing");
 		ms->parsed = redirection(space);

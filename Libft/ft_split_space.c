@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 18:05:46 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 07:50:56 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/20 07:06:47 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,28 +60,7 @@ static char	*next_pipe(char *input)
 	return (NULL);
 }
 
-static int	word_length(char *start, char *end)
-{
-	int		in_quote;
-	char	*c;
-	int		size;
-
-	in_quote = 0;
-	c = start;
-	while (c < end)
-	{
-		if (*c == '\"')
-			in_quote = !in_quote;
-		c++;
-	}
-	if (in_quote)
-		size = (end - start) - 2 + 1;
-	else
-		size = (end - start) - 0 + 1;
-	return (size);
-}
-
-static char	**no_null(char **tab)
+static char	**no_null(char **tab, int mod)
 {
 	char	**tab2;
 	int		i;
@@ -95,7 +74,10 @@ static char	**no_null(char **tab)
 			j++;
 		i++;
 	}
-	tab2 = (char **)ft_gc_malloc(sizeof(char *) * (j + 1));
+	if (!mod)
+		tab2 = ft_calloc_parent(sizeof(char *), (j + 1), "");
+	else
+		tab2 = ft_calloc_child(sizeof(char *), (j + 1));
 	i = 0;
 	j = 0;
 	while (tab[i])
@@ -107,7 +89,18 @@ static char	**no_null(char **tab)
 	return (tab2[j] = 0, tab2);
 }
 
-char	**ft_split_space(char *input)
+char	**init_split(int mod, int count)
+{
+	char	**split;
+
+	if (!mod)
+		split = ft_calloc_parent(sizeof(char *), (count + 1), "");
+	else
+		split = ft_calloc_child(sizeof(char *), (count + 1));
+	return (split);
+}
+
+char	**ft_split_space(char *input, int mod)
 {
 	int		count;
 	char	*end;
@@ -116,7 +109,7 @@ char	**ft_split_space(char *input)
 
 	i = 0;
 	count = count_words(input);
-	split = (char **)ft_gc_malloc(sizeof(char *) * (count + 1));
+	split = init_split(mod, count);
 	end = next_pipe(input);
 	while (end != NULL)
 	{
@@ -124,14 +117,12 @@ char	**ft_split_space(char *input)
 		if (!split[i])
 			return (NULL);
 		ft_strncpy(split[i], input, end - input);
-		split[i][end - input] = '\0';
-		i++;
+		split[i++][end - input] = '\0';
 		input = end + 1;
 		end = next_pipe(input);
 	}
 	split[i] = ft_strdup(input);
 	if (!split[i])
 		return (NULL);
-	split[i + 1] = NULL;
-	return (no_null(split));
+	return (split[i + 1] = NULL, no_null(split, mod));
 }

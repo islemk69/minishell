@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/19 00:33:02 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/20 07:20:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_minishell
 	char	**f_name;
 	int		*pid;
 	int		save_stdin;
+	int		infile_ok;
+	int		outfile_ok;
 }				t_minishell;
 
 int		init_env(t_minishell *ms, char **envp);
@@ -120,7 +122,7 @@ int		input_env(t_env **env, char **split);
 
 int		input_cd(char **split, t_env **env);
 
-int		built_in_pwd(char **split);
+int		built_in_pwd(t_minishell *ms, char **split);
 
 char	*ft_find_path(t_env **env, char *srch);
 
@@ -251,7 +253,7 @@ char	*ft_tmp_dollar_heredoc(char *tab, int *i);
 char	**change_parsed_dollar(t_minishell *ms, char *tab, \
 	int d_quot, int s_quot);
 
-int		error_exit(char *cmd, char *type, int i);
+int		error_exit(t_minishell *ms, char *cmd, char *type, int i);
 
 char	**ft_realloc_from_i(char **tab, int size, int i);
 
@@ -269,7 +271,9 @@ int		size_file_name_pipe(t_minishell *ms);
 
 void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe);
 
-void	exit_child(int i);
+void	exit_child(t_minishell *ms, int i);
+
+void	exit_child_simple(int i);
 
 void	exit_parent(char *str);
 
@@ -288,5 +292,11 @@ int		is_expandable(char *tab, int i, int d_quot, int s_quot);
 int		is_full_null(t_minishell *ms);
 
 char	*init_m_dollar(t_minishell *ms, char *str);
+
+void	ft_close(t_minishell *ms, int mod, int i);
+
+int		no_key(char *str);
+
+char	quote_check_wrong(char *string, int i, char quote);
 
 #endif

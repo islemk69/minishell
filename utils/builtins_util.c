@@ -21,7 +21,7 @@ void	rm_quote_last(char **cmds)
 		tmp = *cmds;
 		*cmds = quote(tmp);
 		if (!*cmds)
-			exit_child(-1);
+			exit_child_simple(-1);
 		cmds++;
 	}
 }

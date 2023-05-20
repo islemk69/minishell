@@ -20,9 +20,9 @@ void	child_here(t_minishell *ms, int i, int cpt)
 
 	while (ms->parsed[i])
 	{
-		split = ft_split_space(ms->parsed[i]);
+		split = ft_split_space(ms->parsed[i], 1);
 		if (!split)
-			exit_child(-1);
+			exit_child(ms, -1);
 		j = 0;
 		while (split[j] && split[j][0] == '<')
 		{

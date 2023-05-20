@@ -20,7 +20,7 @@ static int	check_dollar_pipe(char *tab, char *realloc, int *i, int *k)
 	{
 		tmp = ft_itoa(g_global.g_status);
 		if (!tmp)
-			exit_child(-1);
+			exit_parent("parsing");
 		while (*tmp)
 		{
 			realloc[(*k)++] = (*tmp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 04:34:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/17 06:28:32 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/20 06:29:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,8 @@ static int	check_wrong_redir(char *string)
 	quote = '\0';
 	while (string[i] != '\0')
 	{
-		if (string[i] == '"' || string[i] == '\'')
-		{
-			if (quote == '\0')
-				quote = string[i];
-			else if (quote == string[i])
-				quote = '\0';
-		}
-		else if (string[i] == '<' && string[i + 1] == '<' \
+		quote = quote_check_wrong(string, i, quote);
+		if (string[i] == '<' && string[i + 1] == '<' \
 			&& string[i + 2] == '<' && quote == '\0')
 			return (custom_msg_check_line(string, i + 2, '<'));
 		else if (string[i] == '>' && string[i + 1] == '>' \

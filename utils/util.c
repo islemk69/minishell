@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:37:56 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/17 07:15:28 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/20 06:29:56 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	size_file_name_pipe(t_minishell *ms)
 	count = 0;
 	while (ms->parsed[i])
 	{
-		split = ft_split_space(ms->parsed[i]);
+		split = ft_split_space(ms->parsed[i], 0);
 		if (!split)
 			exit_parent("filename heredoc");
 		j = 0;
@@ -60,14 +60,14 @@ int	size_file_name_pipe(t_minishell *ms)
 	return (count);
 }
 
-void	exit_child(int i)
+char	quote_check_wrong(char *string, int i, char quote)
 {
-	ft_gc_free_all();
-	exit(i);
-}
-
-void	exit_parent(char *str)
-{
-	ft_gc_free_all();
-	perror(str);
+	if (string[i] == '"' || string[i] == '\'')
+	{
+		if (quote == '\0')
+			quote = string[i];
+		else if (quote == string[i])
+			quote = '\0';
+	}
+	return (quote);
 }

@@ -86,7 +86,7 @@ void	file_name_pipe(t_minishell *ms, int i, int pipe)
 	init_fname(ms, pipe);
 	while (ms->parsed[++i])
 	{
-		split = ft_split_space(ms->parsed[i]);
+		split = ft_split_space(ms->parsed[i], 0);
 		if (!split)
 		{
 			exit_parent("File name");

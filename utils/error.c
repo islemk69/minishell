@@ -43,3 +43,25 @@ size_t	ft_strlen_dtab(char **s)
 		i++;
 	return (i);
 }
+
+int	no_key(char *str)
+{
+	if (!*str)
+		return (1);
+	while (*str)
+	{
+		if (*str == ' ' || *str == '\t')
+			str++;
+		if (*str != ' ' && *str != '\t')
+			break ;
+	}
+	if (*str == 0)
+		return (1);
+	return (0);
+}
+
+void	print_error_export(char *split)
+{
+	ft_dprintf("bash: export: `%s': not a valid identifier\n", split);
+	g_global.g_status = 1;
+}
