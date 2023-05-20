@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:19:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/08 23:04:59 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/20 16:02:26 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	input_cd(char **split, t_env **env)
 	head = *env;
 	if (split[0] && !ft_strncmp(split[0], "cd\0", 3))
 	{
-		oldpwd = getcwd(0, 0);
+		oldpwd = getenv("OLDPWD");
 		if (check_cd(split, env))
 			return (free(oldpwd), 1);
-		pwd = getcwd(0, 0);
+		pwd = getenv("PWD");
 		while (head)
 		{
 			if (!ft_strncmp(head->key, "OLDPWD\0", 7))
@@ -59,8 +59,6 @@ int	input_cd(char **split, t_env **env)
 				head->value = ft_strdup(pwd);
 			head = head->next;
 		}
-		free(oldpwd);
-		free(pwd);
 		return (1);
 	}
 	return (0);
