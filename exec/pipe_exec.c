@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 19:22:00 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/20 14:49:19 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:18:16 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	init_pipe(t_minishell *ms, int i, int *cpt)
 
 void	dup_exec_pipe(t_minishell *ms, int nb_pipe)
 {
+
 	close(ms->fd[0]);
 	if (nb_pipe != 0)
 	{
@@ -72,10 +73,12 @@ void	child_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe, int i)
 		dup_exec_pipe(ms, nb_pipe);
 		if (pipe_builtins(ms, ms->new_parsed, env, 1) == 1)
 			ft_close(ms, 1, g_global.g_status);
+		// close(ms->save_stdin);
 		execve(ms->path_cmd, ms->new_parsed, refresh_env(env));
-		close(ms->fd[0]);
-		close(ms->fd[1]);
-		ft_close(ms, 1, g_global.g_status);
+		// close(ms->fd[0]);
+		// close(ms->fd[1]);
+		// close(ms->save_stdin);
+		// ft_close(ms, 1, g_global.g_status);
 	}
 }
 
@@ -91,6 +94,7 @@ void	close_redir_pipe(t_minishell *ms, int nb_pipe)
 	{
 		if (dup2(ms->save_stdin, 0) == -1)
 			exit_child(ms, -1);
+		close(ms->save_stdin);
 	}
 	close(ms->fd[0]);
 	close(ms->fd[1]);
@@ -112,11 +116,15 @@ void	ft_exec_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 			ms->parsed[i][0] = 't';
 		child_exec_pipe(ms, env, nb_pipe, i);
 		close_redir_pipe(ms, nb_pipe);
+	// 	close(ms->fd[0]);
+	// close(ms->fd[1]);
 		i++;
 		nb_pipe--;
 	}
-	close(ms->save_stdin);
+	close(ms->fd[0]);
+	close(ms->fd[1]);
 	wait_pid(ms, i);
+	close(ms->save_stdin);
 	g_global.g_status = WEXITSTATUS(ms->status);
 	ft_close(ms, 1, g_global.g_status);
 }

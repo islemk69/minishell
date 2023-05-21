@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:32 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/20 14:48:41 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:12:27 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ int	init_exec_pipe(t_minishell *ms, int nb_pipe)
 {
 	ms->pid = ft_calloc_parent(sizeof(int), (nb_pipe + 1), "tableau pid");
 	ms->save_stdin = dup(0);
+	close(ms->save_stdin);
 	if (get_path(ms) == -1)
 		exit_parent("get path");
 	file_name_pipe(ms, 0, 1);
 	if (open_heredoc(ms))
 		return (1);
+	close(ms->save_stdin);
 	unplug_signals();
 	return (0);
 }
@@ -89,7 +91,9 @@ int	exec_multi_pipe(t_minishell *ms, t_env **env, int nb_pipe)
 	{
 		ft_exec_pipe(ms, env, nb_pipe);
 	}
+	// close(ms->save_stdin);
 	waitpid(id1, &tmp_status, WUNTRACED);
+	close(ms->save_stdin);
 	g_global.g_status = WEXITSTATUS(tmp_status);
 	remove_heredoc(ms);
 	if (g_global.g_status == -1)
