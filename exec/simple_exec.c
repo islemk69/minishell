@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/21 14:34:59 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:45:02 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	child_simple_exec(t_minishell *ms, t_env **env)
 		ft_close(ms, 1, 0);
 	if (child_builtins(ms, ms->new_parsed, env)
 		|| !check_command(ms, ms->new_parsed[0], -1))
+		ft_close(ms, 1, g_global.g_status);
+	if (!ms->path_cmd)
 		ft_close(ms, 1, g_global.g_status);
 	if (execve(ms->path_cmd, ms->new_parsed, refresh_env(env)) == -1)
 	{
@@ -111,6 +113,7 @@ int	exec_one_pipe(t_minishell *ms, t_env **env)
 {
 	int	id;
 
+	file_exist(ms);
 	file_name_simple(ms, 0);
 	if (get_path(ms) == -1)
 		exit_parent("get path");

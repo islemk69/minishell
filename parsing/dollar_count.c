@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_count.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 20:10:02 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/19 01:10:55 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:17:48 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int	special_dollar_count(char *tab, int *i, int *count)
 	return (1);
 }
 
-int	dollar_d_quot(char *tab, int d_quot, int *count, int *i)
+int	dollar_d_quot(char *tab, int dbl_quot, int *count, int *i)
 {
-	if ((ft_strchr(tab, ' ') || d_quot) && tab[*i + 1] == '\"')
+	if ((ft_strchr(tab, ' ') || dbl_quot) && tab[*i + 1] == '\"')
 	{
 		*count += 1;
 		*i += 1;
@@ -87,7 +87,7 @@ int	dollar_d_quot(char *tab, int d_quot, int *count, int *i)
 	return (0);
 }
 
-int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
+int	countchar(t_minishell *ms, char *tab, int dbl_quot, int single_quot)
 {
 	int		i;
 	int		count;
@@ -96,14 +96,14 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	i = 0;
 	while (tab[i])
 	{
-		check_quote_dollar(tab[i], &s_quot, &d_quot);
-		if (!is_expandable(tab, i, d_quot, s_quot))
+		check_quote_dollar(tab[i], &single_quot, &dbl_quot);
+		if (!is_expandable(tab, i, dbl_quot, single_quot))
 		{
 			count++;
 			i++;
 			continue ;
 		}
-		else if (tab[i] == '$' && (dollar_d_quot(tab, d_quot, &count, &i)
+		else if (tab[i] == '$' && (dollar_d_quot(tab, dbl_quot, &count, &i)
 				|| !special_dollar_count(tab, &i, &count)))
 			continue ;
 		else if (tab[i] == '$' && check_path_count(ms, tab, &i, &count))
@@ -113,28 +113,3 @@ int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	}
 	return (count);
 }
-
-// int	countchar(t_minishell *ms, char *tab, int d_quot, int s_quot)
-// {
-// 	int		i;
-// 	int		count;
-
-// 	count = 0;
-// 	i = 0;
-// 	while (tab[i])
-// 	{
-// 		check_quote_dollar(tab[i], &s_quot, &d_quot);
-// 		if (!is_expandable(tab, i, d_quot, s_quot))
-// 		{
-// 			count++;
-// 			i++;
-// 			continue ;
-// 		}
-// 		else if (tab[i] == '$' && (dollar_d_quot(tab, d_quot, &count, &i)
-// 				|| !special_dollar_count(tab, &i, &count)))
-// 			continue ;
-// 		count++;
-// 		check_path_count(ms, tab, &i, &count);
-// 	}
-// 	return (count);
-// }

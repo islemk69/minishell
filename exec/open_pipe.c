@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 15:07:49 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/16 01:00:20 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/21 21:42:22 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,10 @@ char	**open_files(t_minishell *ms, char **tab, int *cpt)
 	access_file(ms, tab);
 	if (tab[i] && tab[i][0] == '<')
 	{
-		ms->infile_ok = 1;
 		i = open_infile_pipe(ms, tab, i, &*cpt);
 	}
 	if (tab[i] && tab[i][0] == '>')
 	{
-		ms->outfile_ok = 1;
 		i = open_outfile_pipe(ms, tab, i);
 	}
 	if (tab[i] && (tab[i][0] == '>' || tab[i][0] == '<'))

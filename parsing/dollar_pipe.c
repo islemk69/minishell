@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 07:59:26 by hamza             #+#    #+#             */
-/*   Updated: 2023/05/19 01:01:19 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:42:47 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ static int	check_path_pipe(t_minishell *ms, char *real, char *tmp, int *k)
 	return (1);
 }
 
-int	is_heredoc_name(char *tab, int d_quot, int s_quot, int j)
+int	is_heredoc_name(char *tab, int dbl_quot, int single_quot, int j)
 {
-	if ((tab[j] == '<' && tab[j + 1] == '<' && !d_quot)
-		|| (tab[j] == '<' && tab[j + 1] == '<' && !s_quot))
+	if ((tab[j] == '<' && tab[j + 1] == '<' && !dbl_quot)
+		|| (tab[j] == '<' && tab[j + 1] == '<' && !single_quot))
 		return (1);
 	return (0);
 }
 
-char	*fill_new(char *str, int s_quot, int d_quot, t_minishell *ms)
+char	*fill_new(char *str, int single_quot, int dbl_quot, t_minishell *ms)
 {
 	char	*new;
 	int		j;
@@ -72,17 +72,17 @@ char	*fill_new(char *str, int s_quot, int d_quot, t_minishell *ms)
 
 	init_i_k(&j, &k);
 	new = init_m_dollar(ms, str);
-	while (check_quote_dollar(str[j], &s_quot, &d_quot))
+	while (check_quote_dollar(str[j], &single_quot, &dbl_quot))
 	{
-		if (is_heredoc_name(str, d_quot, s_quot, j))
+		if (is_heredoc_name(str, dbl_quot, single_quot, j))
 		{
-			while (str[j] && (str[j] != 32 || (!d_quot && !s_quot)))
+			while (str[j] && (str[j] != 32 || (!dbl_quot && !single_quot)))
 			{
 				new[k++] = str[j++];
-				check_quote_dollar(str[j], &s_quot, &d_quot);
+				check_quote_dollar(str[j], &single_quot, &dbl_quot);
 			}
 		}
-		else if (!is_expandable(str, j, d_quot, s_quot))
+		else if (!is_expandable(str, j, dbl_quot, single_quot))
 			new[k++] = str[j++];
 		else if (str[j] == '$' && (!check_dollar_pipe(str, new, &j, &k)
 				|| check_path_pipe(ms, new, ft_tmp_dollar(str, &j), &k)))
@@ -93,50 +93,16 @@ char	*fill_new(char *str, int s_quot, int d_quot, t_minishell *ms)
 	return (new[k] = '\0', new);
 }
 
-char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot, char **new)
+char	**dollar_pipe(t_minishell *ms, int dbl_quot, int single_quot, \
+char **new)
 {
 	int		i;
 
 	i = 0;
 	while (ms->parsed[i])
 	{
-		new[i] = fill_new(ms->parsed[i], d_quot, s_quot, ms);
+		new[i] = fill_new(ms->parsed[i], dbl_quot, single_quot, ms);
 		i++;
 	}
 	return (new[i] = 0, new);
 }
-
-// char *fill_new(char *str, int s_quot, int d_quot, t_minishell *ms)
-// {
-// 	char	*new;
-// 	int		j;
-// 	int		k;
-
-// 	j = 0;
-// 	k = 0;
-// 	new = ft_calloc_parent(sizeof(char), (countchar_pipe(ms, 
-// 			str, d_quot, s_quot) + 1), "parsing");
-// 	while (check_quote_dollar(str[j], &s_quot, &d_quot))
-// 	{
-// 		if (is_heredoc_name(str, d_quot, s_quot, j))
-// 		{
-// 			while (str[j] && ((str[j] != 32 && !d_quot)
-// 				|| (str[j] != 32 && !s_quot)))
-// 			{
-// 				new[k++] = str[j++];
-// 				check_quote_dollar(str[j], &s_quot, &d_quot);
-// 			}
-// 			continue ;
-// 		}
-// 		else if (!is_expandable(str, j, d_quot, s_quot))
-// 		{
-// 			new[k++] = str[j++];
-// 			continue ;
-// 		}
-// 		else if (str[j] == '$' && (!check_dollar_pipe(str, new, &j, &k) 
-// 			|| check_path_pipe(ms, new, ft_tmp_dollar(str, &j), &k)))
-// 			continue ;
-// 		new[k++] = str[j++];
-// 	}
-// 	return (new[k] = 0, new);
-// }

@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 16:31:12 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/21 16:58:16 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/22 00:34:05 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ int		pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
 
 int		ft_atoi2(const char *str, t_minishell *ms);
 
-int		built_in_export(t_env **env, char **split);
+int		built_in_export_child(t_env **env, char **split);
+
+int		built_in_export_parent(t_env **env, char **split);
 
 int		built_in_unset(t_env **env, char **cmd);
 
@@ -134,7 +136,8 @@ void	lstclear(t_env **lst);
 
 int		parsing(char *line, t_minishell *ms);
 
-int		countchar_here(t_minishell *ms, char *tab, int d_quot, int s_quot);
+int		countchar_here(t_minishell *ms, char *tab, int dbl_quot, \
+int single_quot);
 
 size_t	ft_strlen_dtab(char **s);
 
@@ -178,7 +181,7 @@ void	check_redir(t_minishell *ms);
 
 void	remove_heredoc(t_minishell *ms);
 
-int		here_doc(t_minishell *ms, char *tab, char *w_quote, int count);
+int		here_doc(t_minishell *ms, char *tab, char *write_quote, int count);
 
 int		check_key(char *str);
 
@@ -206,7 +209,8 @@ char	**tab_copy(char **tab);
 
 void	check_dollar(t_minishell *ms);
 
-char	**dollar_exist(t_minishell *ms, char *tab, int d_quot, int s_quot);
+char	**dollar_exist(t_minishell *ms, char *tab, int dbl_quot, \
+int single_quot);
 
 void	set_interactive_signals(void);
 
@@ -220,7 +224,8 @@ int		built_in_echo(char **split);
 
 int		child_builtins(t_minishell *ms, char **split, t_env **env);
 
-int		parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe);
+int		parent_builtins(t_minishell *ms, char **split, t_env **env, \
+int pipe);
 
 char	**open_files(t_minishell *ms, char **tab, int *cpt);
 
@@ -228,9 +233,11 @@ char	**check_redir_simple(t_minishell *ms);
 
 void	print_error(char *cmd, char *type);
 
-char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot);
+char	*dollar_here_doc(t_minishell *ms, char *tab, int dbl_quot, \
+int single_quot);
 
-int		countchar(t_minishell *ms, char *tab, int d_quot, int s_quot);
+int		countchar(t_minishell *ms, char *tab, int dbl_quot, \
+int single_quot);
 
 int		size_tmp(char *tab, int i);
 
@@ -244,14 +251,14 @@ void	print_error_export(char *split);
 
 int		custom_msg_check_line(char *line, int pos, char c);
 
-int		check_quote_dollar(char c, int *s_quot, int *d_quot);
+int		check_quote_dollar(char c, int *single_quot, int *dbl_quot);
 
 char	*ft_tmp_dollar(char *tab, int *i);
 
 char	*ft_tmp_dollar_heredoc(char *tab, int *i);
 
 char	**change_parsed_dollar(t_minishell *ms, char *tab, \
-	int d_quot, int s_quot);
+	int dbl_quot, int single_quot);
 
 int		error_exit(t_minishell *ms, char *cmd, char *type, int i);
 
@@ -281,13 +288,15 @@ int		name_exist(t_minishell *ms, char *tab, int count);
 
 int		check_tab_heredoc(char *tab, char *realloc, int *i, int *k);
 
-char	**dollar_pipe(t_minishell *ms, int d_quot, int s_quot, char **new);
+char	**dollar_pipe(t_minishell *ms, int dbl_quot, int single_quot, \
+char **new);
 
-int		is_heredoc_name(char *tab, int d_quot, int s_quot, int j);
+int		is_heredoc_name(char *tab, int dbl_quot, int single_quot, int j);
 
-int		countchar_pipe(t_minishell *ms, char *tab, int d_quot, int s_quot);
+int		countchar_pipe(t_minishell *ms, char *tab, int dbl_quot, \
+int single_quot);
 
-int		is_expandable(char *tab, int i, int d_quot, int s_quot);
+int		is_expandable(char *tab, int i, int dbl_quot, int single_quot);
 
 int		is_full_null(t_minishell *ms);
 
@@ -298,5 +307,11 @@ void	ft_close(t_minishell *ms, int mod, int i);
 int		no_key(char *str);
 
 char	quote_check_wrong(char *string, int i, char quote);
+
+void	file_exist(t_minishell *ms);
+
+char	**create_export_spe_parent(char **key_value, char *str);
+
+char	**create_export_spe_child(char **key_value, char *str);
 
 #endif

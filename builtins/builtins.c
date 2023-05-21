@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 14:48:19 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/14 20:56:35 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/22 00:33:27 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	pipe_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 	{
 		if (input_env(env, split)
 			|| input_cd(split, env) || built_in_pwd(ms, split)
-			|| built_in_export(env, split) || built_in_unset(env, split)
+			|| built_in_export_child(env, split) || built_in_unset(env, split)
 			|| !check_write_exit(ms, split, pipe)
 			|| built_in_echo(split))
 		{
@@ -80,12 +80,11 @@ int	child_builtins(t_minishell *ms, char **split, t_env **env)
 
 int	parent_builtins(t_minishell *ms, char **split, t_env **env, int pipe)
 {
-	(void)ms;
 	if (is_built_in2(split[0], env))
 	{
 		rm_quote_last_parent(split);
 		if (input_cd(split, env)
-			|| built_in_export(env, split)
+			|| built_in_export_parent(env, split)
 			|| built_in_unset(env, split)
 			|| !check_write_exit(ms, split, pipe))
 		{

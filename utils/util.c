@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:37:56 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/20 06:29:56 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:46:44 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,19 @@ char	quote_check_wrong(char *string, int i, char quote)
 			quote = '\0';
 	}
 	return (quote);
+}
+
+void	file_exist(t_minishell *ms)
+{
+	int	i;
+
+	i = 0;
+	while (ms->parsed[i])
+	{
+		if (ms->parsed[i][0] == '<')
+			ms->infile_ok = 1;
+		if (ms->parsed[i][0] == '>')
+			ms->outfile_ok = 1;
+		i++;
+	}
 }

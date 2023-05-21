@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_simple.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 14:49:02 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/14 10:19:13 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/21 23:51:08 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	open_infile_simple(t_minishell *ms, int i, int j)
 {
-	ms->infile_ok = 1;
 	while (ms->parsed[i] && ms->parsed[i][0] == '<')
 	{
 		if (ms->parsed[i][1] == '<')
@@ -49,7 +48,6 @@ void	check_close_outfile(t_minishell *ms, int i, int mod)
 
 int	open_outfile_simple(t_minishell *ms, int i)
 {
-	ms->outfile_ok = 1;
 	while (ms->parsed[i] && ms->parsed[i][0] == '>')
 	{
 		if (ms->parsed[i][0] == '>')

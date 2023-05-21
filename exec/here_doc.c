@@ -6,7 +6,7 @@
 /*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:53 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/20 07:20:35 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:22:15 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	here_doc_dollar(t_minishell *ms)
 	return (1);
 }
 
-void	write_line_heredoc(t_minishell *ms, char *w_quote)
+void	write_line_heredoc(t_minishell *ms, char *write_quote)
 {
 	int	dollar;
 
 	dollar = 0;
 	if (ft_strnstr(ms->line_here, "$", ft_strlen(ms->line_here)) != 0
-		&& (!ft_strchr(w_quote, '"') && !ft_strchr(w_quote, '\'')))
+		&& (!ft_strchr(write_quote, '"') && !ft_strchr(write_quote, '\'')))
 		dollar = here_doc_dollar(ms);
 	write(ms->infile, ms->line_here, ft_strlen(ms->line_here));
 	write(ms->infile, "\n", 1);
@@ -50,7 +50,7 @@ void	write_line_heredoc(t_minishell *ms, char *w_quote)
 		free(ms->line_here);
 }
 
-int	here_doc(t_minishell *ms, char *tab, char *w_quote, int count)
+int	here_doc(t_minishell *ms, char *tab, char *write_quote, int count)
 {
 	unplug_signals();
 	set_heredoc_signals();
@@ -69,7 +69,7 @@ int	here_doc(t_minishell *ms, char *tab, char *w_quote, int count)
 		if (!ft_strncmp(tab, ms->line_here, ft_strlen(tab))
 			&& (ft_strlen(tab) == ft_strlen(ms->line_here)))
 			break ;
-		write_line_heredoc(ms, w_quote);
+		write_line_heredoc(ms, write_quote);
 	}
 	free(ms->line_here);
 	close(ms->infile);

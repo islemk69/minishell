@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_here_doc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hamza <hamza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 15:24:49 by hel-ouar          #+#    #+#             */
-/*   Updated: 2023/05/18 08:07:19 by hamza            ###   ########.fr       */
+/*   Updated: 2023/05/21 21:20:20 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	check_quote_dollar(char c, int *s_quot, int *d_quot)
+int	check_quote_dollar(char c, int *single_quot, int *dbl_quot)
 {
 	if (c == 0)
 		return (0);
-	if (c == '"' && *s_quot == 0)
+	if (c == '"' && *single_quot == 0)
 	{
-		if (*d_quot == 0)
-			*d_quot = 1;
+		if (*dbl_quot == 0)
+			*dbl_quot = 1;
 		else
-			*d_quot = 0;
+			*dbl_quot = 0;
 	}
-	if (c == '\'' && *d_quot == 0)
+	if (c == '\'' && *dbl_quot == 0)
 	{
-		if (*s_quot == 0)
-			*s_quot = 1;
+		if (*single_quot == 0)
+			*single_quot = 1;
 		else
-			*s_quot = 0;
+			*single_quot = 0;
 	}
 	return (1);
 }
@@ -76,7 +76,8 @@ static void	check_path_heredoc(t_minishell *ms, char *real, char *tmp, int *k)
 	}
 }
 
-char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
+char	*dollar_here_doc(t_minishell *ms, char *tab, int dbl_quot, \
+int single_quot)
 {
 	int		i;
 	int		k;
@@ -86,10 +87,10 @@ char	*dollar_here_doc(t_minishell *ms, char *tab, int d_quot, int s_quot)
 	k = 0;
 	i = 0;
 	realloc = ft_calloc_child(sizeof(char),
-			(countchar_here(ms, tab, d_quot, s_quot) + 1));
+			(countchar_here(ms, tab, dbl_quot, single_quot) + 1));
 	while (tab[i])
 	{
-		check_quote_dollar(tab[i], &s_quot, &d_quot);
+		check_quote_dollar(tab[i], &single_quot, &dbl_quot);
 		if (tab[i] == '$' && (ft_isalnum(tab[i + 1]) || tab[i + 1] == '?'))
 		{
 			if (!check_dollar_heredoc(tab, realloc, &i, &k))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   export_child.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:20:37 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/10 18:47:33 by hel-ouar         ###   ########.fr       */
+/*   Updated: 2023/05/22 00:45:51 by ikaismou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,51 @@ static void	simple_export(t_env **env)
 			continue ;
 		}
 		add_quote = ft_strjoin("\"", print->value);
+		if (!add_quote)
+			exit_child_simple(-1);
 		add_quote = ft_strjoin(add_quote, "\"");
+		if (!add_quote)
+			exit_child_simple(-1);
 		printf("declare -x %s=%s\n", print->key, add_quote);
 		print = print->next;
 	}
 }
 
-int	create_export(t_env **env, char **key_value, int flg)
+static void	do_create_export(t_env **env, char **key_value, int flg)
 {
 	t_env	*cell;
+
+	if (!flg)
+	{
+		cell = create_cell(key_value[0], key_value[1]);
+		if (!cell)
+			exit_child_simple(-1);
+		ft_lstad_back(env, cell);
+	}
+}
+
+static int	create_export(t_env **env, char **key_value, int flg)
+{
 	t_env	*print;
 
 	print = *env;
 	while (print)
 	{
-		if (!ft_strncmp(key_value[0], print->key, \
-			ft_strlen(print->key)))
+		if (!ft_strncmp(key_value[0], print->key, ft_strlen(print->key)))
 		{
 			if (key_value[1])
+			{
 				print->value = ft_strdup(key_value[1]);
+				if (!print->value)
+					exit_child_simple(-1);
+			}
 			flg = 1;
 			break ;
 		}
 		print = print->next;
 	}
-	if (!flg)
-	{
-		cell = create_cell(key_value[0], key_value[1]);
-		if (!cell)
-			return (0);
-		ft_lstad_back(env, cell);
-	}
+	do_create_export(env, key_value, flg);
 	return (1);
-}
-
-char	**create_export_spe(char **key_value, char *str)
-{
-	char	**tmp;
-
-	key_value = ft_gc_malloc(sizeof(char *) * 3);
-	tmp = ft_split(str, '=');
-	key_value[0] = ft_strdup(tmp[0]);
-	key_value[1] = ft_strdup("");
-	key_value[2] = 0;
-	return (key_value);
 }
 
 static int	several_export(t_env **env, char **split, char **key_value, int i)
@@ -84,9 +85,13 @@ static int	several_export(t_env **env, char **split, char **key_value, int i)
 			continue ;
 		}
 		if (split[i][ft_strlen(split[i]) - 1] == '=')
-			key_value = create_export_spe(key_value, split[i]);
+			key_value = create_export_spe_child(key_value, split[i]);
 		else
+		{
 			key_value = ft_split(split[i], '=');
+			if (!key_value)
+				exit_child_simple(-1);
+		}
 		if (!check_key(key_value[0]))
 		{
 			print_error_export(split[i]);
@@ -98,7 +103,7 @@ static int	several_export(t_env **env, char **split, char **key_value, int i)
 	return (1);
 }
 
-int	built_in_export(t_env **env, char **split)
+int	built_in_export_child(t_env **env, char **split)
 {
 	char	**key_value;
 
