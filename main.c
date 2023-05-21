@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 15:34:03 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/20 06:41:11 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 14:30:39 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int	start_minishell(t_minishell *ms)
 	ms->parsed = NULL;
 	while (1)
 	{
+		unplug_signals();
 		set_interactive_signals();
 		ms->line = readline(ms->prompt);
 		if (!urandom(ms->line))

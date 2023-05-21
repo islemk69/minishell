@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 14:19:52 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/20 16:02:26 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 14:34:22 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	input_cd(char **split, t_env **env)
 	{
 		oldpwd = getenv("OLDPWD");
 		if (check_cd(split, env))
-			return (free(oldpwd), 1);
+			return (1);
 		pwd = getenv("PWD");
 		while (head)
 		{

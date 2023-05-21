@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simple_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikaismou <ikaismou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hel-ouar <hel-ouar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:06 by ikaismou          #+#    #+#             */
-/*   Updated: 2023/05/20 07:20:09 by ikaismou         ###   ########.fr       */
+/*   Updated: 2023/05/21 14:34:59 by hel-ouar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,9 @@ void	exec_child(t_minishell *ms, t_env **env)
 		ft_close(ms, 0, 0);
 		exit(g_global.g_status);
 	}
+	if (!ft_strncmp(ms->parsed[0], "./minishell\0", \
+		ft_strlen(ms->parsed[0]) + 1))
+		unplug_signals();
 	waitpid(id2, &status, WUNTRACED);
 	g_global.g_status = WEXITSTATUS(status);
 	ft_close(ms, 0, 0);
